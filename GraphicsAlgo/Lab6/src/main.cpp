@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <GLFW/glfw3.h>
 
 #include <EllipticalCylinder.h>
@@ -9,17 +9,6 @@
 Scene scene;
 EllipticalCylinder *cylinder;
 float start_time;
-
-//GLfloat rotate_x = 0, rotate_y = 0;
-//GLfloat scale = 2.5f;
-//bool carcass = false;
-//int partition = 20;
-//float cur_time = 0;
-//bool animation_enabled = false;
-
-//vector<Material> materials;
-//vector<Light> local_lights;
-//GlobalLight global_light;
 
 void animateCylinder();
 
@@ -140,7 +129,7 @@ int main(void)
 	GLFWwindow* window; 
 	glfwSetErrorCallback(error_callback);
 
-	scene.settings_file = "C:\\tmp\\settings.json";
+	scene.settings_file = "res/settings.json";
 	scene.load();
 
 	if (!glfwInit()) {
