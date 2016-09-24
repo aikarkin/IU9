@@ -1,0 +1,270 @@
+#include <GLFW/glfw3.h>
+#include <GL/glut.h>
+#include <cmath>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+enum COLOR { BLACK, WHITE, GREEN, BLUE };
+
+struct Point2i {
+    int x, y;
+    Point2i(int _x, int _y) : x(_x), y(_y) {};
+    Point2i() : x(0), y(0) {};
+};
+
+Point2i operator -(const Point2i &left, const Point2i &right) {
+    return Point2i(left.x - right.x, left.y - right.y);
+}
+
+Point2i operator +(const Point2i &left, const Point2i &right) {
+    return Point2i(left.x + right.x, left.y + right.y);
+}
+
+
+
+bool polygonClosed;
+int clipperVtxsCount;
+int width = 640, height = 480;
+
+Point2i pClipperBegin, pClipperEnd;
+
+vector<Point2i> polygonPoints;
+vector<Point2i> clipperPoints;
+
+void makeClipping();
+
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    if (action != GLFW_PRESS)
+        return;
+    switch (key) {
+        case GLFW_KEY_SPACE:
+			polygonClosed = true;
+            break;
+        case GLFW_KEY_C:
+			makeClipping();
+            break;
+        case GLFW_KEY_R:
+			polygonClosed = false;
+			clipperVtxsCount = 0;
+            clipperPoints.clear();
+            polygonPoints.clear();
+            break;
+        default:
+            break;
+    }
+}
+
+static void mouse_callback(GLFWwindow* window, int button, int action, int mods) {
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+   
+		if(!polygonClosed)
+			polygonPoints.emplace_back((int)xpos, (int)ypos);
+		else if(clipperVtxsCount < 2) {
+			clipperVtxsCount++;
+			(clipperVtxsCount == 1) ? pClipperBegin.x = (int)xpos, pClipperBegin.y = (int)ypos
+							   : pClipperEnd.x = (int)xpos, pClipperEnd.y = (int)ypos;
+		}
+    }
+}
+
+static void error_callback(int error, const char* description) {
+    fprintf(stderr, "Error: %s\n", description);
+}
+
+void init_view(GLFWwindow *window, int width, int height) {
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, (float)width,  (float)height, 0, -1.f, 15.f);
+}
+
+void drawLine(Point2i p1, Point2i p2, COLOR color) {
+    switch(color) {
+        case WHITE:
+            glColor3f(1.0, 1.0, 1.0);
+            break;
+        case GREEN:
+            glColor3f(0.0, 1.0, 0.0);
+            break;
+        case BLUE:
+            glColor3f(0.0, 0.0, 1.0);
+            break;
+        default:
+            glColor3f(0.0, 0.0, 0.0);
+            break;
+    }
+
+    glBegin(GL_LINES);
+    glVertex2i(p1.x, p1.y);
+    glVertex2i(p2.x, p2.y);
+    glEnd();
+}
+
+void drawPolygonLines() {
+    for (int i = 1; i < polygonPoints.size(); ++i)
+        drawLine(polygonPoints[i - 1], polygonPoints[i], WHITE);
+
+    if(polygonClosed)
+        drawLine(polygonPoints.back(), polygonPoints.front(), WHITE);
+}
+
+int scalar(Point2i vector1, Point2i vector2) {
+    return vector1.x * vector2.x + vector1.y * vector2.y;
+}
+
+int sign(int val) {
+    if (val == 0)
+        return 0;
+    return val < 0 ? -1 : 1;
+}
+
+int side(Point2i p1, Point2i p2, Point2i m) {
+    Point2i N(p2.y - p1.y, p1.x - p2.x); /* нормаль к [P1, P2] */
+    return sign(scalar(m - p1, N));
+}
+
+
+bool intersected(Point2i v1, Point2i v2, Point2i p1, Point2i p2) {
+    int s1 = side(v1, v2, p1),
+        s2 = side(v1, v2, p2);
+
+
+    if(s1 == 0 && s2 == 0)
+        return false;
+
+    int s3 = side(p1, p2, v1),
+        s4 = side(p1, p2, v2);
+
+    return ((s1*s2<=0) & (s3*s4<=0));
+}
+
+
+bool insidePolygon(Point2i p) {
+    Point2i v(width, p.y);
+    bool res = false;
+    for (int i = 1; i < polygonPoints.size(); ++i) {
+        if(intersected(polygonPoints[i - 1], polygonPoints[i], p, v))
+            res=!res;
+    }
+	if(intersected(polygonPoints.back(), polygonPoints.front(), p, v))
+		res=!res;
+    return res;
+}
+
+
+float getIntersectionParam(Point2i v1, Point2i v2, Point2i p1, Point2i p2) {
+    Point2i N(v2.y - v1.y, v1.x - v2.x);
+    return (-1)*(float)scalar(p1-v2, N)/(float)scalar(p2 - p1, N);
+}
+
+
+void makeClipping() {
+    vector<float> interParams;
+
+    cout << "Clipper: (" << pClipperBegin.x << ", " << pClipperBegin.y << ")  ("
+         << pClipperEnd.x << ", " << pClipperEnd.y << ")" << endl;
+
+
+    for (int i = 1; i < polygonPoints.size(); ++i) {
+        cout << "--- " << i << endl;
+        if (intersected(polygonPoints[i - 1], polygonPoints[i], pClipperBegin, pClipperEnd)) {
+            cout << "(" << polygonPoints[i - 1].x << ", " << polygonPoints[i - 1].y << ") "
+                 << "(" << polygonPoints[i].x << ", " << polygonPoints[i].y << ") " << endl;
+            cout << "intersected" << endl;
+            float t = getIntersectionParam(polygonPoints[i - 1], polygonPoints[i], pClipperBegin, pClipperEnd);
+            interParams.push_back(t);
+        }
+    }
+
+    if(intersected(polygonPoints.back(), polygonPoints.front(), pClipperBegin, pClipperEnd)) {
+        float t = getIntersectionParam(polygonPoints.back(), polygonPoints.front(), pClipperBegin, pClipperEnd);
+        interParams.push_back(t);
+    }
+
+
+    cout << "Heeey! 1" << endl << "interParams: " << endl;
+
+    if(insidePolygon(pClipperBegin))
+        interParams.push_back(0);
+    if (insidePolygon(pClipperEnd))
+        interParams.push_back(1);
+
+    sort(interParams.begin(), interParams.end(), [](float a, float b) { return b - a > 0.000001; });
+
+    for (int j = 0; j < interParams.size(); ++j) {
+        cout << interParams[j] << endl;
+    }
+
+    for (int i = 0; i < interParams.size(); ++i) {
+        float x = pClipperBegin.x + (pClipperEnd.x - pClipperBegin.x)*interParams[i],
+              y = pClipperBegin.y + (pClipperEnd.y - pClipperBegin.y)*interParams[i];
+        clipperPoints.emplace_back(x, y);
+    }
+
+
+    cout << "-------------" << endl;
+}
+
+void drawClippers() {
+    for (int i = 1; i < clipperPoints.size(); i+=2) {
+        drawLine(clipperPoints[i - 1], clipperPoints[i], GREEN);
+    }
+}
+
+int main(void) {
+    GLFWwindow *window;
+    glfwSetErrorCallback(error_callback);
+	
+	polygonClosed = false;
+	clipperVtxsCount = 0;
+
+    if (!glfwInit()) {
+        fprintf( stderr, "Failed to initialize GLFW\n" );
+        exit(EXIT_FAILURE);
+    }
+
+    window = glfwCreateWindow(width, height, "Lab 5", NULL, NULL);
+
+    if (!window)
+    {
+        fprintf( stderr, "Failed to open GLFW window\n" );
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval( 1 );
+
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetMouseButtonCallback(window, mouse_callback);
+
+    glfwSetFramebufferSizeCallback(window, init_view);
+    init_view(window, width, height);
+
+    glfwGetWindowSize(window, &width, &height);
+
+	
+    while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
+        drawPolygonLines();
+        if(clipperVtxsCount==2) {
+            drawLine(pClipperBegin, pClipperEnd, BLUE);
+            drawClippers();
+        }
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+
+    glfwTerminate();
+    exit(EXIT_SUCCESS);
+}
