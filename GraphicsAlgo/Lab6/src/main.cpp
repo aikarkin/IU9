@@ -1,39 +1,22 @@
 #include <iostream>
-#include <GL\glew.h>
-#include <GLFW/glfw3.h>
-#include <SOIL.h>
 
 #include <EllipticalCylinder.h>
 #include <Scene.h>
+#include <SOIL.h>
 
 #define MAX_SCALE 3.275
 
-Scene scene;
-EllipticalCylinder *cylinder;
 float start_time;
+bool side = true;
 
-unsigned int texture1, texture2;
+EllipticalCylinder *cylinder;
+Texture *tex1, *tex2;
+Scene scene;
 
+void init_projection(GLFWwindow*, int, int);
+void init_scene(char*);
 void animateCylinder();
-
-void loadTexture();
-
-void switch_light(int i) {
-	if (scene.local_lights.size() > i && i >=0 ) {
-		if (scene.local_lights[i].enabled) {
-			scene.local_lights[i].code = switch_code(i);
-			glDisable(scene.local_lights[i].code);
-			scene.local_lights[i].enabled = false;
-		}
-		else {
-			scene.local_lights[i].code = switch_code(i);
-			glEnable(scene.local_lights[i].code);
-			scene.local_lights[i].enabled = true;
-		}
-		return;
-	}
-	cerr << "������! ��������� ����� � �������� �������� �� ����������" << endl;
-}
+void switch_light(int);
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (action != GLFW_PRESS)
@@ -66,6 +49,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		break;
 	case GLFW_KEY_T:
 		scene.texture_enabled = !scene.texture_enabled;
+		break;
 	case GLFW_KEY_COMMA:
 		if (scene.partition>5) {
 			scene.partition -= 5;
@@ -113,39 +97,30 @@ static void error_callback(int error, const char* description)
 	fprintf(stderr, "Error: %s\n", description);
 }
 
-void init(GLFWwindow* window, int width, int height) {
-	glViewport(0, 0, width, height);
-
-	glMatrixMode(GL_PROJECTION);
-
-	GLfloat matrix_3p[16] = {
-		1.f,    0.00f,  0.0f,   -0.6f,
-		0.0f,   1.0f,   0.0f,   -0.6f,
-		0.0f,   0.f,    1.0f,   0.6f,
-		0.0f,   0.0f,   0.00f,     1.f
-	};
-
-	glLoadMatrixf(matrix_3p);
-	glOrtho(-(GLfloat)width / 64.0f, (GLfloat)width / 64.0f, -(GLfloat)height / 64.0f, (GLfloat)height / 64.0f, -10, 10);
-}
-
-int main(void)
+int main(int argc, char *argv[])
 {
 	GLFWwindow* window; 
 	glfwSetErrorCallback(error_callback);
-
-	scene.settings_file = "C:\\tmp\\settings.json";
-	scene.load();
+	if (argc != 3) {
+		cerr << "Invalid number of argments" << endl;
+		cout << "Ussage: Lab6 -c [config_file]" << endl;
+		return -1;
+	}
+	else if (argv[1][0] != '-' && argv[1][1]!='c') {
+		cerr << "Invalid parameter" << endl;
+		cout << "Ussage: Lab6 -c [config_file]" << endl;
+		return -1;
+	}
 
 	if (!glfwInit()) {
-		fprintf(stderr, "Failed to initialize GLFW\n");
+		cerr << "Failed to initialize GLFW" << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	window = glfwCreateWindow(640, 480, "Lab 6", NULL, NULL);
 	if (!window)
 	{
-		fprintf(stderr, "Failed to open GLFW window\n");
+		cerr << "Failed to open GLFW window" << endl;
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
@@ -153,20 +128,15 @@ int main(void)
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 
-	printf("%s\n", glGetString(GL_VERSION));
+	cout << glGetString(GL_VERSION) << endl;
 
 	glEnable(GL_DEPTH_TEST);
 
 	glfwSetKeyCallback(window, key_callback);
-	glfwSetFramebufferSizeCallback(window, init);
-	init(window, 640, 480);
-	cylinder = new EllipticalCylinder(1.0f, 1.5f, 2.0f, scene.partition);
+	glfwSetFramebufferSizeCallback(window, init_projection);
 
-	initGloabalLight(scene.global_light);
-	for (int i = 0; i < scene.local_lights.size(); i++)
-		initLight(scene.local_lights[i]);
-
-	loadTexture();
+	init_projection(window, 640, 480);
+	init_scene(argv[2]);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -188,7 +158,7 @@ int main(void)
 
 		if (scene.animation_enabled)
 			animateCylinder();
-		if (scene.texture_enabled)
+		if (scene.texture_enabled)	
 			glEnable(GL_TEXTURE_2D);
 		cylinder->draw(scene.current_time);
 		glDisable(GL_TEXTURE_2D);
@@ -199,14 +169,43 @@ int main(void)
 		glfwPollEvents();
 
 	}
-
 	scene.save();
 	glfwTerminate();
 	delete cylinder;
 	exit(EXIT_SUCCESS);
 }
 
-bool side = true;
+void init_projection(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
+
+	glMatrixMode(GL_PROJECTION);
+
+	GLfloat matrix_3p[16] = {
+		1.f,    0.00f,  0.0f,   -0.6f,
+		0.0f,   1.0f,   0.0f,   -0.6f,
+		0.0f,   0.f,    1.0f,   0.6f,
+		0.0f,   0.0f,   0.00f,     1.f
+	};
+
+	glLoadMatrixf(matrix_3p);
+	glOrtho(-(GLfloat)width / 64.0f, (GLfloat)width / 64.0f, -(GLfloat)height / 64.0f, (GLfloat)height / 64.0f, -10, 10);
+}
+
+void init_scene(char *settings_file) {
+	scene.settings_file = settings_file;
+	scene.load();
+	cylinder = new EllipticalCylinder(1.0f, 1.5f, 2.0f, scene.partition);
+
+	initGloabalLight(scene.global_light);
+	for (int i = 0; i < scene.local_lights.size(); i++)
+		initLight(scene.local_lights[i]);
+
+	for (int i = 0; i < scene.textures.size(); i++) {
+		scene.textures[i].load();
+	}
+
+	tex1 = &scene.textures[0], tex2 = &scene.textures[1];
+}
 
 void animateCylinder() {
 	if (!scene.animation_enabled)
@@ -221,33 +220,19 @@ void animateCylinder() {
 
 }
 
-void loadTexture() {
-	string img_path1 = "C:\\tmp\\glass1_2560x320.jpg";
-	string img_path2 = "C:\\tmp\\glass2.jpg";
-	int width, height;
-	unsigned char *img = SOIL_load_image(img_path1.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
-
-	glGenTextures(1, &texture1);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-	SOIL_free_image_data(img);
-
-	img = SOIL_load_image(img_path2.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
-
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-	SOIL_free_image_data(img);
+void switch_light(int i) {
+	if (scene.local_lights.size() > i && i >= 0) {
+		if (scene.local_lights[i].enabled) {
+			scene.local_lights[i].code = switch_code(i);
+			glDisable(scene.local_lights[i].code);
+			scene.local_lights[i].enabled = false;
+		}
+		else {
+			scene.local_lights[i].code = switch_code(i);
+			glEnable(scene.local_lights[i].code);
+			scene.local_lights[i].enabled = true;
+		}
+		return;
+	}
+	cerr << "Incorrect index of light. Maximum count of lights is eight." << endl;
 }

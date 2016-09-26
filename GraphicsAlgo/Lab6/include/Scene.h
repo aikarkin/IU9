@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <Texture.h>
 #include <Light.h>
 
 struct Scene {
@@ -16,10 +17,11 @@ struct Scene {
 	float current_time;
 	float rotate_x, rotate_y;
 	float scale;
-	float texture_enabled;
+	bool texture_enabled;
 	std::vector<Material> materials;
 	std::vector<Light> local_lights;
 	GlobalLight global_light;
+	std::vector<Texture> textures;
 	void load();
 	void save();
 };

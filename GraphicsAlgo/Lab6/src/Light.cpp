@@ -44,6 +44,7 @@ void initGloabalLight(GlobalLight params) {
 	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, params.local_viewer);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, params.two_side);
 	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
 }
 
@@ -72,7 +73,7 @@ void setMaterial(Material params) {
 	glMaterialfv(params.diffuse_side, GL_DIFFUSE, params.diffuse_color);
 	glMaterialfv(params.specular_side, GL_SPECULAR, params.specular_color);
 	glMaterialfv(params.emission_side, GL_EMISSION, params.emission_color);
-	glMaterialf(params.shiness_side, GL_SHININESS, params.shiness);
+	glMaterialf(params.shiness_side, GL_SHININESS, params.shininess);
 }
 
 void deserializeLightParams(std::string file, GlobalLight &global, vector<Light> &lights, vector<Material> &materials)
@@ -141,6 +142,9 @@ void deserializeLightParams(std::string file, GlobalLight &global, vector<Light>
 				curMaterial.emission_color[i] = (float)jMaterial[j]["emission_color"].GetArray()[i].GetDouble();
 			}
 		}
+
+		if (jMaterial[j].HasMember("shininess"))
+			curMaterial.shininess = jMaterial[j]["shininess"].GetFloat();
 		materials.push_back(curMaterial);
 	}
 
@@ -190,6 +194,7 @@ void deserializeLightParams(std::string file, GlobalLight &global, vector<Light>
 				curLight.spot_direction[i] = (float)jLocal[j]["spot_direction"][i].GetDouble();
 			}
 		}
+
 
 		lights.push_back(curLight);
 	}

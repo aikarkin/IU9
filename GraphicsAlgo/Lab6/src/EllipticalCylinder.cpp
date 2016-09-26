@@ -1,8 +1,9 @@
 #include <EllipticalCylinder.h>
+#include <Texture.h>
 
 using namespace std;
 
-extern unsigned int texture1, texture2;
+extern Texture *tex1, *tex2;
 
 void EllipticalCylinder::generatePoints() {
 	GLfloat dphi = 2 * (float)MATH_PI / (partition - 1);
@@ -25,32 +26,30 @@ void EllipticalCylinder::generateTexels() {
 
 	float a_t, b_t;
 	if (a < b) {
-		a_t = 0.5 * a / b;
-		b_t = 0.5;
+		a_t = 0.5f * a / b;
+		b_t = 0.5f;
 	}
 	else {
-		b_t = 0.5 * b / a;
-		a_t = 0.5;
+		b_t = 0.5f * b / a;
+		a_t = 0.5f;
 	}
 
-	dt = 2.0 * (float)MATH_PI / (partition - 1);
+	dt = 2.0f * (float)MATH_PI / (partition - 1);
 	float phi;
 	capTexels[0] = Vec2f(a_t, b_t);
 	for (size_t i = 1; i < partition; i++) {
-		//cout << "phi=" << i*dt << endl;
-		phi = MATH_PI + i*dt;
+		phi = (float)MATH_PI + i*dt;
 		capTexels[i] = Vec2f(a_t + a_t * cos(phi), b_t + b_t * sin(phi));
-		//cout << capTexels[i].x << " " << capTexels[i].y << endl;
 	}
-	phi = MATH_PI + partition*dt;
+	phi = (float)MATH_PI + partition*dt;
 	capTexels[partition] = Vec2f(a_t + a_t * cos(phi), b_t + b_t * sin(phi));
 }
 
 void EllipticalCylinder::calcNormals() {
 	normals[0] = normal(Vec3f(points[0].x, y0, points[0].y), Vec3f(points[1].x, y0, points[1].y), Vec3f(points[2].x, y0, points[2].y));
-	/*normals[0].x *= -1;
+	normals[0].x *= -1;
 	normals[0].y *= -1;
-	normals[0].z *= -1;*/
+	normals[0].z *= -1;
 
 	for (size_t i = 1; i < partition; i++)	{
 		Vec3f v1(points[i - 1].x, y0, points[i - 1].y);
@@ -131,25 +130,23 @@ size_t EllipticalCylinder::getPartition() {
 }
 
 void EllipticalCylinder::draw(float time) {
-	//Drowing buttom side
-	//cout << "Texels for ellipse: " << endl;
-	glBindTexture(GL_TEXTURE_2D, texture2);
+	//Drowing buttom cap
+	tex1->bind();
 	drawEllipse(points, capTexels, partition, Vec3f(x0, y0, z0), normals[0], time);
-	//cout << endl;
 
 	//Drawing cylinder
-	glBindTexture(GL_TEXTURE_2D, texture1);
+	tex2->bind();
 	for (int i = 1; i < partition; ++i) {
 		Vec3f v1(points[i - 1].x, y0, points[i - 1].y);
 		Vec3f v2(points[i].x, y0, points[i].y);
 		drawRectangle(v1, v2, wallTexels + 2*(i - 1), normals[i], h, time);
 	}
-	//Drawing last face of cylinder
+	//Drawing last polygon of cylinder
 	drawRectangle(Vec3f(points[partition - 1].x, y0, points[partition - 1].y),
 		Vec3f(points[0].x, y0, points[0].y), wallTexels + 2 * partition - 2, normals[partition], h, time);
 
-	//Drawing top side
-	glBindTexture(GL_TEXTURE_2D, texture2);
+	tex1->bind();
+	//Drawing top cap
 	drawEllipse(points, capTexels, partition, Vec3f(x0, y0 + h, z0), normals[partition + 1], time);
 }
 
@@ -160,9 +157,9 @@ Vec3f EllipticalCylinder::getPoint(int ind) {
 	}
 	if (ind < partition)
 		return Vec3f(points[ind].x, y0, points[ind].y);
-	else if (ind == 2*partition) //points[2*partition] - buttom center
+	else if (ind == 2*partition) /* points[2*partition] - buttom center */
 		return Vec3f(x0, y0, z0);
-	else if(ind == 2*partition + 1) // points[2*parition + 1] - top center
+	else if(ind == 2*partition + 1) /* points[2*parition + 1] - top center*/
 		return Vec3f(x0, y0 + h, z0);
 	else 
 		return Vec3f(points[ind].x, y0 + h, points[ind].y);

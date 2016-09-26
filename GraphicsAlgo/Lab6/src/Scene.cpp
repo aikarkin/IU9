@@ -22,6 +22,7 @@ void Scene::load()
 	scale = scene["scale"].GetFloat();
 	texture_enabled = scene["texture_enabled"].GetBool();
 	deserializeLightParams(settings_file, global_light, local_lights, materials);
+	deserializeTextures(textures, settings_file);
 }
 
 void Scene::save()

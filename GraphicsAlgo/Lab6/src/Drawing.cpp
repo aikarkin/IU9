@@ -1,4 +1,6 @@
+#include <Light.h>
 #include <Drawing.h>
+#include <Scene.h>
 #include <iostream>
 
 extern Scene scene;
@@ -6,8 +8,9 @@ extern Scene scene;
 void drawCube() {
 	glBegin(GL_QUADS);
 		glNormal3f(0.0, 0.0, 1.0);
-		//glColor3f(1.0f, 0.5f, 0.0f);
 		setMaterial(scene.materials[0]);
+		glColor3f(1.0f, 0.5f, 0.0f);
+
 		glVertex3f(1.0, 1.0, 1.0);
 		glVertex3f(-1.0, 1.0, 1.0);
 		glVertex3f(-1.0, -1.0, 1.0);
@@ -16,8 +19,8 @@ void drawCube() {
 
 	glBegin(GL_QUADS);
 		glNormal3f(0.0, 0.0, -1.0);
-		//glColor3f(0.0f, 1.0f, 0.0f);
-		setMaterial(scene.materials[1]);
+		setMaterial(scene.materials[0]);
+		glColor3f(0.0f, 1.0f, 0.0f);
 
 		glVertex3f(1.0, 1.0, -1.0);
 		glVertex3f(1.0, -1.0, -1.0);
@@ -27,7 +30,8 @@ void drawCube() {
 
 	glBegin(GL_QUADS);
 		glNormal3f(-1.0, 0.0, 0.0);
-		setMaterial(scene.materials[2]);
+		setMaterial(scene.materials[0]);
+		glColor3f(0.0f, 1.0f, 03.f);
 
 		glVertex3f(-1.0, 1.0, 1.0);
 		glVertex3f(-1.0, 1.0, -1.0);
@@ -37,8 +41,9 @@ void drawCube() {
 
 	glBegin(GL_QUADS);
 		glNormal3f(1.0, 0.0, 0.0);
-		//glColor3f(1.0, 0.0, 0.0);
-		setMaterial(scene.materials[3]);
+		setMaterial(scene.materials[0]);
+		glColor3f(1.0, 0.0, 0.0);
+
 		glVertex3f(1.0, 1.0, 1.0);
 		glVertex3f(1.0, -1.0, 1.0);
 		glVertex3f(1.0, -1.0, -1.0);
@@ -47,8 +52,8 @@ void drawCube() {
 
 	glBegin(GL_QUADS);
 		glNormal3f(0.0, 1.0, 0.0);
-		//glColor3f(0.0, 0.0, 1.0);
-		setMaterial(scene.materials[4]);
+		setMaterial(scene.materials[0]);
+		glColor3f(0.0, 0.0, 1.0);
 
 		glVertex3f(-1.0, 1.0, -1.0);
 		glVertex3f(-1.0, 1.0, 1.0);
@@ -58,8 +63,8 @@ void drawCube() {
 
 	glBegin(GL_QUADS);
 		glNormal3f(0.0, -1.0, 0.0);
-		//glColor3f(1.0, 0.0, 1.0);
-		setMaterial(scene.materials[5]);
+		glColor3f(1.0, 0.0, 1.0);
+		setMaterial(scene.materials[0]);
 
 		glVertex3f(-1.0, -1.0, -1.0);
 		glVertex3f(1.0, -1.0, -1.0);
@@ -69,7 +74,7 @@ void drawCube() {
 }
 
 
-void drawRectangle(Vec3f p1, Vec3f p2, Vec2f *texels, Vec3f N, GLfloat h, float time) {
+void drawRectangle(Vec3f p1, Vec3f p2, Vec2f *texels, Vec3f N, float h, float time) {
 	Vec3f v1(p1), v4(p2), v2(p1.x, p1.y + h, p1.z), v3(p2.x, p2.y + h, p2.z);
 	if(time!=0) {
 		//N = bezueFunction(N, time);
@@ -78,10 +83,10 @@ void drawRectangle(Vec3f p1, Vec3f p2, Vec2f *texels, Vec3f N, GLfloat h, float 
 		v3 = bezueFunction(Vec3f(p2.x, p2.y + h, p2.z), time);
 		v4 = bezueFunction(Vec3f(p2.x, p2.y, p2.z), time);
 	}
-
 	glBegin(GL_QUADS);
 		glNormal3f(N.x, N.y, N.z);
-		setMaterial(scene.materials[5]);
+		setMaterial(scene.materials[0]);
+		glColor3f(1.0, 0.3, 0.0);
 
 		glTexCoord2f(texels[0].x, texels[0].y);
 		glVertex3fv(&v1.x);
@@ -105,14 +110,14 @@ void drawEllipse(Vec2f *points, Vec2f *texels, size_t count, Vec3f O, Vec3f N, f
 	}
 	glBegin(GL_TRIANGLE_FAN);
 		glNormal3f(N.x, N.y, N.z);
-		setMaterial(scene.materials[1]);
+		setMaterial(scene.materials[0]);
+		glColor3f(0.2f, 0.2f, 0.2f);
 		glTexCoord2f(texels[0].x, texels[0].y);
 		glVertex3f(O_.x, O_.y, O_.z);
 		for (int i = 0; i < count; i++) {
 			Vec3f curPoint(points[i].x, O.y, points[i].y);
 			if(time!=0)
 				curPoint = bezueFunction(curPoint, time);
-			//cout << "(" << texels[i].x << "; " << texels[i].y << ")" << endl;
 			glTexCoord2f(texels[i + 1].x, texels[i + 1].y);
 			glVertex3fv(&curPoint.x);
 		}
@@ -120,7 +125,6 @@ void drawEllipse(Vec2f *points, Vec2f *texels, size_t count, Vec3f O, Vec3f N, f
 		Vec3f curPoint(points[0].x, O.y, points[0].y);
 		if (time != 0)
 			curPoint = bezueFunction(curPoint, time);
-		//cout << "(" << texels[i].x << "; " << texels[i].y << ")" << endl;
 		glTexCoord2f(texels[count].x, texels[count].y);
 		glVertex3fv(&curPoint.x);
 	glEnd();

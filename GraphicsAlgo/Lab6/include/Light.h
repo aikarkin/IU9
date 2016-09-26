@@ -18,20 +18,20 @@ struct Light {
 
 	float position[4] = { 0.0f, 0.5f, 1.0f, 0.f };
 
-	float constant_attenuation = 0.33f;
-	float linear_attenuation = 0.66f;
+	float constant_attenuation = 1.0f;
+	float linear_attenuation = 1.0f;
 	float quadric_attenuation = 0.0f;
 
-	float spot_cutoff; // ���� �����������
-	float spot_exponent; // �������� ����������������� n (I*cos^n(a))
-	float spot_direction[3] = { 0.0f, 0.0f, -1.0f }; // ����������� ��������� ���������
+	float spot_cutoff; 
+	float spot_exponent; 
+	float spot_direction[3] = { 0.0f, 0.0f, -1.0f }; 
 };
 
 struct GlobalLight {
 	unsigned int shade_mode = GL_SMOOTH;
 	float global_ambient_color[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	bool local_viewer = false;
-	bool two_side = true;
+	bool local_viewer = true;
+	bool two_side = false;
 };
 
 struct Material {
@@ -48,7 +48,7 @@ struct Material {
 	float emission_color[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	unsigned int shiness_side = GL_FRONT_AND_BACK;
-	float shiness = 0.0f;
+	float shininess = 0.2f * 128.0f;;
 };
 
 unsigned int switch_code(int i);
