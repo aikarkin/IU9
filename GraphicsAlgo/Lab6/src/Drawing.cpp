@@ -18,6 +18,7 @@ void drawCube() {
 		glNormal3f(0.0, 0.0, -1.0);
 		//glColor3f(0.0f, 1.0f, 0.0f);
 		setMaterial(scene.materials[1]);
+
 		glVertex3f(1.0, 1.0, -1.0);
 		glVertex3f(1.0, -1.0, -1.0);
 		glVertex3f(-1.0, -1.0, -1.0);
@@ -26,8 +27,8 @@ void drawCube() {
 
 	glBegin(GL_QUADS);
 		glNormal3f(-1.0, 0.0, 0.0);
-		//glColor3f(1.0f, 1.0f, 0.0f);
 		setMaterial(scene.materials[2]);
+
 		glVertex3f(-1.0, 1.0, 1.0);
 		glVertex3f(-1.0, 1.0, -1.0);
 		glVertex3f(-1.0, -1.0, -1.0);
@@ -48,6 +49,7 @@ void drawCube() {
 		glNormal3f(0.0, 1.0, 0.0);
 		//glColor3f(0.0, 0.0, 1.0);
 		setMaterial(scene.materials[4]);
+
 		glVertex3f(-1.0, 1.0, -1.0);
 		glVertex3f(-1.0, 1.0, 1.0);
 		glVertex3f(1.0, 1.0, 1.0);
@@ -58,6 +60,7 @@ void drawCube() {
 		glNormal3f(0.0, -1.0, 0.0);
 		//glColor3f(1.0, 0.0, 1.0);
 		setMaterial(scene.materials[5]);
+
 		glVertex3f(-1.0, -1.0, -1.0);
 		glVertex3f(1.0, -1.0, -1.0);
 		glVertex3f(1.0, -1.0, 1.0);
@@ -66,7 +69,7 @@ void drawCube() {
 }
 
 
-void drawRectangle(Vec3f p1, Vec3f p2, Vec3f N, GLfloat h, float time) {
+void drawRectangle(Vec3f p1, Vec3f p2, Vec2f *texels, Vec3f N, GLfloat h, float time) {
 	Vec3f v1(p1), v4(p2), v2(p1.x, p1.y + h, p1.z), v3(p2.x, p2.y + h, p2.z);
 	if(time!=0) {
 		//N = bezueFunction(N, time);
@@ -80,14 +83,21 @@ void drawRectangle(Vec3f p1, Vec3f p2, Vec3f N, GLfloat h, float time) {
 		glNormal3f(N.x, N.y, N.z);
 		setMaterial(scene.materials[5]);
 
+		glTexCoord2f(texels[0].x, texels[0].y);
 		glVertex3fv(&v1.x);
+
+		glTexCoord2f(texels[1].x, texels[1].y);
 		glVertex3fv(&v2.x);
+
+		glTexCoord2f(texels[3].x, texels[3].y);
 		glVertex3fv(&v3.x);
+
+		glTexCoord2f(texels[2].x, texels[2].y);
 		glVertex3fv(&v4.x);
 	glEnd();
 }
 
-void Ellipse(Vec2f *points, size_t count, Vec3f O, Vec3f N, float time) {
+void drawEllipse(Vec2f *points, Vec2f *texels, size_t count, Vec3f O, Vec3f N, float time) {
 	Vec3f O_(O);
 	if(time != 0) {
 		O_ = bezueFunction(O, time);
@@ -96,13 +106,23 @@ void Ellipse(Vec2f *points, size_t count, Vec3f O, Vec3f N, float time) {
 	glBegin(GL_TRIANGLE_FAN);
 		glNormal3f(N.x, N.y, N.z);
 		setMaterial(scene.materials[1]);
+		glTexCoord2f(texels[0].x, texels[0].y);
 		glVertex3f(O_.x, O_.y, O_.z);
 		for (int i = 0; i < count; i++) {
 			Vec3f curPoint(points[i].x, O.y, points[i].y);
 			if(time!=0)
 				curPoint = bezueFunction(curPoint, time);
+			//cout << "(" << texels[i].x << "; " << texels[i].y << ")" << endl;
+			glTexCoord2f(texels[i + 1].x, texels[i + 1].y);
 			glVertex3fv(&curPoint.x);
 		}
+
+		Vec3f curPoint(points[0].x, O.y, points[0].y);
+		if (time != 0)
+			curPoint = bezueFunction(curPoint, time);
+		//cout << "(" << texels[i].x << "; " << texels[i].y << ")" << endl;
+		glTexCoord2f(texels[count].x, texels[count].y);
+		glVertex3fv(&curPoint.x);
 	glEnd();
 }
 
