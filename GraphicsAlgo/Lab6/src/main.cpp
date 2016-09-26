@@ -64,6 +64,8 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	case GLFW_KEY_M:
 		scene.scale /= 1.1f;
 		break;
+	case GLFW_KEY_T:
+		scene.texture_enabled = !scene.texture_enabled;
 	case GLFW_KEY_COMMA:
 		if (scene.partition>5) {
 			scene.partition -= 5;
@@ -186,7 +188,8 @@ int main(void)
 
 		if (scene.animation_enabled)
 			animateCylinder();
-		glEnable(GL_TEXTURE_2D);
+		if (scene.texture_enabled)
+			glEnable(GL_TEXTURE_2D);
 		cylinder->draw(scene.current_time);
 		glDisable(GL_TEXTURE_2D);
 
