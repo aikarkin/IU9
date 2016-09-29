@@ -19,7 +19,7 @@ struct Light {
 	float position[4] = { 0.0f, 0.5f, 1.0f, 0.f };
 
 	float constant_attenuation = 1.0f;
-	float linear_attenuation = 1.0f;
+	float linear_attenuation = 0.0f;
 	float quadric_attenuation = 0.0f;
 
 	float spot_cutoff; 

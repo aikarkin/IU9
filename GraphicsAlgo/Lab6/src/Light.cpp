@@ -44,7 +44,7 @@ void initGloabalLight(GlobalLight params) {
 	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, params.local_viewer);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, params.two_side);
 	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
+	//glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
 }
 
