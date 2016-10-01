@@ -156,12 +156,16 @@ int main(int argc, char *argv[])
 		glRotatef(scene.rotate_x, 1.0, 0.0, 0.0);
 		glRotatef(scene.rotate_y, 0.0, 1.0, 0.0);
 
-		if (scene.animation_enabled)
+		if (scene.animation_enabled) {
 			animateCylinder();
+			cylinder->draw(scene.current_time);
+		}
+		else
+			cylinder->draw(0);
 		if (scene.texture_enabled)	
 			glEnable(GL_TEXTURE_2D);
-		cylinder->draw(scene.current_time);
-		glDisable(GL_TEXTURE_2D);
+		else 
+			glDisable(GL_TEXTURE_2D);
 
 		glPolygonMode(GL_FRONT_AND_BACK, scene.carcas_enabled ? GL_LINE : GL_FILL);
 
@@ -197,6 +201,7 @@ void init_scene(char *settings_file) {
 	cylinder = new EllipticalCylinder(1.0f, 1.5f, 2.0f, scene.partition);
 
 	initGloabalLight(scene.global_light);
+	setMaterial(scene.materials[3]);
 	for (int i = 0; i < scene.local_lights.size(); i++)
 		initLight(scene.local_lights[i]);
 

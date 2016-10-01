@@ -1,30 +1,33 @@
 #pragma once
 #include <Drawing.h>
 #include <iostream>
+#include <vector>
 #include <GLFW/glfw3.h>
 
 #define MATH_PI 3.141593
 
+struct Face {
+	Vec3f *pixels;
+	Vec2f *texels;
+	Vec3f normalVec;
+};
+
 class EllipticalCylinder {
 private:
-	Vec2f *points;
-	Vec3f *normals;
-	Vec2f *wallTexels;
-	Vec2f *capTexels;
+	std::vector<Face> walls;
+	Face base, cap;
+
 	GLfloat x0, y0, z0, h, a, b;
 	size_t partition;
-
-	void generatePoints();
-	void generateTexels();
-	void calcNormals();
+	void pointsAlloc();
+	void pointsFree();
+	void initPoints();
 public:
 	EllipticalCylinder(GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, GLfloat, size_t);
 	EllipticalCylinder(GLfloat, GLfloat, GLfloat, size_t);
 	EllipticalCylinder(size_t);
 
 	void setPartition(size_t);
-	Vec3f getPoint(int ind);
-	Vec3f getNormal(int ind);
 	size_t getPartition();
 	void draw(float time);
 
