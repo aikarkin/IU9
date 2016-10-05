@@ -6,24 +6,34 @@
 #include <string>
 
 #define MAX_SCALE 3.275
+#define MATH_PI 3.141593
 
 GLuint Program;
 GLint  Attrib_vertex;
 GLint  Unif_color;
 GLuint VBO;
+bool carcas_enabled = false;
 
 GLfloat rotate_x = 0.0;
 GLfloat rotate_y = 0.0;
 GLfloat scale = 2.0;
+size_t partition = 20;
 
-struct Vec2f
-{
-	GLfloat x;
-	GLfloat y;
-};
+unsigned int cubeOffset, baseOffset, wallsOffset, capOffset;
+
+void freeVBO();
+void initVBO();
+
+size_t bufferSize;
+
+struct Vec3f {
+	GLfloat x, y, z;
+	Vec3f() : x(0), y(0), z(0) {};
+	Vec3f(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {};
+} *drawingBuffer;
 
 
-GLfloat cubeCoord[][3] = { 
+GLfloat cubeCoord[][3] = {
 	{ 1.0f, 1.0f, 1.0f },
 	{ -1.0f, 1.0f, 1.0f },
 	{ -1.0, -1.0, 1.0 },
@@ -54,6 +64,49 @@ GLfloat cubeCoord[][3] = {
 	{ 1.0, -1.0, 1.0 },
 	{ -1.0, -1.0, 1.0 }
 };
+
+void initDrawingBuffer() {
+	cubeOffset = 0;
+	baseOffset = 24;
+	wallsOffset = baseOffset + (partition + 2);
+	capOffset = wallsOffset + (partition + 1) * 2;
+	bufferSize = capOffset + partition + 2;
+
+	float x0 = 0.0f, y0 = -1.0f, z0 = 0.0f;
+	float a = 1.0f, b = 1.5f, h = 2.0f;
+	drawingBuffer = new Vec3f[bufferSize];
+
+	// cube coordinates
+	for (int i = 0; i < baseOffset; i++) 
+		drawingBuffer[cubeOffset + i] = Vec3f(cubeCoord[i][0] - 2.4, cubeCoord[i][1], cubeCoord[i][2]);
+	
+	float dphi = 2 * (float)MATH_PI / (partition - 1);
+	float phi;
+
+	// clylinder cap and base coordinates
+	drawingBuffer[baseOffset] = Vec3f(x0, y0, z0);
+	drawingBuffer[capOffset] = Vec3f(x0, y0 + h, z0);
+	for (int i = 1; i <= partition + 1; i++) {
+		phi = ((i - 1)%partition) * dphi;
+
+		drawingBuffer[baseOffset + i] = Vec3f(x0 + a * (float)cos(phi), y0, z0 + b * (float)sin(phi));
+		drawingBuffer[capOffset + i] = Vec3f(x0 + a * (float)cos(phi),	y0 + h,	z0 + b * (float)sin(phi));
+	}
+
+	// cylinder walls coordinates
+	for (size_t i = 0; i <= 2 * (partition - 1); i += 2) {
+		phi = ((i / 2) % partition) * dphi;
+		drawingBuffer[wallsOffset + i] = Vec3f(x0 + a * (float)cos(phi), y0, z0 + b * (float)sin(phi));
+		drawingBuffer[wallsOffset + i + 1] = Vec3f(x0 + a * (float)cos(phi), y0 + h, z0 + b * (float)sin(phi));
+	}	
+}
+
+void resizeDrawingBuffer() {
+	freeVBO();
+	initDrawingBuffer();
+	initVBO();
+}
+
 
 void shaderLog(unsigned int shader)
 {
@@ -145,7 +198,10 @@ void initVBO()
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeCoord), cubeCoord, GL_STATIC_DRAW);
+	//glBufferData(GL_ARRAY_BUFFER, 24*3*sizeof(float) + 4, cubeCoord, GL_STATIC_DRAW);
+	//float *buf = (float*)drawingBuffer;
+	//std::cout << "---=" << buf[0] << " " << " " << buf[1] << " " << buf[2] << std::endl;
+	glBufferData(GL_ARRAY_BUFFER, (bufferSize)*sizeof(Vec3f), drawingBuffer, GL_STATIC_DRAW);
 }
 
 void freeShader()
@@ -165,40 +221,63 @@ void resizeWindow(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+static float red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+static float green[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+static float blue[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
+static float yellow[4] = { 1.0f, 1.0f, 0.0f, 1.0f };
+static float pink[4] = { 1.0f, 0.0f, 1.0f, 1.0f };
+static float aqua_marine[4] = { 0.0f, 1.0f, 1.0f, 1.0f };
+
+void drawCube() {
+	glLoadIdentity();
+	glScalef(2.0f, 2.0f, 2.0f);
+	glTranslatef(-4.5f, 0.0f, -3.0f);
+	glRotatef(-30, 1.0, 0.0, 0.0);
+	glRotatef(-20, 0.0, 1.0, 0.0);
+
+	glUniform4fv(Unif_color, 1, red);
+	glDrawArrays(GL_QUADS, 0, 4);
+
+	glUniform4fv(Unif_color, 1, green);
+	glDrawArrays(GL_QUADS, 4, 4);
+
+	glUniform4fv(Unif_color, 1, blue);
+	glDrawArrays(GL_QUADS, 8, 4);
+
+	glUniform4fv(Unif_color, 1, yellow);
+	glDrawArrays(GL_QUADS, 12, 4);
+
+	glUniform4fv(Unif_color, 1, pink);
+	glDrawArrays(GL_QUADS, 16, 4);
+
+	glUniform4fv(Unif_color, 1, aqua_marine);
+	glDrawArrays(GL_QUADS, 20, 4);
+}
+
+void drawCylinder() {
+	glLoadIdentity();
+	glScalef(scale, scale, scale);
+	glRotatef(rotate_x, 1.0, 0.0, 0.0);
+	glRotatef(rotate_y, 0.0, 1.0, 0.0);
+
+	glUniform4fv(Unif_color, 1, blue);
+	glDrawArrays(GL_TRIANGLE_FAN, baseOffset, wallsOffset - baseOffset);
+	glUniform4fv(Unif_color, 1, red);
+	glDrawArrays(GL_QUAD_STRIP, wallsOffset, capOffset - wallsOffset - 1);
+	glUniform4fv(Unif_color, 1, blue);
+	glDrawArrays(GL_TRIANGLE_FAN, capOffset, wallsOffset - baseOffset);
+}
+
 void render()
 {
-	static float red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
-	static float green[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-	static float blue[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
-	static float yellow[4] = { 1.0f, 1.0f, 0.0f, 1.0f };
-	static float pink[4] = { 1.0f, 0.0f, 1.0f, 1.0f };
-	static float aqua_marine[4] = { 0.0f, 1.0f, 1.0f, 1.0f };
-
 	glUseProgram(Program);
 	glEnableVertexAttribArray(Attrib_vertex);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glVertexAttribPointer(Attrib_vertex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-
-	glUniform4fv(Unif_color, 1, red);
-	glDrawArrays(GL_QUADS, 0, sizeof(GL_FLOAT));
-
-	glUniform4fv(Unif_color, 1, green);
-	glDrawArrays(GL_QUADS, 4, sizeof(GL_FLOAT));
-
-	glUniform4fv(Unif_color, 1, blue);
-	glDrawArrays(GL_QUADS, 8, sizeof(GL_FLOAT));
-
-	glUniform4fv(Unif_color, 1, yellow);
-	glDrawArrays(GL_QUADS, 12, sizeof(GL_FLOAT));
-
-	glUniform4fv(Unif_color, 1, pink);
-	glDrawArrays(GL_QUADS, 16, sizeof(GL_FLOAT));
-
-	glUniform4fv(Unif_color, 1, aqua_marine);
-	glDrawArrays(GL_QUADS, 20, sizeof(GL_FLOAT));
-
+	drawCube();
+	drawCylinder();
 
 	glDisableVertexAttribArray(Attrib_vertex);
 	glUseProgram(0);
@@ -243,6 +322,19 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	case GLFW_KEY_M:
 		scale /= 1.1f;
 		break;
+	case GLFW_KEY_COMMA:
+		if (partition > 5) {
+			partition -= 5;
+			resizeDrawingBuffer();
+		}
+		break;
+	case GLFW_KEY_PERIOD:
+		partition += 5;
+		resizeDrawingBuffer();
+		break;
+	case GLFW_KEY_C:
+		carcas_enabled = !carcas_enabled;
+		break;
 	}
 }
 
@@ -254,7 +346,7 @@ static void error_callback(int error, const char* description)
 int main(int argc, char **argv)
 {
 	GLFWwindow* window;
-
+	//std::cout << sizeof(Vec3f) << std::endl;
 	glfwSetErrorCallback(error_callback);
 
 	if (!glfwInit()) {
@@ -294,6 +386,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
+	initDrawingBuffer();
 	initGL();
 	initVBO();
 	initShader();
@@ -302,11 +395,8 @@ int main(int argc, char **argv)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glMatrixMode(GL_MODELVIEW);
+		glPolygonMode(GL_FRONT_AND_BACK, carcas_enabled ? GL_LINE : GL_FILL);
 
-		glLoadIdentity();
-		glScalef(scale, scale, scale);
-		glRotatef(rotate_x, 1.0, 0.0, 0.0);
-		glRotatef(rotate_y, 0.0, 1.0, 0.0);
 		render();
 
 		glfwSwapBuffers(window);
@@ -315,4 +405,5 @@ int main(int argc, char **argv)
 
 	freeShader();
 	freeVBO();
+	delete[] drawingBuffer;
 }
