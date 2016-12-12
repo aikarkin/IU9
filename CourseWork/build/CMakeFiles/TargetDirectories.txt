@@ -1,3 +1,0 @@
-/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles/edit_cache.dir
-/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles/rebuild_cache.dir
-/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles/CourseWork.dir
