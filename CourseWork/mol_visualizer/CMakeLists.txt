@@ -5,8 +5,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lGLU")
 
 set(SOURCE_FILES mol_visualizer.cpp)
 
-set(PMOLS_INCLUDE_DIRS /home/alex/dev/src/cpp/CourseWork/pmols/include/)
-set(PMOLS_STATIC_LIBRARY /home/alex/dev/src/cpp/CourseWork/lib/libpmols.so)
+set(PMOLS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../pmols/include/)
+set(PMOLS_STATIC_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/../lib/libpmols.so)
 
 add_executable(mol_visualizer ${SOURCE_FILES})
 
