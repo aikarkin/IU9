@@ -188,6 +188,10 @@ void MolCubeShell::superposePlanesWithAxis() {
         mol->GetAtom(i).coord = rotate_vec(mol->GetAtom(i).coord, phi, v_rot_phi);
         mol->GetAtom(i).coord = rotate_vec(mol->GetAtom(i).coord, psi, v_rot_psi);
     }
+
+    // crutch
+    /*glm::vec3 disp_vec(cube_edge_len - M.x, cube_edge_len - M.y, cube_edge_len - M.z);
+    translate(disp_vec);*/
 }
 #pragma clang diagnostic pop
 

@@ -35,13 +35,9 @@ void ShellCellLattice::initMolShellParams() {
     vec_j = dispVecs[0];
     vec_k = dispVecs[1];
 
-    std::cout << "displacement vectors: " << vec_to_string(vec_i) << " " << vec_to_string(vec_j) << " " << vec_to_string(vec_k) << std::endl;
-
     len_i = glm::length(vec_i);
     len_j = glm::length(vec_j);
     len_k = glm::length(vec_k);
-
-    //std::cout << "min len: " << len_i << std::endl;
 
     if(cell_len == 0) {
         cell_shift_i = len_i;
@@ -66,7 +62,7 @@ void ShellCellLattice::formLattice() {
     // move apposition point of shell in right place inside initial lattice shell
     glm::vec3 P = (cell_shift_i - len_i)/2*vec_i + (cell_shift_j - len_j)/2*vec_j + (cell_shift_k - len_k)*vec_k;
     glm::vec3 vec_app_shift = (P - shell_appos);
-    initialShell.translate(vec_app_shift);
+    initialShell.translate(-vec_app_shift);
 
     // lattice generation
     int n = (int)ceilf(len_a/cell_shift_i); // amount of lattice cells in vec_i direction
@@ -76,23 +72,15 @@ void ShellCellLattice::formLattice() {
     res_a = n*cell_shift_i;
     res_b = m*cell_shift_j;
     res_c = l*cell_shift_k;
-
-    glm::vec3 vec_disp_i;
-    glm::vec3 vec_disp_j;
-    glm::vec3 vec_disp_k;
+    glm::vec3 vec_disp;
 
     for (int i = 0; i < n; ++i) {
-        vec_disp_i = i*cell_shift_i*vec_i;
-        std::cout << "disp_i :"<< vec_to_string(vec_disp_i) << std::endl;
         for (int j = 0; j < m; ++j) {
-            vec_disp_j = j*cell_shift_j*vec_j;
-            std::cout << "disp_j :"<< vec_to_string(vec_disp_j) << std::endl;
             for (int k = 0; k < l; ++k) {
-                vec_disp_k = k*cell_shift_k*vec_k;
-                std::cout << "disp_k :"<< vec_to_string(vec_disp_k) << std::endl;
-                initialShell.translate(vec_disp_i + vec_disp_j + vec_disp_k);
-                mols.push_back(initialShell.getMolecule());
-                initialShell.translate(-vec_disp_i - vec_disp_j - vec_disp_k);
+                vec_disp = glm::vec3(i*cell_shift_i*vec_i + j*cell_shift_j*vec_j + k*cell_shift_k*vec_k);
+                Molecule mol(initialShell.getMolecule());
+                mol.translate(vec_disp);
+                mols.push_back(mol);
             }
         }
     }

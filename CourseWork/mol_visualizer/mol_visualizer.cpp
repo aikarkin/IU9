@@ -477,15 +477,6 @@ int main(void) {
 
     init(window, 640, 480);
 
-    printMolAtoms();
-
-    for (int i = 0; i < mol.BondsCount(); ++i) {
-        std::cout << std::endl;
-        mol.GetBond(i).print();
-    }
-    std::cout << "-----------" << std::endl;
-
-
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

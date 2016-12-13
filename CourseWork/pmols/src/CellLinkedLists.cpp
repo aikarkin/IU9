@@ -13,21 +13,18 @@ CellLinkedLists::CellLinkedLists(float cell_length, float len_a, float len_b, fl
 
     atom_grid = new Atom***[atoms_count_x];
 
-    std::cout << "mem alloc" << std::endl;
     for (int i = 0; i < atoms_count_x; ++i) {
         atom_grid[i] = new Atom**[atoms_count_y];
         for (int j = 0; j < atoms_count_y; ++j) {
             atom_grid[i][j] = new Atom*[atoms_count_z];
         }
     }
-    std::cout << "mem alloc - ok" << std::endl;
 
 
     for (int i = 0; i < atoms_count_x; ++i) {
         for (int j = 0; j < atoms_count_y; ++j) {
             for (int k = 0; k < atoms_count_z; ++k) {
                 atom_grid[i][j][k] = NULL;
-                //std::cout << "val of initial_atom grid ptr: " << atom_grid[i][j][k] << std::endl;
             }
         }
     }
@@ -48,7 +45,6 @@ bool CellLinkedLists::addAtom(Atom *atom) {
     int i = (int)floorf(atom->coord.x/cell_len);
     int j = (int)floorf(atom->coord.y/cell_len);
     int k = (int)floorf(atom->coord.z/cell_len);
-    std::cout << "adding atom to (" << i << ", " << j << ", " << k << ")" << std::endl;
 
     if (i < 0 || i >= atoms_count_x ||
         j < 0 || j >= atoms_count_y ||
@@ -78,7 +74,6 @@ bool CellLinkedLists::remAtom(Atom *atom) {
 }
 
 float CellLinkedLists::GetCellLength() {
-    //std::cout << "--->" << cell_len << std::endl;
     return cell_len;
 }
 
