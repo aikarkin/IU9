@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC  -std=c++11 -O3  -shared -Wl,-soname,libpmols.so -o ../../lib/libpmols.so CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o CMakeFiles/pmols.dir/src/Molecule.cpp.o CMakeFiles/pmols.dir/src/MolLattice.cpp.o CMakeFiles/pmols.dir/src/MolShell.cpp.o -lopenbabel 
