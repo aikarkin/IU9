@@ -6,17 +6,23 @@
 #include <CellLinkedLists.h>
 
 CellLinkedLists::CellLinkedLists(float cell_length, float len_a, float len_b, float len_c) {
+
     cell_len = cell_length;
+    
+    cell_len_setted = true;
+    size_setted = true;
 
     box_length = len_a;
     box_width = len_b;
-    box_heigth = len_c;
+    box_height = len_c;
+    
+//    atom_grid = NULL;
 
     formCellLinkedLists();
 }
 
 CellLinkedLists::~CellLinkedLists() {
-    if(atom_grid != NULL)
+  //  if(atom_grid != NULL)
         freeAtomGrid();
 }
 
@@ -30,7 +36,7 @@ bool CellLinkedLists::addAtom(Atom *atom) {
         k < 0 || k >= atoms_count_z ||
              atom_grid[i][j][k] != NULL)
         return false;
-
+    
     atom_grid[i][j][k] = atom;
 
     return true;
@@ -76,17 +82,17 @@ CLLNeighbourAtoms CellLinkedLists::getNeighbours(Atom *atom) {
 CellLinkedLists::CellLinkedLists() {
     cell_len_setted = false;
     size_setted = false;
-    atom_grid = NULL;
+    //atom_grid = NULL;
 }
 
 void CellLinkedLists::formCellLinkedLists() {
     atoms_count_x = (int)ceilf(box_length/cell_len);
     atoms_count_y = (int)ceilf(box_width/cell_len);
-    atoms_count_z = (int)ceilf(box_heigth/cell_len);
+    atoms_count_z = (int)ceilf(box_height/cell_len);
 
-    if(atom_grid != NULL) {
+    /*if(atom_grid != NULL) {
         freeAtomGrid();
-    }
+    }*/
 
     atom_grid = new Atom***[atoms_count_x];
 
@@ -109,7 +115,9 @@ void CellLinkedLists::formCellLinkedLists() {
 
 void CellLinkedLists::setCellLength(float cell_length) {
     cell_len = cell_length;
+    
     cell_len_setted = true;
+    
     if (size_setted)
         formCellLinkedLists();
 }
@@ -117,7 +125,8 @@ void CellLinkedLists::setCellLength(float cell_length) {
 void CellLinkedLists::setSize(float len_a, float len_b, float len_c) {
     box_length = len_a;
     box_width = len_b;
-    box_heigth = len_c;
+    box_height = len_c;
+    
     size_setted = true;
 
     if(cell_len_setted)

@@ -1,13 +1,12 @@
 #include <MolLattice.h>
-#include <CellLinkedLists.h>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <memory>
 
 Molecule *mol_struct;
-MolCubeShell *shell;
-ShellCellLattice *lattice;
+
+HJLattice *lattice;
 std::vector<Molecule> mols;
 float cell_len;
 
@@ -66,14 +65,11 @@ struct MolPackingParams {
 
 void generateLattice(MolPackingParams &params) {
     mol_struct = new Molecule(params.mol_file);
-    shell = new MolCubeShell(mol_struct);
+    lattice = new HJLattice(*mol_struct);
+    lattice->setBoxSize(params.a, params.b, params.c);
+    lattice->setPrecision(0.5f, 0.5f, 0.5f, 0.05f, 0.05f, 0.05f);
+    lattice->packMax();
 
-    // calc cell length
-    float mol_wt = (float)mol_struct->OBMol().GetMolWt();
-    float k = 0.60221413f; // N_a*10^(-24)
-    cell_len = powf(mol_wt/(k*params.density), 1.f/3.f);
-
-    lattice = new ShellCellLattice(*shell, glm::vec3(0, 0, 0), params.a, params.b, params.c, cell_len);
     mols = lattice->getMolecules();
 }
 
@@ -109,8 +105,8 @@ int main(int argc, char *argv[]) {
     }
 
     generateLattice(params);
-    std::vector<float> res_box_size(lattice->getLatticeSize());
-    CellLinkedLists cllLists(2.8f, res_box_size[0], res_box_size[1], res_box_size[2]);
+    //std::vector<float> res_box_size(lattice->getLatticeSize());
+    /*CellLinkedLists cllLists(2.8f, res_box_size[0], res_box_size[1], res_box_size[2]);
 
     for (int i = 0; i < mols.size(); ++i) {
         for (int j = 0; j < mols[i].AtomsCount(); ++j) {
@@ -138,15 +134,17 @@ int main(int argc, char *argv[]) {
         }
     }
     std::cout << "----------------" << std::endl;
-
+*/
 
     if (mols.size() > 0) {
         std::filebuf fb;
         fb.open (out_file, std::ios::out);
+
         if(!fb.is_open()) {
             std::cout << "Result: failed" << std::endl;
             std::cerr << "error: Can't write to output file" << std::endl;
         }
+
         std::ostream out_stream(&fb);
 
 
@@ -164,7 +162,7 @@ int main(int argc, char *argv[]) {
         fb.close();
 
         std::cout << "Result: success\nMolecules packed: " << mols.size()
-                  << "\nBox size: " << res_box_size[0] << "x" << res_box_size[1] << "x" << res_box_size[2]
+                  // << "\nBox size: " << res_box_size[0] << "x" << res_box_size[1] << "x" << res_box_size[2]
                   << "\nEdge length of cell: " << cell_len << std::endl;
     }
     else {
@@ -173,7 +171,6 @@ int main(int argc, char *argv[]) {
     }
 
     delete mol_struct;
-    delete shell;
     delete lattice;
 
     return 0;

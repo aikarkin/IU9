@@ -2,8 +2,8 @@
 // Created by alex on 05.12.16.
 //
 
-#include <bits/shared_ptr.h>
 #include "MolLattice.h"
+#include <OptimizationAlgos.h>
 
 bool isOrthogonal(glm::vec3 vec1, glm::vec3 vec2) {
     return std::abs(glm::angle(vec1, vec2) - (float)M_PI_2) < 0.0001f;
@@ -26,8 +26,6 @@ std::vector<Molecule> &ShellCellLattice::getMolecules() {
     return mols;
 }
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "IncompatibleTypes"
 void ShellCellLattice::initMolShellParams() {
     shellPoints = initialShell.getShellPoints();
     std::vector<glm::vec3> dispVecs(initialShell.getDisplacementVectors());
@@ -36,9 +34,9 @@ void ShellCellLattice::initMolShellParams() {
     vec_j = dispVecs[0];
     vec_k = dispVecs[1];
 
-    len_i = glm::length(vec_i);
-    len_j = glm::length(vec_j);
-    len_k = glm::length(vec_k);
+    len_i = (float)glm::length(vec_i);
+    len_j = (float)glm::length(vec_j);
+    len_k = (float)glm::length(vec_k);
 
     if(cell_len == 0) {
         cell_shift_i = len_i;
@@ -57,7 +55,6 @@ void ShellCellLattice::initMolShellParams() {
 
     shell_appos = initialShell.getAppositionPoint();
 }
-#pragma clang diagnostic pop
 
 void ShellCellLattice::formLattice() {
     // move apposition point of shell in right place inside initial lattice shell
@@ -110,59 +107,13 @@ std::vector<float> ShellCellLattice::getLatticeSize() {
     return res;
 }
 
-void HookeJeevesLattice::pack() {
-    if (!calcOptimizationFunc()) {
-        std::cerr << "Error: intolerable coordinates of molecules" << std::endl;
-        return;
-    };
-
-    while(exploringSearch()) {
-        patternSearch();
-    }
-}
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "IncompatibleTypes"
-bool HookeJeevesLattice::addMolecule() {
-    if(cur_k >= n_k) {
-        cur_k = 0;
-        cur_j++;
-    }
-    if(cur_j >= n_j) {
-        cur_j = 0;
-        cur_i++;
-    }
-    if(cur_i >= n_i) {
-        return false;
-    }
-
-    Molecule mol(mol_proto);
-    glm::vec3 trans_vec((float)cur_i*vec_i + (float)cur_j*vec_j + (float)cur_k*vec_k);
-    mol.translate(trans_vec);
-
-    mols.push_back(mol);
-
-    molInd_iter.emplace_back(90, 90, 90, glm::length(vec_i) / 2.f, glm::length(vec_j) / 2.f, glm::length(vec_k) / 2.f);
-    molInd_iter.back().mol_dist_sum = calcDistSumOfMol(mol);
-
-    for (int i = 0; i < mol.AtomsCount(); ++i) {
-        clLists.addAtom(&mol.GetAtom(i));
-    }
-
-    cur_k++;
-    return true;
-}
-#pragma clang diagnostic pop
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "IncompatibleTypes"
-HookeJeevesLattice::HookeJeevesLattice(Molecule mol_prototype) :
-        ClosestPackedLattice(mol_prototype), clLists() {
+HJLattice::HJLattice(Molecule mol_prototype) : ClosestPackedLattice(mol_prototype) {
     MolCubeShell cubeShell(&mol_proto);
 
     MolCubeShell::compareCubeEdgeLes compareFunc = [](float len, float len_opt) {
         return len > len_opt;
     };
+
     cubeShell.pack(std::bind(compareFunc, std::placeholders::_1, std::placeholders::_2));
     mols.push_back(mol_proto);
 
@@ -177,128 +128,245 @@ HookeJeevesLattice::HookeJeevesLattice(Molecule mol_prototype) :
             max_radius = cur_radius;
     }
 
+    std::cout << "CLL construction" << std::endl;
+    //clLists = CellLinkedLists();
     clLists.setCellLength(2*max_radius);
+
 
     vec_i = disp_vecs[0];
     vec_j = disp_vecs[1];
     vec_k = disp_vecs[2];
 
-    full_dist_sum = 0;
+    // full_dist_sum = 0;
 
     cur_i = 0;
     cur_j = 0;
     cur_k = 0;
-}
-#pragma clang diagnostic pop
 
-void HookeJeevesLattice::packMax() {
-    while(addMolecule()) {}
-    pack();
 }
 
-void HookeJeevesLattice::setPrecision(float teta_x_prec, float teta_y_prec, float teta_z_prec, float x_prec, float y_prec,
-                                 float z_prec) {
-    tx_e = teta_x_prec;
-    ty_e = teta_y_prec;
-    tz_e = teta_z_prec;
-
-    x_e = x_prec;
-    y_e = y_prec;
-    z_e = z_prec;
-}
-
-void HookeJeevesLattice::setBoxSize(float a, float b, float c) {
+void HJLattice::setBoxSize(float a, float b, float c) {
     ClosestPackedLattice::setBoxSize(a, b, c);
 
-    float cube_of_radii_sum = 0;
+//    float cube_of_radii_sum = 0;
+//
+//    for (int i = 0; i < mol_proto.AtomsCount(); ++i) {
+//        cube_of_radii_sum += std::pow(mol_proto.GetAtom(i).vdw_radius, 3);
+//    }
+//
+//    float n0 = 0.176776f * (1 / cube_of_radii_sum);
+//
+//    std::cout << "n0: " << n0 << std::endl;
+//    std::cout << "box_a: " << box_a << "box_b: " << box_b << "box_c: " << box_c << std::endl;
 
-    for (int i = 0; i < mol_proto.AtomsCount(); ++i) {
-        cube_of_radii_sum += std::pow(mol_proto.GetAtom(i).vdw_radius, 3);
-    }
+    n_i = (int)(2*box_a/clLists.GetCellLength());
+    n_j = (int)(2*box_b/clLists.GetCellLength());
+    n_k = (int)(2*box_c/clLists.GetCellLength());
 
-    float n0 = 0.176776f * (1 / cube_of_radii_sum);
 
-    n_i = (int)(n0*box_a);
-    n_j = (int)(n0*box_b);
-    n_k = (int)(n0*box_c);
 
-    float cll_a = (int)((float)n_i*glm::length(vec_i)) + 2;
-    float cll_b = (int)((float)n_j*glm::length(vec_j)) + 2;
-    float cll_c = (int)((float)n_k*glm::length(vec_k)) + 2;
+    std::cout << "box size set! " << std::endl;
+    std::cout << "n_i: " << n_i << "; n_j: " << n_j << "; n_k: " << n_k << std::endl;
+
+    float cll_a = n_i*(float)glm::length(vec_i) + 2.f;
+    float cll_b = n_j*(float)glm::length(vec_j) + 2.f;
+    float cll_c = n_k*(float)glm::length(vec_k) + 2.f;
 
     clLists.setSize(cll_a, cll_b, cll_c);
 }
 
-bool HookeJeevesLattice::calcOptimizationFunc() {
-    float cur_sum;
-    full_dist_sum = 0;
-    for (int i = 0; i < mols.size(); ++i) {
-        cur_sum = calcDistSumOfMol(mols[i]);
-        if(cur_sum < 0) {
-            return false;
-        }
-        full_dist_sum += cur_sum;
+void HJLattice::setPrecision(float tx_eps, float ty_eps, float tz_eps, float x_eps, float y_eps, float z_eps) {
+    tx_e = tx_eps;
+    ty_e = ty_eps;
+    tz_e = tz_eps;
+
+    x_e = x_eps;
+    y_e = y_eps;
+    z_e = z_eps;
+}
+
+bool HJLattice::addMolecule() {
+    /*std::cout << "adding molecule" << std::endl;
+    std::cout << "cur_i: " << cur_i << "; cur_j: " << cur_j << "; cur_k: " << cur_k << std::endl;
+    std::cout << "n_i: " << n_i << "; n_j: " << n_j << "; n_k: " << n_k << std::endl;
+*/
+    if(cur_k >= n_k) {
+        cur_k = 0;
+        cur_j++;
     }
+    if(cur_j >= n_j) {
+        cur_j = 0;
+        cur_i++;
+    }
+    if(cur_i >= n_i) {
+        std::cout << "finished!!" << std::endl;
+        return false;
+    }
+
+    Molecule mol(mol_proto);
+    glm::vec3 trans_vec((float)cur_i*vec_i + (float)cur_j*vec_j + (float)cur_k*vec_k);
+//    std::cout << "adding new mol to " << vec_to_string(trans_vec) << std::endl;
+    mol.translate(trans_vec);
+    mols.push_back(mol);
+
+    for (int i = 0; i < mol.AtomsCount(); ++i) {
+        clLists.addAtom(&mol.GetAtom(i));
+    }
+
+    cur_k++;
     return true;
 }
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "IncompatibleTypes"
-float HookeJeevesLattice::calcDistSumOfMol(Molecule &mol) {
-    float res_sum = 0;
+void HJLattice::pack() {
+    ublas::vector<float> point(mols.size()*6);
+    std::vector<float> displacement;
+    std::vector<float> epsilon(point.size());
+
+    float sum_dist = 0;
+
+    std::cout << "calc initial sum" << std::endl;
+    std::cout << "mols size: " << mols.size() << std::endl;
+    for (int i = 0; i < mols.size(); ++i) {
+        sum_dist += calcMolSum(i);
+    }
+    std::cout << "initial sum: " << sum_dist << std::endl;
+
+    for (int i = 0, j = 0; i < point.size(); ++i) {
+        point[i] = 0;
+        j = i%6;
+
+        if(j < 3)
+            displacement.push_back(45.f);
+        else
+            displacement.push_back(0.5f);
+
+        switch(j) {
+            case 0:
+                epsilon[i] = tx_e;
+                break;
+            case 1:
+                epsilon[i] = ty_e;
+                break;
+            case 2:
+                epsilon[i] = tz_e;
+                break;
+            case 3:
+                epsilon[i] = x_e;
+                break;
+            case 4:
+                epsilon[i] = y_e;
+            case 5:
+                epsilon[i] = z_e;
+                break;
+            default:
+                break;
+        }
+    }
+
+    //std::cout << "sum_dist: " << sum_dist << std::endl;
+    OFuncCallback opt_func = [sum_dist, this](ublas::vector<float>& p, int coord_ind) -> float {
+        //std::cout << "!!! in optimization func" << std::endl;
+        //std::cout << "sum_dist1: " << sum_dist << std::endl;
+        int i = coord_ind / 6; // mol index
+        int op_num = coord_ind % 6;
+        float coord_val = p[coord_ind];
+
+        float old_mol_sum = calcMolSum(i);
+        std::cout << "old mol sum: " << old_mol_sum << std::endl;
+
+        moveByCode(op_num, i, coord_val);
+
+        updateAtomIndexes(i);
+
+        float new_mol_sum = calcMolSum(i);
+        std::cout << "new mol sum: " << new_mol_sum << std::endl;
+
+        //moveByCode(op_num, i, -coord_val);
+
+        if(new_mol_sum < 0.f) {
+            return -1.f;
+        }
+
+        return sum_dist - old_mol_sum + new_mol_sum;
+    };
+
+    HookeJeevesOptimize(point, displacement, epsilon, opt_func);
+}
+
+float HJLattice::calcMolSum(int mol_ind) {
+    float mol_sum = 0;
     float cur_dist = 0;
 
     Atom *cur_atom;
-    for (int i = 0; i < mol.AtomsCount(); ++i) {
-        cur_atom = &mol.GetAtom(i);
-        for(auto a : clLists.getNeighbours(cur_atom)) {
-            cur_dist = glm::distance(cur_atom->coord, a.coord) - cur_atom->vdw_radius - a.vdw_radius;
-            if (cur_dist < 0)
-                return -1;
-            else
-                res_sum += cur_dist;
+
+    //std::cout << "calc sum of mol with barycenter: " << vec_to_string(mols[mol_ind].GetBarycenter()) << std::endl;
+    for (int j = 0; j < mols[mol_ind].AtomsCount(); ++j) {
+        //std::cout << "--> atom coordinates: " << vec_to_string(mols[mol_ind].GetAtom(j).coord) << std::endl;
+        cur_atom = &mols[mol_ind].GetAtom(j);
+        //std::cout << "cur atom coord: " << vec_to_string(cur_atom->coord) << std::endl;
+        //std::cout << "\tneighbours count: " <<  clLists.getNeighbours(cur_atom).size() << std::endl;
+        for (auto n_atom : clLists.getNeighbours(cur_atom)) {
+            //std::cout << "on next" << std::endl;
+            //std::cout << "\t--> neighbour atom coordinates: " << vec_to_string(n_atom.coord) << std::endl;
+            if (n_atom.parent_mol != cur_atom->parent_mol) {
+                //std::cout << "\t\t--> atoms' parents is not equal" << std::endl;
+                cur_dist = glm::distance(cur_atom->coord, n_atom.coord)
+                           - (cur_atom->vdw_radius + n_atom.vdw_radius);
+                //std::cout << "\t\t\tcur distance: " << cur_dist << std::endl;
+                if (cur_dist < 0)
+                    return -1;
+                mol_sum += cur_dist;
+                //std::cout << "\t\t\tmol sum: " << mol_sum << std::endl;
+            }
+            //std::cout << "\t\t\titer success" << std::endl;
         }
+        //std::cout << "\tgoing to next atom" << std::endl;
     }
-
-    return res_sum;
+    std::cout << "mol_sum: " << mol_sum << std::endl;
+    return mol_sum;
 }
-#pragma clang diagnostic pop
 
-bool HookeJeevesLattice::exploringSearch() {
-    bool finished = true;
+std::vector<float> HJLattice::getLatticeSize() {
+    std::vector<float> res_sizes;
 
-    for (int i = 0; i < molInd_iter.size(); ++i) {
-        if (!chooseOptimalState(molInd_iter[i])) {
-            molInd_iter[i].h_tx /= 2;
-            molInd_iter[i].h_ty /= 2;
-            molInd_iter[i].h_tz /= 2;
+    // TODO: write some code here
 
-            molInd_iter[i].h_x /= 2;
-            molInd_iter[i].h_y /= 2;
-            molInd_iter[i].h_z /= 2;
+    return res_sizes;
+}
 
-            if(finished && (molInd_iter[i].h_tx > tx_e ||
-                    molInd_iter[i].h_ty > ty_e ||
-                    molInd_iter[i].h_tz > tz_e ||
-                    molInd_iter[i].h_x > x_e ||
-                    molInd_iter[i].h_y > y_e ||
-                    molInd_iter[i].h_z > z_e))
-                finished = false;
-        }
+void HJLattice::updateAtomIndexes(int mol_ind) {
+    for (int i = 0; i < mols[mol_ind].AtomsCount(); ++i) {
+        clLists.remAtom(&mols[mol_ind].GetAtom(i));
+        clLists.addAtom(&mols[mol_ind].GetAtom(i));
     }
-
-    return finished;
 }
 
-void HookeJeevesLattice::patternSearch() {
+void HJLattice::moveByCode(int op_num, int mol_idx, float disp_val) {
+    glm::vec3 v_rot_x = glm::normalize(vec_i);
+    glm::vec3 v_rot_y = glm::normalize(vec_j);
+    glm::vec3 v_rot_z = glm::normalize(vec_k);
 
+    switch(op_num) {
+        case 0:
+            mols[mol_idx].rotateX(disp_val);
+            break;
+        case 1:
+            mols[mol_idx].rotateY(disp_val);
+            break;
+        case 2:
+            mols[mol_idx].rotateZ(disp_val);
+            break;
+        case 3:
+            mols[mol_idx].translate(disp_val * v_rot_x);
+            break;
+        case 4:
+            mols[mol_idx].translate(disp_val * v_rot_y);
+            break;
+        case 5:
+            mols[mol_idx].translate(disp_val * v_rot_z);
+            break;
+        default:
+            break;
+    }
 }
 
-void HookeJeevesLattice::removeExcessMoleules() {
-
-}
-
-bool HookeJeevesLattice::chooseOptimalState(HookeJeevesIteration &iteration) {
-    `
-    return false;
-}

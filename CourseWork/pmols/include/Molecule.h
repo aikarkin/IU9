@@ -16,6 +16,8 @@
 
 std::string vec_to_string(glm::vec3 vec);
 
+class Molecule;
+
 struct Colorf {
     float red, green, blue, alpha;
     Colorf(float red_, float green_, float blue_) : red(red_), green(green_), blue(blue_), alpha(1.0) {};
@@ -40,10 +42,13 @@ struct Atom {
     float radius;
     Atom() : color(Colorf(0.0, 0.0, 0.0)) {};
     Atom(const Atom &other) : color(other.color) {
-        symbol = other.symbol;
+        /*std::cout << "current atom: " << vec_to_string(this->coord) << std::endl;
+        std::cout << "other atom: " << vec_to_string(other.coord) << std::endl;*/
+        //symbol = other.symbol;
         vdw_radius = other.vdw_radius;
         coord = other.coord;
         radius = other.radius;
+        parent_mol = other.parent_mol;
     }
     void print();
     bool operator==(const Atom& other) {

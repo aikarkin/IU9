@@ -11,81 +11,6 @@
 #include <vector>
 
 
-class ClosestPackedLattice {
-public:
-    ClosestPackedLattice(Molecule mol_prototype) : mol_proto(mol_prototype) {};
-    virtual void setBoxSize(float a, float b, float c) {
-        box_a = a;
-        box_b = b;
-        box_c = c;
-    }
-    virtual void pack() = 0;
-    virtual bool addMolecule() = 0;
-
-    virtual void packMax() {
-        while(addMolecule()) {
-            pack();
-        }
-    };
-    std::vector<Molecule> &getMolecules() {
-        return mols;
-    };
-protected:
-    std::vector<Molecule> mols;
-    Molecule mol_proto;
-    float box_a, box_b, box_c;
-};
-
-struct HookeJeevesIteration {
-    float h_tx, h_ty, h_tz, h_x, h_y, h_z;
-    glm::vec3 cur_trans_vec; // displacement vector got in exploring search
-    glm::vec3 cur_rot_vec; // vector of rotation angle got in exploring search
-    float mol_dist_sum;
-
-    HookeJeevesIteration(float h_tx_, float h_ty_, float h_tz_, float h_x_, float h_y_, float h_z_) {
-        cur_trans_vec = glm::vec3(0, 0, 0);
-        cur_rot_vec = glm::vec3(0, 0, 0);
-        mol_dist_sum = 0;
-
-        h_tx = h_tx_;
-        h_ty = h_ty_;
-        h_tz = h_tz_;
-
-        h_x = h_x_;
-        h_y = h_y_;
-        h_z = h_z_;
-    }
-};
-
-class HookeJeevesLattice : public ClosestPackedLattice {
-public:
-    HookeJeevesLattice(Molecule mol_prototype);
-    bool addMolecule();
-    void pack();
-    void packMax();
-    void setBoxSize(float a, float b, float c);
-    void setPrecision(float teta_x_prec, float teta_y_prec, float teta_z_prec, float x_prec, float y_prec, float z_prec);
-private:
-    float tx_e, ty_e, tz_e, x_e, y_e, z_e;
-    glm::vec3 vec_i, vec_j, vec_k;
-    int n_i, n_j, n_k;
-    int cur_i, cur_j, cur_k;
-    float full_dist_sum;
-    std::vector<Molecule> mols;
-    std::vector<HookeJeevesIteration> molInd_iter;
-    CellLinkedLists clLists;
-
-
-    bool calcOptimizationFunc();
-    float calcDistSumOfMol(Molecule &mol);
-    bool exploringSearch();
-    void patternSearch();
-    void removeExcessMoleules();
-
-    bool chooseOptimalState(HookeJeevesIteration &iteration);
-};
-
-
 class ShellCellLattice {
 public:
     ShellCellLattice(IMolShell &initialMolShell, glm::vec3 apposition_point, float a, float b, float c, float cell_length=0);
@@ -113,5 +38,50 @@ private:
     float cell_len;
 };
 
+class ClosestPackedLattice {
+public:
+    ClosestPackedLattice(Molecule mol_prototype) : mol_proto(mol_prototype) {};
+    virtual void setBoxSize(float a, float b, float c) {
+        box_a = a;
+        box_b = b;
+        box_c = c;
+    }
+    virtual void pack() = 0;
+    virtual bool addMolecule() = 0;
+
+    virtual void packMax() {
+        while (addMolecule()) {
+            //std::cout << "go to addMolecule() " << std::endl;
+        }
+        pack();
+    };
+    std::vector<Molecule> &getMolecules() {
+        return mols;
+    };
+protected:
+    std::vector<Molecule> mols;
+    Molecule mol_proto;
+    float box_a, box_b, box_c;
+};
+
+class HJLattice : public ClosestPackedLattice{
+public:
+    HJLattice(Molecule mol_prototype);
+    void setBoxSize(float a, float b, float c);
+    bool addMolecule() override;
+    void setPrecision(float tx_eps, float ty_eps, float tz_eps, float x_eps, float y_eps, float z_eps);
+    std::vector<float> getLatticeSize();
+    void pack() override;
+private:
+    int n_i, n_j, n_k;
+    int cur_i, cur_j, cur_k;
+    glm::vec3 vec_i, vec_j, vec_k;
+    float tx_e, ty_e, tz_e, x_e, y_e, z_e;
+    CellLinkedLists clLists;
+
+    float calcMolSum(int mol_ind);
+    void updateAtomIndexes(int mol_ind);
+    void moveByCode(int op_num, int mol_idx, float disp_val);
+};
 
 #endif //COURSEWORK_MOLLATTICE_H
