@@ -5,9 +5,12 @@
 #include <memory>
 
 Molecule *mol_struct;
-
-HJLattice *lattice;
+MolCubeShell *shell;
 std::vector<Molecule> mols;
+
+HJLattice *hjLattice;
+ShellCellLattice *scLattice;
+
 float cell_len;
 
 std::vector<std::string> split(std::string str, char delimiter) {
@@ -63,14 +66,27 @@ struct MolPackingParams {
     }
 };
 
-void generateLattice(MolPackingParams &params) {
+void generateHJLattice(MolPackingParams& params) {
     mol_struct = new Molecule(params.mol_file);
-    lattice = new HJLattice(*mol_struct);
-    lattice->setBoxSize(params.a, params.b, params.c);
-    lattice->setPrecision(0.5f, 0.5f, 0.5f, 0.05f, 0.05f, 0.05f);
-    lattice->packMax();
+    hjLattice = new HJLattice(*mol_struct);
+    hjLattice->setBoxSize(params.a, params.b, params.c);
+    hjLattice->setPrecision(0.5f, 0.5f, 0.5f, 0.01f, 0.01f, 0.01f);
+    hjLattice->packMax();
 
-    mols = lattice->getMolecules();
+    mols = hjLattice->getMolecules();
+}
+
+void generateSCLattice(MolPackingParams &params) {
+    mol_struct = new Molecule(params.mol_file);
+    shell = new MolCubeShell(mol_struct);
+
+    // calc cell length
+    float mol_wt = (float)mol_struct->OBMol().GetMolWt();
+    float k = 0.60221413f; // N_a*10^(-24)
+    cell_len = powf(mol_wt/(k*params.density), 1.f/3.f);
+
+    scLattice = new ShellCellLattice(*shell, glm::vec3(0, 0, 0), params.a, params.b, params.c, cell_len);
+    mols = scLattice->getMolecules();
 }
 
 int main(int argc, char *argv[]) {
@@ -91,7 +107,7 @@ int main(int argc, char *argv[]) {
         }
     }
     else {
-        std::cout << "lattice configuration file:";
+        std::cout << "hjLattice configuration file:";
         std::getline(std::cin, imp_file);
     }
 
@@ -104,14 +120,14 @@ int main(int argc, char *argv[]) {
         outf_matched = true;
     }
 
-    generateLattice(params);
-    //std::vector<float> res_box_size(lattice->getLatticeSize());
-    /*CellLinkedLists cllLists(2.8f, res_box_size[0], res_box_size[1], res_box_size[2]);
+    generateHJLattice(params);
+    //generateSCLattice(params);
+
+    /*std::vector<float> res_box_size(hjLattice->getLatticeSize());
+    CellLinkedLists cllLists(2.8f, res_box_size[0], res_box_size[1], res_box_size[2]);
 
     for (int i = 0; i < mols.size(); ++i) {
-        for (int j = 0; j < mols[i].AtomsCount(); ++j) {
-            cllLists.addAtom(&mols[i].GetAtom(j));
-        }
+        cllLists.addMol(mols[i]);
     }
 
     Atom *cur_atom;
@@ -135,7 +151,6 @@ int main(int argc, char *argv[]) {
     }
     std::cout << "----------------" << std::endl;
 */
-
     if (mols.size() > 0) {
         std::filebuf fb;
         fb.open (out_file, std::ios::out);
@@ -162,8 +177,8 @@ int main(int argc, char *argv[]) {
         fb.close();
 
         std::cout << "Result: success\nMolecules packed: " << mols.size()
-                  // << "\nBox size: " << res_box_size[0] << "x" << res_box_size[1] << "x" << res_box_size[2]
-                  << "\nEdge length of cell: " << cell_len << std::endl;
+                  /* << "\nBox size: " << res_box_size[0] << "x" << res_box_size[1] << "x" << res_box_size[2]
+                   << "\nEdge length of cell: " << cell_len */ << std::endl;
     }
     else {
         std::cout << "Result: failed" << std::endl;
@@ -171,7 +186,7 @@ int main(int argc, char *argv[]) {
     }
 
     delete mol_struct;
-    delete lattice;
+    delete hjLattice;
 
     return 0;
 }

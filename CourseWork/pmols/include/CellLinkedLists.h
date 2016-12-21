@@ -7,22 +7,7 @@
 
 class CLLNeighbourAtoms;
 
-
-/*
-template<class T, template<class> class iter_class >
-class AtomContainer {
-public:
-    typedef iter_class<T> atom_iter;
-    typedef iter_class<const T> const_atom_iter;
-
-    virtual atom_iter begin() = 0;
-    virtual atom_iter end() = 0;
-    virtual const_atom_iter begin() const = 0;
-    virtual const_atom_iter end() const = 0;
-    virtual size_t size() = 0;
-};
-*/
-
+enum MoveOperation {ROT_X, ROT_Y, ROT_Z, TRANS_X, TRANS_Y, TRANS_Z};
 
 template <typename T>
 class CLLNeighbourAtomsIter;
@@ -35,10 +20,19 @@ public:
     void setCellLength(float cell_length);
     void setSize(float len_a, float len_b, float len_c);
     Atom *getAtomByInd(int i, int j, int k);
-    CLLNeighbourAtoms getNeighbours(Atom *atom);
+
     float GetCellLength();
-    bool addAtom(Atom *atom);
-    bool remAtom(Atom *atom);
+    bool addAtom(Atom &atom);
+    bool remAtom(Atom &atom);
+    bool repAtom(Atom &old_atom, Atom &new_atom);
+    CLLNeighbourAtoms getNeighbours(Atom *atom);
+
+    bool addMol(Molecule &mol);
+    bool remMol(Molecule &mol);
+    bool repMol(Molecule &old_mol, Molecule &new_mol);
+    bool moveMol(Molecule &mol, MoveOperation move_op, float val);
+    float totalNAtomsDist(Molecule &mol);
+
     ~CellLinkedLists();
 
 private:

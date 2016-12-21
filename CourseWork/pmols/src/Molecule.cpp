@@ -8,7 +8,12 @@ std::string vec_to_string(glm::vec3 vec) {
     return "(" + std::to_string(vec.x) + ", " + std::to_string(vec.y) + ", " + std::to_string(vec.z) + ")";
 }
 
+int Molecule::molecules_count = 0;
+
 Molecule::Molecule(std::string file_path) {
+    mol_id = molecules_count;
+    molecules_count++;
+
     OpenBabel::OBConversion conversion;
 
     size_t dot_pos = file_path.find_last_of(".");
@@ -34,7 +39,7 @@ Molecule::Molecule(std::string file_path) {
         atoms[idx].coord =  glm::vec3(atom->GetX(), atom->GetY(), atom->GetZ());
         atoms[idx].vdw_radius = (float)table.GetVdwRad(atomic_num);
         atoms[idx].radius = atoms[idx].vdw_radius / 5.0f;
-        atoms[idx].parent_mol = this;
+        atoms[idx].parent_mol_id = mol_id;
     }
 
     int i = 0;
@@ -138,6 +143,8 @@ void Molecule::rotateOn(glm::vec3 point, float angle, glm::vec3 dir) {
 }
 
 Molecule::Molecule(const Molecule &other) {
+    mol_id = molecules_count;
+    molecules_count++;
     atoms_count = other.atoms_count;
     bonds_count = other.bonds_count;
     bar_vec = other.bar_vec;
@@ -148,6 +155,7 @@ Molecule::Molecule(const Molecule &other) {
 
     for (int i = 0; i < atoms_count; ++i) {
         atoms[i] = other.atoms[i];
+        atoms[i].parent_mol_id = mol_id;
     }
 
     for (int i = 0; i < bonds_count; ++i) {
@@ -162,6 +170,10 @@ OpenBabel::OBMol Molecule::OBMol() {
         cur_atom->SetVector(atoms[i].coord.x, atoms[i].coord.y, atoms[i].coord.z);
     }
     return mol;
+}
+
+int Molecule::getMolId() {
+    return mol_id;
 }
 
 

@@ -20,21 +20,21 @@ public:
         bool terminate = true;
 
         for (int i = 0; i < x.size(); ++i) {
-            if(terminate && disp[i] > eps[i])
+            if(terminate && disp[i] >= eps[i])
                 terminate = false;
 
             x0 = x[i];
 
             f0 = F(x, i); // on previous step all constraints was observed
-            std::cout << "F(.., x_i, ..) = " << f0 << std::endl;
+//            std::cout << "F(.., x_i, ..) = " << f0 << std::endl;
 
             x[i] = x0 + disp[i];
             f1 = F(x, i);
-            std::cout << "F(.., x_i + h_i, ..) = " << f1 << std::endl;
+//            std::cout << "F(.., x_i + h_i, ..) = " << f1 << std::endl;
 
             x[i] = x0 - disp[i];
             f2 = F(x, i);
-            std::cout << "F(.., x_i - h_i, ..) = " << f2 << std::endl;
+//            std::cout << "F(.., x_i - h_i, ..) = " << f2 << std::endl;
 
             if((f0 < f1 && f0 < f2) || (f1 < 0 && f2 < 0)) {
                 disp[i] /= HJ_DSTEP;
@@ -43,13 +43,15 @@ public:
             }
             else if(f1 >= 0 && f1 < f0 && (f1 < f2 || f2 < 0)) {
                 x[i] = x0 + disp[i];
-                F(x, i);
+                //F(x, i);
             }
             else if(f2 >= 0 && f2 < f0 && (f2 < f1 || f1 < 0)) {
                 x[i] = x0 - disp[i];
-                F(x, i);
+                //F(x, i);
             }
+            //std::cout << "x[i]=" << x[i] << std::endl;
         }
+        //std::cout << std::endl;
         if(terminate)
             return -1;
         if(!changed)
@@ -79,8 +81,8 @@ private:
 };
 
 
-ublas::vector<float> &HookeJeevesOptimize(ublas::vector<float> &coord, std::vector<float> &displacement,
-                                          std::vector<float> &epsilon, OFuncCallback &func) {
+ublas::vector<float> HookeJeevesOptimize(ublas::vector<float> &coord, std::vector<float> &displacement,
+                                         std::vector<float> &epsilon, OFuncCallback &func) {
     HJOptimizationHelper hj_helper(displacement, epsilon, func);
 
     ublas::vector<float> x1 = coord;

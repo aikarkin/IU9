@@ -34,7 +34,7 @@ struct Colorf {
 const Colorf BLACK(0.0, 0.0, 0.0);
 
 struct Atom {
-    Molecule *parent_mol;
+    int parent_mol_id;
     Colorf color;
     std::string symbol;
     float vdw_radius;
@@ -42,13 +42,11 @@ struct Atom {
     float radius;
     Atom() : color(Colorf(0.0, 0.0, 0.0)) {};
     Atom(const Atom &other) : color(other.color) {
-        /*std::cout << "current atom: " << vec_to_string(this->coord) << std::endl;
-        std::cout << "other atom: " << vec_to_string(other.coord) << std::endl;*/
-        //symbol = other.symbol;
+        symbol = other.symbol;
         vdw_radius = other.vdw_radius;
         coord = other.coord;
         radius = other.radius;
-        parent_mol = other.parent_mol;
+        parent_mol_id = other.parent_mol_id;
     }
     void print();
     bool operator==(const Atom& other) {
@@ -82,11 +80,14 @@ public:
     void rotateZ(float gamma);
     void rotateOn(glm::vec3, float, glm::vec3);
     void translate(glm::vec3);
+    int getMolId();
     ~Molecule();
 private:
+    static int molecules_count;
     glm::vec3 bar_vec;
     int atoms_count;
     int bonds_count;
+    int mol_id;
     OpenBabel::OBMol mol;
     Atom *atoms;
     Bond *bonds;

@@ -28,7 +28,7 @@ private:
     float len_i, len_j, len_k; // lengths of matching vectors
     glm::vec3 shell_appos;
 
-    // params of lattice
+    // params of hjLattice
     std::vector<Molecule> mols;
     glm::vec3 lattice_appos;
     IMolShell& initialShell;
@@ -67,21 +67,21 @@ protected:
 class HJLattice : public ClosestPackedLattice{
 public:
     HJLattice(Molecule mol_prototype);
-    void setBoxSize(float a, float b, float c);
     bool addMolecule() override;
     void setPrecision(float tx_eps, float ty_eps, float tz_eps, float x_eps, float y_eps, float z_eps);
     std::vector<float> getLatticeSize();
+    void setBoxSize(float a, float b, float c) override;
     void pack() override;
 private:
     int n_i, n_j, n_k;
     int cur_i, cur_j, cur_k;
     glm::vec3 vec_i, vec_j, vec_k;
     float tx_e, ty_e, tz_e, x_e, y_e, z_e;
-    CellLinkedLists clLists;
 
-    float calcMolSum(int mol_ind);
-    void updateAtomIndexes(int mol_ind);
-    void moveByCode(int op_num, int mol_idx, float disp_val);
+    float cll_cell_len;
+
+    float getMaxAtomRadius();
+    void moveMol(Molecule &mol, MoveOperation move_op, float val);
 };
 
 #endif //COURSEWORK_MOLLATTICE_H

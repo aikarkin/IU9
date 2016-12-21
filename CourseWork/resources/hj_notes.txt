@@ -15,7 +15,7 @@ CLLists
 +remMol(...) => bool
 +repMol(...) => bool
 +moveMol(mol, op_enum, val) => bool
-+totalDistance(Molecule&) => bool
++totalDistance(Molecule&) => float
 
 -atom_grid[n][m][p]:Atom
 ______________________

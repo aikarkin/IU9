@@ -57,15 +57,15 @@ void ShellCellLattice::initMolShellParams() {
 }
 
 void ShellCellLattice::formLattice() {
-    // move apposition point of shell in right place inside initial lattice shell
+    // move apposition point of shell in right place inside initial hjLattice shell
     glm::vec3 P = (cell_shift_i - len_i)/2*vec_i + (cell_shift_j - len_j)/2*vec_j + (cell_shift_k - len_k)*vec_k;
     glm::vec3 vec_app_shift = (P - shell_appos);
     initialShell.translate(-vec_app_shift);
 
-    // lattice generation
-    int n = (int)ceilf(len_a/cell_shift_i); // amount of lattice cells in vec_i direction
-    int m = (int)ceilf(len_b/cell_shift_j); // amount of lattice cells in vec_j direction
-    int l = (int)ceilf(len_c/cell_shift_k); // amount of lattice cells in vec_k direction
+    // hjLattice generation
+    int n = (int)ceilf(len_a/cell_shift_i); // amount of hjLattice cells in vec_i direction
+    int m = (int)ceilf(len_b/cell_shift_j); // amount of hjLattice cells in vec_j direction
+    int l = (int)ceilf(len_c/cell_shift_k); // amount of hjLattice cells in vec_k direction
 
     res_a = n*cell_shift_i;
     res_b = m*cell_shift_j;
@@ -90,7 +90,7 @@ void ShellCellLattice::initLattice() {
 
     if (cell_len !=0 && std::max(len_i, std::max(len_j, len_k)) >= cell_len) {
         std::cout << "Result: failed" << std::endl;
-        std::cerr << "Error: unable to generate lattice with current configuration. Try to change single cell length." << std::endl;
+        std::cerr << "Error: unable to generate hjLattice with current configuration. Try to change single cell length." << std::endl;
         return;
     }
 
@@ -111,7 +111,7 @@ HJLattice::HJLattice(Molecule mol_prototype) : ClosestPackedLattice(mol_prototyp
     MolCubeShell cubeShell(&mol_proto);
 
     MolCubeShell::compareCubeEdgeLes compareFunc = [](float len, float len_opt) {
-        return len > len_opt;
+        return len < len_opt;
     };
 
     cubeShell.pack(std::bind(compareFunc, std::placeholders::_1, std::placeholders::_2));
@@ -128,51 +128,13 @@ HJLattice::HJLattice(Molecule mol_prototype) : ClosestPackedLattice(mol_prototyp
             max_radius = cur_radius;
     }
 
-    std::cout << "CLL construction" << std::endl;
-    //clLists = CellLinkedLists();
-    clLists.setCellLength(2*max_radius);
-
-
     vec_i = disp_vecs[0];
     vec_j = disp_vecs[1];
     vec_k = disp_vecs[2];
 
-    // full_dist_sum = 0;
-
     cur_i = 0;
     cur_j = 0;
     cur_k = 0;
-
-}
-
-void HJLattice::setBoxSize(float a, float b, float c) {
-    ClosestPackedLattice::setBoxSize(a, b, c);
-
-//    float cube_of_radii_sum = 0;
-//
-//    for (int i = 0; i < mol_proto.AtomsCount(); ++i) {
-//        cube_of_radii_sum += std::pow(mol_proto.GetAtom(i).vdw_radius, 3);
-//    }
-//
-//    float n0 = 0.176776f * (1 / cube_of_radii_sum);
-//
-//    std::cout << "n0: " << n0 << std::endl;
-//    std::cout << "box_a: " << box_a << "box_b: " << box_b << "box_c: " << box_c << std::endl;
-
-    n_i = (int)(2*box_a/clLists.GetCellLength());
-    n_j = (int)(2*box_b/clLists.GetCellLength());
-    n_k = (int)(2*box_c/clLists.GetCellLength());
-
-
-
-    std::cout << "box size set! " << std::endl;
-    std::cout << "n_i: " << n_i << "; n_j: " << n_j << "; n_k: " << n_k << std::endl;
-
-    float cll_a = n_i*(float)glm::length(vec_i) + 2.f;
-    float cll_b = n_j*(float)glm::length(vec_j) + 2.f;
-    float cll_c = n_k*(float)glm::length(vec_k) + 2.f;
-
-    clLists.setSize(cll_a, cll_b, cll_c);
 }
 
 void HJLattice::setPrecision(float tx_eps, float ty_eps, float tz_eps, float x_eps, float y_eps, float z_eps) {
@@ -186,10 +148,6 @@ void HJLattice::setPrecision(float tx_eps, float ty_eps, float tz_eps, float x_e
 }
 
 bool HJLattice::addMolecule() {
-    /*std::cout << "adding molecule" << std::endl;
-    std::cout << "cur_i: " << cur_i << "; cur_j: " << cur_j << "; cur_k: " << cur_k << std::endl;
-    std::cout << "n_i: " << n_i << "; n_j: " << n_j << "; n_k: " << n_k << std::endl;
-*/
     if(cur_k >= n_k) {
         cur_k = 0;
         cur_j++;
@@ -199,37 +157,46 @@ bool HJLattice::addMolecule() {
         cur_i++;
     }
     if(cur_i >= n_i) {
-        std::cout << "finished!!" << std::endl;
         return false;
     }
 
     Molecule mol(mol_proto);
     glm::vec3 trans_vec((float)cur_i*vec_i + (float)cur_j*vec_j + (float)cur_k*vec_k);
-//    std::cout << "adding new mol to " << vec_to_string(trans_vec) << std::endl;
     mol.translate(trans_vec);
     mols.push_back(mol);
-
-    for (int i = 0; i < mol.AtomsCount(); ++i) {
-        clLists.addAtom(&mol.GetAtom(i));
-    }
 
     cur_k++;
     return true;
 }
 
 void HJLattice::pack() {
+    // cell linked lists forming
+
+    float cll_a = n_i*(float)glm::length(vec_i) + 2.f;
+    float cll_b = n_j*(float)glm::length(vec_j) + 2.f;
+    float cll_c = n_k*(float)glm::length(vec_k) + 2.f;
+
+    std::shared_ptr<CellLinkedLists> clLists = std::make_shared<CellLinkedLists>(cll_cell_len, cll_a, cll_b, cll_c);
+
+    for (int i = 0; i < mols.size(); ++i) {
+        clLists->addMol(mols[i]);
+    }
+
+    std::shared_ptr<float> sum_dist = std::make_shared<float>(0);
+    float cur_dist;
+
+    for (int i = 0; i < mols.size(); ++i) {
+        cur_dist = clLists->totalNAtomsDist(mols[i]);
+        *sum_dist += cur_dist;
+        std::cout << "total neighbour atoms distances: " << cur_dist << std::endl;
+    }
+
+    std::cout << "initial sum: " << *sum_dist << std::endl;
+
+    // Hooke Jeeves params preparation
     ublas::vector<float> point(mols.size()*6);
     std::vector<float> displacement;
     std::vector<float> epsilon(point.size());
-
-    float sum_dist = 0;
-
-    std::cout << "calc initial sum" << std::endl;
-    std::cout << "mols size: " << mols.size() << std::endl;
-    for (int i = 0; i < mols.size(); ++i) {
-        sum_dist += calcMolSum(i);
-    }
-    std::cout << "initial sum: " << sum_dist << std::endl;
 
     for (int i = 0, j = 0; i < point.size(); ++i) {
         point[i] = 0;
@@ -263,68 +230,47 @@ void HJLattice::pack() {
         }
     }
 
-    //std::cout << "sum_dist: " << sum_dist << std::endl;
-    OFuncCallback opt_func = [sum_dist, this](ublas::vector<float>& p, int coord_ind) -> float {
-        //std::cout << "!!! in optimization func" << std::endl;
-        //std::cout << "sum_dist1: " << sum_dist << std::endl;
-        int i = coord_ind / 6; // mol index
-        int op_num = coord_ind % 6;
-        float coord_val = p[coord_ind];
+    // optimized function
+    // &mols - ???
+    OFuncCallback opt_func = [sum_dist, mols=mols, clLists](ublas::vector<float>& p, int c_idx) -> float {
+        float c_val = p[c_idx];
+        int mol_idx = c_idx / 6;
+        int op_num = c_idx % 6;
 
-        float old_mol_sum = calcMolSum(i);
-        std::cout << "old mol sum: " << old_mol_sum << std::endl;
+        MoveOperation  m_op = (MoveOperation)op_num;
+        Molecule cur_mol = mols[mol_idx];
 
-        moveByCode(op_num, i, coord_val);
+        float old_mol_sum = clLists->totalNAtomsDist(cur_mol);
 
-        updateAtomIndexes(i);
-
-        float new_mol_sum = calcMolSum(i);
-        std::cout << "new mol sum: " << new_mol_sum << std::endl;
-
-        //moveByCode(op_num, i, -coord_val);
-
-        if(new_mol_sum < 0.f) {
+        if(!clLists->moveMol(cur_mol, m_op, c_val))
             return -1.f;
-        }
 
-        return sum_dist - old_mol_sum + new_mol_sum;
+        float cur_mol_sum = clLists->totalNAtomsDist(cur_mol);
+
+        clLists->moveMol(cur_mol, m_op, -c_val);
+
+        if(cur_mol_sum < 0)
+            return -1.f;
+
+        *sum_dist = *sum_dist - old_mol_sum + cur_mol_sum;
+        //std::cout << "sum_dist: " << *sum_dist << std::endl;
+
+        return *sum_dist;
     };
 
-    HookeJeevesOptimize(point, displacement, epsilon, opt_func);
-}
+    // Hooke Jeeves Algorithm
+    ublas::vector<float> hj_res(HookeJeevesOptimize(point, displacement, epsilon, opt_func));
 
-float HJLattice::calcMolSum(int mol_ind) {
-    float mol_sum = 0;
-    float cur_dist = 0;
+    for (int i = 0; i < hj_res.size(); ++i) {
+        float c_val = hj_res[i];
+        int mol_idx = i / 6;
+        int op_num = i % 6;
 
-    Atom *cur_atom;
-
-    //std::cout << "calc sum of mol with barycenter: " << vec_to_string(mols[mol_ind].GetBarycenter()) << std::endl;
-    for (int j = 0; j < mols[mol_ind].AtomsCount(); ++j) {
-        //std::cout << "--> atom coordinates: " << vec_to_string(mols[mol_ind].GetAtom(j).coord) << std::endl;
-        cur_atom = &mols[mol_ind].GetAtom(j);
-        //std::cout << "cur atom coord: " << vec_to_string(cur_atom->coord) << std::endl;
-        //std::cout << "\tneighbours count: " <<  clLists.getNeighbours(cur_atom).size() << std::endl;
-        for (auto n_atom : clLists.getNeighbours(cur_atom)) {
-            //std::cout << "on next" << std::endl;
-            //std::cout << "\t--> neighbour atom coordinates: " << vec_to_string(n_atom.coord) << std::endl;
-            if (n_atom.parent_mol != cur_atom->parent_mol) {
-                //std::cout << "\t\t--> atoms' parents is not equal" << std::endl;
-                cur_dist = glm::distance(cur_atom->coord, n_atom.coord)
-                           - (cur_atom->vdw_radius + n_atom.vdw_radius);
-                //std::cout << "\t\t\tcur distance: " << cur_dist << std::endl;
-                if (cur_dist < 0)
-                    return -1;
-                mol_sum += cur_dist;
-                //std::cout << "\t\t\tmol sum: " << mol_sum << std::endl;
-            }
-            //std::cout << "\t\t\titer success" << std::endl;
-        }
-        //std::cout << "\tgoing to next atom" << std::endl;
+        MoveOperation  m_op = (MoveOperation)op_num;
+        moveMol(mols[mol_idx], m_op, c_val);
     }
-    std::cout << "mol_sum: " << mol_sum << std::endl;
-    return mol_sum;
 }
+
 
 std::vector<float> HJLattice::getLatticeSize() {
     std::vector<float> res_sizes;
@@ -334,36 +280,53 @@ std::vector<float> HJLattice::getLatticeSize() {
     return res_sizes;
 }
 
-void HJLattice::updateAtomIndexes(int mol_ind) {
-    for (int i = 0; i < mols[mol_ind].AtomsCount(); ++i) {
-        clLists.remAtom(&mols[mol_ind].GetAtom(i));
-        clLists.addAtom(&mols[mol_ind].GetAtom(i));
+float HJLattice::getMaxAtomRadius() {
+    float max_radius = 0;
+    float cur_radius;
+
+    for (int i = 0; i < mol_proto.AtomsCount(); ++i) {
+        cur_radius = mol_proto.GetAtom(i).vdw_radius;
+        if (cur_radius > max_radius)
+            max_radius = cur_radius;
     }
+
+    return max_radius;
 }
 
-void HJLattice::moveByCode(int op_num, int mol_idx, float disp_val) {
-    glm::vec3 v_rot_x = glm::normalize(vec_i);
-    glm::vec3 v_rot_y = glm::normalize(vec_j);
-    glm::vec3 v_rot_z = glm::normalize(vec_k);
+void HJLattice::setBoxSize(float a, float b, float c) {
+    ClosestPackedLattice::setBoxSize(a, b, c);
 
-    switch(op_num) {
-        case 0:
-            mols[mol_idx].rotateX(disp_val);
+    cll_cell_len = 2*getMaxAtomRadius();
+
+    n_i = (int)(2*box_a/cll_cell_len);
+    n_j = (int)(2*box_b/cll_cell_len);
+    n_k = (int)(2*box_c/cll_cell_len);
+    std::cout << std::endl;
+}
+
+void HJLattice::moveMol(Molecule &mol, MoveOperation move_op, float val) {
+    glm::vec3 vec_i(1, 0, 0);
+    glm::vec3 vec_j(0, 1, 0);
+    glm::vec3 vec_k(0, 0, 1);
+
+    switch(move_op) {
+        case ROT_X:
+            mol.rotateX(val);
             break;
-        case 1:
-            mols[mol_idx].rotateY(disp_val);
+        case ROT_Y:
+            mol.rotateY(val);
             break;
-        case 2:
-            mols[mol_idx].rotateZ(disp_val);
+        case ROT_Z:
+            mol.rotateZ(val);
             break;
-        case 3:
-            mols[mol_idx].translate(disp_val * v_rot_x);
+        case TRANS_X:
+            mol.translate(val*vec_i);
             break;
-        case 4:
-            mols[mol_idx].translate(disp_val * v_rot_y);
+        case TRANS_Y:
+            mol.translate(val*vec_j);
             break;
-        case 5:
-            mols[mol_idx].translate(disp_val * v_rot_z);
+        case TRANS_Z:
+            mol.translate(val*vec_k);
             break;
         default:
             break;
