@@ -38,6 +38,7 @@ public:
 
             if((f0 < f1 && f0 < f2) || (f1 < 0 && f2 < 0)) {
                 disp[i] /= HJ_DSTEP;
+                x[i] = x0;
                 if(!changed)
                     changed = true;
             }

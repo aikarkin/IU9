@@ -34,14 +34,23 @@ struct Colorf {
 const Colorf BLACK(0.0, 0.0, 0.0);
 
 struct Atom {
+    static int atoms_number;
+    static int proto_nums;
+    int atomic_number;
+    int atom_idx;
     int parent_mol_id;
     Colorf color;
     std::string symbol;
     float vdw_radius;
     glm::vec3 coord;
     float radius;
-    Atom() : color(Colorf(0.0, 0.0, 0.0)) {};
+    int idx;
+    Atom() : color(Colorf(0.0, 0.0, 0.0)) {
+        proto_nums++;
+        atom_idx = proto_nums;
+    };
     Atom(const Atom &other) : color(other.color) {
+        atomic_number = other.atomic_number;
         symbol = other.symbol;
         vdw_radius = other.vdw_radius;
         coord = other.coord;
@@ -55,7 +64,21 @@ struct Atom {
     bool operator!=(const Atom& other) {
         return !(this->operator==(other));
     }
+
+    OpenBabel::OBAtom OBAtom() {
+        OpenBabel::OBAtom atom;
+        atom.SetVector(coord.x, coord.y, coord.z);
+        atom.SetType(symbol);
+        atoms_number++;
+        //std::cout << "atoms_number: " << atoms_number << std::endl;
+        atom.SetIdx(atoms_number);
+        atom.SetId(atoms_number);
+        atom.SetAtomicNum(atomic_number);
+
+        return atom;
+    }
 };
+
 
 struct Bond {
     Atom *begin;

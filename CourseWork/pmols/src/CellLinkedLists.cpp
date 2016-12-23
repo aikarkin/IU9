@@ -230,7 +230,7 @@ float CellLinkedLists::totalNAtomsDist(Molecule &mol) {
                 cur_dist = glm::distance(mol.GetAtom(i).coord, n_atom.coord)
                        - mol.GetAtom(i).vdw_radius - n_atom.vdw_radius;
                 if(cur_dist < 0)
-                    return -1;
+                    return -1.f;
                 sum += cur_dist;
             }
         }

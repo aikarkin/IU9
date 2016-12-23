@@ -182,16 +182,17 @@ void HJLattice::pack() {
         clLists->addMol(mols[i]);
     }
 
-    std::shared_ptr<float> sum_dist = std::make_shared<float>(0);
+    //std::shared_ptr<float> sum_dist = std::make_shared<float>(0);
+    float sum_dist = 0;
     float cur_dist;
 
     for (int i = 0; i < mols.size(); ++i) {
         cur_dist = clLists->totalNAtomsDist(mols[i]);
-        *sum_dist += cur_dist;
+        sum_dist += cur_dist;
         std::cout << "total neighbour atoms distances: " << cur_dist << std::endl;
     }
 
-    std::cout << "initial sum: " << *sum_dist << std::endl;
+    std::cout << "initial sum: " << sum_dist << std::endl;
 
     // Hooke Jeeves params preparation
     ublas::vector<float> point(mols.size()*6);
@@ -232,7 +233,7 @@ void HJLattice::pack() {
 
     // optimized function
     // &mols - ???
-    OFuncCallback opt_func = [sum_dist, mols=mols, clLists](ublas::vector<float>& p, int c_idx) -> float {
+    OFuncCallback opt_func = [&sum_dist, mols=mols, clLists](ublas::vector<float>& p, int c_idx) -> float {
         float c_val = p[c_idx];
         int mol_idx = c_idx / 6;
         int op_num = c_idx % 6;
@@ -252,14 +253,15 @@ void HJLattice::pack() {
         if(cur_mol_sum < 0)
             return -1.f;
 
-        *sum_dist = *sum_dist - old_mol_sum + cur_mol_sum;
-        //std::cout << "sum_dist: " << *sum_dist << std::endl;
+        sum_dist = sum_dist - old_mol_sum + cur_mol_sum;
+        std::cout << "sum_dist: " << sum_dist << std::endl;
 
-        return *sum_dist;
+        return sum_dist;
     };
 
     // Hooke Jeeves Algorithm
     ublas::vector<float> hj_res(HookeJeevesOptimize(point, displacement, epsilon, opt_func));
+    std::vector<Molecule> new_mols;
 
     for (int i = 0; i < hj_res.size(); ++i) {
         float c_val = hj_res[i];
@@ -269,6 +271,27 @@ void HJLattice::pack() {
         MoveOperation  m_op = (MoveOperation)op_num;
         moveMol(mols[mol_idx], m_op, c_val);
     }
+
+    bool in_box;
+    for (int i = 0; i < mols.size(); ++i) {
+        in_box = true;
+        glm::vec3 atom_coord;
+        for (int j = 0; j < mols[i].AtomsCount(); ++j) {
+            atom_coord = mols[i].GetAtom(j).coord;
+            if(atom_coord.x < 0 || atom_coord.x > box_a
+                    || atom_coord.y < 0 || atom_coord.y > box_b
+                    || atom_coord.z < 0 || atom_coord.z > box_c) {
+                in_box = false;
+                break;
+            }
+        }
+        if(in_box) {
+            new_mols.push_back(mols[i]);
+        }
+    }
+    mols.clear();
+    mols = new_mols;
+
 }
 
 

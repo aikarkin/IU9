@@ -2,6 +2,7 @@
 // Created by alex on 08.11.16.
 //
 
+#include <Molecule.h>
 #include "../include/Molecule.h"
 
 std::string vec_to_string(glm::vec3 vec) {
@@ -9,6 +10,9 @@ std::string vec_to_string(glm::vec3 vec) {
 }
 
 int Molecule::molecules_count = 0;
+
+int Atom::atoms_number = 0;
+int Atom::proto_nums = 0;
 
 Molecule::Molecule(std::string file_path) {
     mol_id = molecules_count;
@@ -34,6 +38,7 @@ Molecule::Molecule(std::string file_path) {
     FOR_ATOMS_OF_MOL(atom, mol) {
         int idx = atom->GetIdx() - 1;
         int atomic_num = atom->GetAtomicNum();
+        atoms[idx].atomic_number = atomic_num;
         atoms[idx].color = Colorf(table.GetRGB(atomic_num));
         atoms[idx].symbol = table.GetSymbol(atomic_num);
         atoms[idx].coord =  glm::vec3(atom->GetX(), atom->GetY(), atom->GetZ());
@@ -164,12 +169,16 @@ Molecule::Molecule(const Molecule &other) {
 }
 
 OpenBabel::OBMol Molecule::OBMol() {
-    OpenBabel::OBAtom *cur_atom;
+    OpenBabel::OBMol cur_mol;
+    OpenBabel::OBBond cur_bond;
+
     for (int i = 0; i < atoms_count; ++i) {
-        cur_atom = mol.GetAtom(i + 1);
-        cur_atom->SetVector(atoms[i].coord.x, atoms[i].coord.y, atoms[i].coord.z);
+        OpenBabel::OBAtom cur_atom = atoms[i].OBAtom();
+        cur_atom.SetParent(&cur_mol);
+        cur_mol.AddAtom(cur_atom);
     }
-    return mol;
+
+    return cur_mol;
 }
 
 int Molecule::getMolId() {

@@ -167,12 +167,25 @@ int main(int argc, char *argv[]) {
         obConversion.SetOutStream(&out_stream);
         obConversion.SetOutFormat(params.output_format.c_str(), false);
 
-        std::shared_ptr<OpenBabel::OBMol> mol;
+        std::shared_ptr<OpenBabel::OBMol> mol_lattice = std::make_shared<OpenBabel::OBMol>();
+        int atom_b_idx;
+        int atom_e_idx;
 
         for (int i = 0; i < mols.size(); ++i) {
-            mol = std::make_shared<OpenBabel::OBMol>(mols[i].OBMol());
-            obConversion.Write(mol.get());
+            OpenBabel::OBMol cur_mol = mols[i].OBMol();
+            FOR_ATOMS_OF_MOL(a, cur_mol) {
+                mol_lattice->AddAtom(*a);
+            }
+
+            for (int j = 0; j < mol_struct->BondsCount(); ++j) {
+                atom_b_idx = i*mol_struct->AtomsCount() + mol_struct->GetBond(j).begin->atom_idx;
+                atom_e_idx = i*mol_struct->AtomsCount() + mol_struct->GetBond(j).end->atom_idx;
+
+                mol_lattice->AddBond(atom_b_idx, atom_e_idx, 1);
+            }
         }
+
+        obConversion.Write(mol_lattice.get());
 
         fb.close();
 
