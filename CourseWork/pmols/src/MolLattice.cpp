@@ -107,6 +107,10 @@ std::vector<float> ShellCellLattice::getLatticeSize() {
     return res;
 }
 
+IMolShell &ShellCellLattice::getInitialShell() {
+    return initialShell;
+}
+
 HJLattice::HJLattice(Molecule mol_prototype) : ClosestPackedLattice(mol_prototype) {
     MolCubeShell cubeShell(&mol_proto);
 
@@ -115,22 +119,18 @@ HJLattice::HJLattice(Molecule mol_prototype) : ClosestPackedLattice(mol_prototyp
     };
 
     cubeShell.pack(std::bind(compareFunc, std::placeholders::_1, std::placeholders::_2));
+
     mols.push_back(mol_proto);
 
     std::vector<glm::vec3> disp_vecs(cubeShell.getDisplacementVectors());
 
-    float max_radius = 0;
-    float cur_radius;
-
-    for (int i = 0; i < mol_proto.AtomsCount(); ++i) {
-        cur_radius = mol_proto.GetAtom(i).vdw_radius;
-        if (cur_radius > max_radius)
-            max_radius = cur_radius;
-    }
-
     vec_i = disp_vecs[0];
     vec_j = disp_vecs[1];
     vec_k = disp_vecs[2];
+
+    len_i = glm::length(disp_vecs[0]);
+    len_j = glm::length(disp_vecs[1]);
+    len_k = glm::length(disp_vecs[2]);
 
     cur_i = 0;
     cur_j = 0;
@@ -171,12 +171,13 @@ bool HJLattice::addMolecule() {
 
 void HJLattice::pack() {
     // cell linked lists forming
-
-    float cll_a = n_i*(float)glm::length(vec_i) + 2.f;
-    float cll_b = n_j*(float)glm::length(vec_j) + 2.f;
-    float cll_c = n_k*(float)glm::length(vec_k) + 2.f;
+    float cll_a = n_i * len_i + 2.f;
+    float cll_b = n_j * len_j + 2.f;
+    float cll_c = n_k * len_k + 2.f;
 
     std::shared_ptr<CellLinkedLists> clLists = std::make_shared<CellLinkedLists>(cll_cell_len, cll_a, cll_b, cll_c);
+
+    std::cout << "mols count: " << mols.size() << std::endl;
 
     for (int i = 0; i < mols.size(); ++i) {
         clLists->addMol(mols[i]);
@@ -189,10 +190,12 @@ void HJLattice::pack() {
     for (int i = 0; i < mols.size(); ++i) {
         cur_dist = clLists->totalNAtomsDist(mols[i]);
         sum_dist += cur_dist;
-        std::cout << "total neighbour atoms distances: " << cur_dist << std::endl;
+        if(cur_dist > 0) {
+            std::cout << "total neighbour atoms distances: " << cur_dist << std::endl;
+        }
     }
 
-    std::cout << "initial sum: " << sum_dist << std::endl;
+    std::cout << std::endl << "initial sum: " << sum_dist << std::endl << std::endl;
 
     // Hooke Jeeves params preparation
     ublas::vector<float> point(mols.size()*6);
@@ -232,7 +235,6 @@ void HJLattice::pack() {
     }
 
     // optimized function
-    // &mols - ???
     OFuncCallback opt_func = [&sum_dist, mols=mols, clLists](ublas::vector<float>& p, int c_idx) -> float {
         float c_val = p[c_idx];
         int mol_idx = c_idx / 6;
@@ -247,14 +249,17 @@ void HJLattice::pack() {
             return -1.f;
 
         float cur_mol_sum = clLists->totalNAtomsDist(cur_mol);
-
+        
         clLists->moveMol(cur_mol, m_op, -c_val);
-
+        
         if(cur_mol_sum < 0)
-            return -1.f;
+        	return -1.f;
 
         sum_dist = sum_dist - old_mol_sum + cur_mol_sum;
+        std::cout << "old_mol_sum: " << old_mol_sum << std::endl;
+        std::cout << "cur_mol_sum: " << old_mol_sum << std::endl;
         std::cout << "sum_dist: " << sum_dist << std::endl;
+        std::cout << "--------------------" << std::endl;
 
         return sum_dist;
     };
@@ -324,7 +329,6 @@ void HJLattice::setBoxSize(float a, float b, float c) {
     n_i = (int)(2*box_a/cll_cell_len);
     n_j = (int)(2*box_b/cll_cell_len);
     n_k = (int)(2*box_c/cll_cell_len);
-    std::cout << std::endl;
 }
 
 void HJLattice::moveMol(Molecule &mol, MoveOperation move_op, float val) {
@@ -354,5 +358,15 @@ void HJLattice::moveMol(Molecule &mol, MoveOperation move_op, float val) {
         default:
             break;
     }
+}
+
+HJLattice::HJLattice(std::vector<Molecule> &molecules) : ClosestPackedLattice(molecules) {
+    cur_i = 0;
+    cur_j = 0;
+    cur_k = 0;
+
+    len_i = glm::length(molecules[0].GetBarycenter() - molecules[1].GetBarycenter());
+    len_j = len_i;
+    len_k = len_i;
 }
 

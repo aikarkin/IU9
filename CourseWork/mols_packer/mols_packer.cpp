@@ -67,10 +67,11 @@ struct MolPackingParams {
 };
 
 void generateHJLattice(MolPackingParams& params) {
-    mol_struct = new Molecule(params.mol_file);
-    hjLattice = new HJLattice(*mol_struct);
+    //mol_struct = new Molecule(params.mol_file);
+    hjLattice = new HJLattice(mols);
     hjLattice->setBoxSize(params.a, params.b, params.c);
     hjLattice->setPrecision(0.5f, 0.5f, 0.5f, 0.01f, 0.01f, 0.01f);
+    mols.clear();
     hjLattice->packMax();
 
     mols = hjLattice->getMolecules();
@@ -81,12 +82,21 @@ void generateSCLattice(MolPackingParams &params) {
     shell = new MolCubeShell(mol_struct);
 
     // calc cell length
-    float mol_wt = (float)mol_struct->OBMol().GetMolWt();
+    /*float mol_wt = (float)mol_struct->OBMol().GetMolWt();
     float k = 0.60221413f; // N_a*10^(-24)
-    cell_len = powf(mol_wt/(k*params.density), 1.f/3.f);
+    cell_len = powf(mol_wt/(k*params.density), 1.f/3.f);*/
 
-    scLattice = new ShellCellLattice(*shell, glm::vec3(0, 0, 0), params.a, params.b, params.c, cell_len);
+    scLattice = new ShellCellLattice(*shell, glm::vec3(0, 0, 0), 2*params.a, 2*params.b, 2*params.c, 0);
     mols = scLattice->getMolecules();
+
+    /*std::cout << "shell cell lattice configured, atoms count: " << mols.size() << std::endl;
+    for (int i = 0; i < mols.size(); ++i) {
+        std::cout << "Molecule #" << i << std::endl;
+        for (int j = 0; j < mols[i].AtomsCount(); ++j) {
+            std::cout << "\tAtom#" << j << vec_to_string(mols[i].GetAtom(j).coord) << std::endl;
+        }
+        std::cout << std::endl;
+    }*/
 }
 
 int main(int argc, char *argv[]) {
@@ -120,8 +130,8 @@ int main(int argc, char *argv[]) {
         outf_matched = true;
     }
 
+    generateSCLattice(params);
     generateHJLattice(params);
-    //generateSCLattice(params);
 
     /*std::vector<float> res_box_size(hjLattice->getLatticeSize());
     CellLinkedLists cllLists(2.8f, res_box_size[0], res_box_size[1], res_box_size[2]);
