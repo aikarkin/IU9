@@ -60,4 +60,31 @@
 	<script src="js/loaders/PDBLoader.js"></script>
 	<script src="js/renderers/CSS2DRenderer.js"></script>
 	<script src="js/mols_visualizer.js"></script>
+	<script>
+		if(typeof(Storage) !== 'undefined') {
+			var storage;
+
+			if(typeof(sessionStorage) !== 'undefined')
+				storage = sessionStorage;
+			else if(typeof(localStorage) !== 'undefined')
+				storage = localStorage;
+			else
+				alert('unsupported type of browser storage. Try to change browser');
+			
+			var lattice_data = storage.getItem('lattice_data');
+			if(typeof(lattice_data) === 'undefined') {
+				alert('Can\'t get lattice params')
+			}
+			else {
+				var lattice_conf = JSON.parse(lattice_data);
+				visualize_mols(lattice_conf);
+			}
+			
+		}
+
+		else {
+			alert('This browser don\'t support local storage. Please try another one');
+		}		
+		
+	</script>
 </html>

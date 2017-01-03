@@ -11,8 +11,9 @@ link_directories({CMAKE_CURRENT_SOURCE_DIR}/../lib)
 add_executable(mols_packer ${SOURCE_FILES})
 
 find_package(PkgConfig REQUIRED)
+find_package(Boost 1.58 COMPONENTS program_options REQUIRED)
 pkg_search_module(openbabel REQUIRED openbabel-2.0)
 
-include_directories(${openbabel_INCLUDE_DIRS} ${PMOLS_INCLUDE_DIRS})
-target_link_libraries(mols_packer ${openbabel_STATIC_LIBRARIES} pmols)
+include_directories(${openbabel_INCLUDE_DIRS} ${PMOLS_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+target_link_libraries(mols_packer ${openbabel_STATIC_LIBRARIES} ${Boost_LIBRARIES} ${Boost_PROGRAM_OPTIONS_LIBRARY} pmols)
 

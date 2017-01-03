@@ -3,6 +3,10 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <boost/program_options.hpp>
+#include <boost/program_options/options_description.hpp>
+#include <boost/program_options/option.hpp>
+#include <iomanip>
 
 Molecule *mol_struct;
 MolCubeShell *shell;
@@ -10,8 +14,16 @@ std::vector<Molecule> mols;
 
 HJLattice *hjLattice;
 ShellCellLattice *scLattice;
+namespace po = boost::program_options;
 
 float cell_len;
+
+std::string float_to_string(float num, int prec) {
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(prec) << num;
+    std::string s = stream.str();
+    return s;
+}
 
 std::vector<std::string> split(std::string str, char delimiter) {
     std::vector<std::string> internal;
@@ -31,7 +43,7 @@ struct MolPackingParams {
     float a, b, c;
     float density;
 
-    void deserialize(std::string imp_file) {
+    void load_from_file(std::string imp_file) {
         std::ifstream imp_stream(imp_file);
         if(!imp_stream.is_open()) {
             std::cout << "Result: failed" << std::endl;
@@ -67,7 +79,7 @@ struct MolPackingParams {
 };
 
 void generateHJLattice(MolPackingParams& params) {
-    //mol_struct = new Molecule(params.mol_file);
+    // mol_struct = new Molecule(params.mol_file);
     hjLattice = new HJLattice(mols);
     hjLattice->setBoxSize(params.a, params.b, params.c);
     hjLattice->setPrecision(0.5f, 0.5f, 0.5f, 0.01f, 0.01f, 0.01f);
@@ -77,131 +89,108 @@ void generateHJLattice(MolPackingParams& params) {
     mols = hjLattice->getMolecules();
 }
 
+
+
 void generateSCLattice(MolPackingParams &params) {
     mol_struct = new Molecule(params.mol_file);
     shell = new MolCubeShell(mol_struct);
 
-    // calc cell length
-    /*float mol_wt = (float)mol_struct->OBMol().GetMolWt();
-    float k = 0.60221413f; // N_a*10^(-24)
-    cell_len = powf(mol_wt/(k*params.density), 1.f/3.f);*/
-
     scLattice = new ShellCellLattice(*shell, glm::vec3(0, 0, 0), 2*params.a, 2*params.b, 2*params.c, 0);
     mols = scLattice->getMolecules();
-
-    /*std::cout << "shell cell lattice configured, atoms count: " << mols.size() << std::endl;
-    for (int i = 0; i < mols.size(); ++i) {
-        std::cout << "Molecule #" << i << std::endl;
-        for (int j = 0; j < mols[i].AtomsCount(); ++j) {
-            std::cout << "\tAtom#" << j << vec_to_string(mols[i].GetAtom(j).coord) << std::endl;
-        }
-        std::cout << std::endl;
-    }*/
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
     std::string imp_file;
     std::string out_file;
     bool outf_matched = false;
 
-    if(argc >= 2) {
-        imp_file = argv[1];
-        if (argc == 3) {
-            out_file = argv[2];
-            outf_matched = true;
-        }
-        else if(argc > 3) {
-            std::cout << "Result: failed" << std::endl;
-            std::cerr << "error: invalid number of arguments" << std::endl;
-            return 0;
-        }
-    }
-    else {
-        std::cout << "hjLattice configuration file:";
-        std::getline(std::cin, imp_file);
-    }
+    po::options_description gen_dec("General options");
+    gen_dec.add_options()
+            ("help,h", "Show help")
+            ("length,L", po::value<float>(), "Set lattice length.")
+            ("width,W", po::value<float>(), "Set lattice width.")
+            ("height,H", po::value<float>(), "Set lattice height.")
+            ("input,i", po::value<std::string>(), "Set input molecule prototype file")
+            ("output,O", po::value<std::string>(), "Output lattice file")
+            ("format,f", po::value<std::string>(), "Output format")
+            ("dir,d", po::value<std::string>(), "Output directory");
+
+    po::variables_map vm;
+    po::parsed_options parsed = po::parse_command_line(argc, argv, gen_dec);
+    po::store(parsed, vm);
+    po::notify(vm);
+
 
     MolPackingParams params;
-    params.deserialize(imp_file);
 
-    if(!outf_matched) {
-        std::vector<std::string> split_res = split(imp_file, '.');
-        out_file = imp_file.substr(0, imp_file.length() - split_res.back().length() - 1) + "." + params.output_format;
-        outf_matched = true;
+    if(vm.count("help")) {
+        std::cout << "Molecules' closest packer" << std::endl << std::endl;
+        std::cout << gen_dec << std::endl;
+        return 0;
+    }
+
+    if(vm.count("length") && vm.count("width") && vm.count("height")) {
+//        if(vm["size"].as<std::vector<float>>().size() != 3) {
+//            std::cerr << "Error: invalid box size argument. Size must contain 3 real positive numbers" << std::endl;
+//            return 0;
+//        }
+        params.a = vm["length"].as<float>();
+        params.b = vm["width"].as<float>();
+        params.c = vm["height"].as<float>();
+
+        std::cout << "size: " << params.a << ", " << params.b << ", " << params.c << std::endl;
+    }
+    else {
+        std::cerr << "Error: size required." << std::endl;
+        return 0;
+    }
+
+    if(vm.count("input")) {
+        params.mol_file = vm["input"].as<std::string>();
+        std::cout << "mol_file: " << params.mol_file << std::endl;
+    }
+    else {
+        std::cout << "Error: molecule prototype is not matched" << std::endl;
+        return 0;
+    }
+
+    if(vm.count("format")) {
+        params.output_format = vm["format"].as<std::string>();
+        std::cout << "format: " << params.output_format << std::endl;
+    }
+    else {
+        params.output_format = split(params.mol_file, '.').back();
+    }
+
+    if(vm.count("output")) {
+        out_file = vm["output"].as<std::string>();
+        std::cout << "out file: " << out_file << std::endl;
+    }
+    else {
+        std::string base = "";
+        std::vector<std::string> dirs = split(params.mol_file, '/');
+        std::string fname = (dirs.back());
+        std::vector<std::string> split_res = split(fname, '.');
+        if(vm.count("dir"))
+            base = vm["dir"].as<std::string>();
+        else {
+            for (int i = 0; i < dirs.size() - 1; ++i) {
+                base += dirs[i] + '/';
+            }
+        }
+        out_file = base + fname.substr(0, fname.length() - split_res.back().length() - 1)
+                   + "_" + float_to_string(params.a, 3) + "x"
+                   + float_to_string(params.b, 3) + "x"
+                   + float_to_string(params.c, 3) + "." + params.output_format;
+
+        std::cout << "out_file: " << out_file << std::endl;
     }
 
     generateSCLattice(params);
     generateHJLattice(params);
 
-    /*std::vector<float> res_box_size(hjLattice->getLatticeSize());
-    CellLinkedLists cllLists(2.8f, res_box_size[0], res_box_size[1], res_box_size[2]);
-
-    for (int i = 0; i < mols.size(); ++i) {
-        cllLists.addMol(mols[i]);
-    }
-
-    Atom *cur_atom;
-
-    std::cout << "CellLinkedLists testing ..." << std::endl;
-    std::cout << "cell length of CLL: " << cllLists.GetCellLength() << std::endl;
-
-    std::cout << "---------------\nDistance to neighbour atoms:" << std::endl;
-    for (int i = 0; i < mols.size(); ++i) {
-        std::cout << "Molecule #" << i << std::endl;
-        for (int j = 0; j < mols[i].AtomsCount(); ++j) {
-            std::cout << "\tAtom #" << j << " with coordinates " <<vec_to_string(mols[i].GetAtom(j).coord) << std::endl;
-            std::cout << "\tadjacent atoms count:" << cllLists.getNeighbours(&mols[i].GetAtom(j)).size() << std::endl;
-
-            for(auto cell_atom : cllLists.getNeighbours(&mols[i].GetAtom(j))) {
-                std::cout << "\t\tdistance to atom with coordinates " << vec_to_string(cell_atom.coord) << " is " <<
-                          (float)glm::distance(mols[i].GetAtom(j).coord, cell_atom.coord)
-                          << std::endl;
-            }
-        }
-    }
-    std::cout << "----------------" << std::endl;
-*/
     if (mols.size() > 0) {
-        std::filebuf fb;
-        fb.open (out_file, std::ios::out);
-
-        if(!fb.is_open()) {
-            std::cout << "Result: failed" << std::endl;
-            std::cerr << "error: Can't write to output file" << std::endl;
-        }
-
-        std::ostream out_stream(&fb);
-
-
-        OpenBabel::OBConversion obConversion;
-        obConversion.SetOutStream(&out_stream);
-        obConversion.SetOutFormat(params.output_format.c_str(), false);
-
-        std::shared_ptr<OpenBabel::OBMol> mol_lattice = std::make_shared<OpenBabel::OBMol>();
-        int atom_b_idx;
-        int atom_e_idx;
-
-        for (int i = 0; i < mols.size(); ++i) {
-            OpenBabel::OBMol cur_mol = mols[i].OBMol();
-            FOR_ATOMS_OF_MOL(a, cur_mol) {
-                mol_lattice->AddAtom(*a);
-            }
-
-            for (int j = 0; j < mol_struct->BondsCount(); ++j) {
-                atom_b_idx = i*mol_struct->AtomsCount() + mol_struct->GetBond(j).begin->atom_idx;
-                atom_e_idx = i*mol_struct->AtomsCount() + mol_struct->GetBond(j).end->atom_idx;
-
-                mol_lattice->AddBond(atom_b_idx, atom_e_idx, 1);
-            }
-        }
-
-        obConversion.Write(mol_lattice.get());
-
-        fb.close();
-
-        std::cout << "Result: success\nMolecules packed: " << mols.size()
-                  /* << "\nBox size: " << res_box_size[0] << "x" << res_box_size[1] << "x" << res_box_size[2]
-                   << "\nEdge length of cell: " << cell_len */ << std::endl;
+        hjLattice->saveToFile(out_file, params.output_format);
     }
     else {
         std::cout << "Result: failed" << std::endl;

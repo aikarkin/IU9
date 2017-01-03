@@ -88,6 +88,7 @@ public:
     std::vector<float> getLatticeSize();
     void setBoxSize(float a, float b, float c) override;
     void pack() override;
+    void saveToFile(std::string output_file, std::string output_format);
 private:
     int n_i, n_j, n_k;
     int cur_i, cur_j, cur_k;

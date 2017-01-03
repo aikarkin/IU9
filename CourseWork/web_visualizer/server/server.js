@@ -1,15 +1,28 @@
-var mols = {
+var express = require('express')
+  , app = express()
+  , port = 3000;
+var fs = require('fs');
+var pmols = require('./pmols_utils.js');
+var path = require('path');
+
+var MOLECULES = {
     1: '../molecules/Structure3D_CID_962.sdf',
     2: '../molecules/Structure3D_CID_11.sdf',
     3: '../molecules/Structure3D_CID_6212.sdf',
     4: '../molecules/Structure3D_CID_2519.sdf'
 }
 
-var express = require('express')
-  , app = express()
-  , port = 3000
+pmols.updateLattices('../lattices/', pmols.fn_lobj);
 
-var exec = require('child_process').exec;
+function try_get_and_send(resp, lattice, debug) {
+  var lkey = pmols.fn_lobj.indexOf(lattice);
+  console.log(lkey)
+  if(lkey == undefined)
+    return undefined;
+  data = fs.readFileSync(lkey, 'utf8');
+  resp.send(JSON.stringify({'result': 'success', 'data': data, 'debug': debug}));
+  return lkey;
+}
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,15 +33,35 @@ app.use(function (req, res, next) {
 });
 
 app.get('/get/mol/:id', function (req, res) {
-  var mol_id = req.params.id
-  if (mol_id in mols) {
-    //console.log(mols[mol_id]);
-    var child = exec('./mol_info.py ' + mols[mol_id], function (error, stdout, stderr) {
-      res.send(JSON.stringify({'result': 'success', 'data': stdout}));
-    });
+  var mol_id = req.params.id;
+  if (mol_id in MOLECULES) {
+    var lparams = {
+      '-L': req.param('L'),
+      '-W': req.param('W'),
+      '-H': req.param('H'),
+      '-f': 'json',
+      '-i': MOLECULES[mol_id],
+      '-d': '../lattices/'
+    };
+
+    var mol_name = path.parse(MOLECULES[mol_id]).name;
+    req_lattice = new pmols.Lattice(lparams['-L'], lparams['-W'], lparams['-H'], mol_name, lparams['-f']);
+    sent_res = try_get_and_send(res, req_lattice, 'cache');
+    if(sent_res == undefined) {
+      pmols.exec('./mols_packer', lparams,
+        (stdout, stderr) => {
+          pmols.updateLattices('../lattices/', pmols.fn_lobj);
+          sent_res = try_get_and_send(res, req_lattice, stdout);
+          if(sent_res == undefined) {
+            res.send(JSON.stringify({'result': 'runtime error', 'errors': stderr, 'debug': stdout}));
+            return;
+          }
+        },
+        (err) => { res.send(JSON.stringify({'result': 'execution error', 'error': err}));  });
+    }
   }
   else {
-    res.send(JSON.stringify({'result': 'error', 'message': 'there is not molecule with id: {}' % mol_id }));
+    res.send(JSON.stringify({'result': 'error', 'message': 'there is no molecule with given id: {}' % mol_id }));
   }
 });
 

@@ -313,6 +313,7 @@ function loadMol(mol_id) {
             else if(data['result'] == 'success'){
 				console.log(data['data']);
                 var mol = JSON.parse(data['data']);
+                console.log(mol);
                 visualize_mol(mol);
                 render();
             }

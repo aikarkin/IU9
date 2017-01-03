@@ -6,9 +6,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 set(HEADER_FILES include/CellLinkedLists.h include/Molecule.h include/MolLattice.h include/MolShell.h src/OptimizationAlgos.cpp include/OptimizationAlgos.h)
 set(SOURCE_FILES src/CellLinkedLists.cpp src/Molecule.cpp src/MolLattice.cpp src/MolShell.cpp src/OptimizationAlgos.cpp include/OptimizationAlgos.h)
+set(RAPIDJSON_INCLUDE_DIRS /home/alex/dev/libs/rapidjson-master/include)
 
 find_package(PkgConfig REQUIRED)
 find_package(Boost 1.58 REQUIRED)
+find_package(RapidJSON)
 
 pkg_search_module(openbabel REQUIRED openbabel-2.0)
 

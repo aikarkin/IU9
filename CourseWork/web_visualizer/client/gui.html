@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>
+            PMOLS - Graphical interface for passing params
+        </title>
+        <style> 
+            form {
+                max-width: 220px;
+                margin-top: 20px;
+                margin-left: 45px;
+            }
+
+            input, select {
+                float: right;
+                margin-right: 10px;
+            }
+
+            input {
+                max-width: 123;
+            }
+
+            button {
+                margin-left: 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            Input lattice parameters
+        </h1>
+        <form>
+            <p> Length: <input type="text" id='txt_length'> </p>
+            <p> Width:  <input type="text" id='txt_width'> </p>
+            <p> Hieght: <input type="text" id='txt_height'> </p>
+            <p> 
+                Molecule: 
+                <select id='sel_mol'>
+                    <option> Water </option>
+                    <option> Ethylene chloride </option>
+                    <option> Chloroform </option>
+                    <option> Caffeine </option>
+                </select>
+            </p>
+            <button id='btn_pack'> Pack! </button>
+        </form>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $('#btn_pack').click(function(evt){
+            evt.preventDefault();
+            var l = $('#txt_length').val();
+            var w = $('#txt_width').val();
+            var h = $('#txt_height').val();
+            var mol_id = $('#sel_mol').prop("selectedIndex") + 1;
+
+            console.log(`l=${l}, w=${w}, h=${h}, mol_id=${mol_id}`);
+            alert(`l=${l}, w=${w}, h=${h}, mol_id=${mol_id}`);
+            
+            $.ajax({
+                url: `http://127.0.0.1:3000/get/mol/${mol_id}/?L=${l}&H=${h}&W=${w}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data, textStatus) {
+                    if(data['result'] == 'runtime error') {
+                        console.log(data['debug']);
+                        console.error('runtime error');
+                        console.error(data['errors']);
+                        return;
+                    }
+                    else if(data['result'] == 'execution error') {
+                        console.error('execution error');
+                        console.error('error code: ' + data['error']['code']);
+                        return;
+                    }
+                    console.log(data['data']);
+
+                    if(typeof(Storage) !== 'undefined') {
+                        var storage;
+
+                        if(typeof(sessionStorage) !== 'undefined')
+                            storage = sessionStorage;
+                        else if(typeof(localStorage) !== 'undefined')
+                            storage = localStorage;
+                        else
+                            alert('unsupported type of browser storage. Try to change browser');
+
+                        if(typeof(storage.getItem('lattice_data')) !== 'undefined') {
+                            storage.removeItem('lattice_data');
+                        }
+
+                        storage.setItem('lattice_data', data['data']);
+                        window.open('visualizer.html');
+                    }
+
+                    else {
+                        alert('This browser don\'t support local storage. Please try another one');
+                    }
+
+                }
+            });
+        });
+    </script>
+</html>

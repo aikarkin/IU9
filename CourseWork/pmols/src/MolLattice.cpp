@@ -4,6 +4,11 @@
 
 #include "MolLattice.h"
 #include <OptimizationAlgos.h>
+#include "rapidjson/document.h"
+#include <rapidjson/ostreamwrapper.h>
+#include <rapidjson/writer.h>
+#include <fstream>
+
 
 bool isOrthogonal(glm::vec3 vec1, glm::vec3 vec2) {
     return std::abs(glm::angle(vec1, vec2) - (float)M_PI_2) < 0.0001f;
@@ -177,7 +182,7 @@ void HJLattice::pack() {
 
     std::shared_ptr<CellLinkedLists> clLists = std::make_shared<CellLinkedLists>(cll_cell_len, cll_a, cll_b, cll_c);
 
-    std::cout << "mols count: " << mols.size() << std::endl;
+    //std::cout << "mols count: " << mols.size() << std::endl;
 
     for (int i = 0; i < mols.size(); ++i) {
         clLists->addMol(mols[i]);
@@ -191,11 +196,11 @@ void HJLattice::pack() {
         cur_dist = clLists->totalNAtomsDist(mols[i]);
         sum_dist += cur_dist;
         if(cur_dist > 0) {
-            std::cout << "total neighbour atoms distances: " << cur_dist << std::endl;
+            //std::cout << "total neighbour atoms distances: " << cur_dist << std::endl;
         }
     }
 
-    std::cout << std::endl << "initial sum: " << sum_dist << std::endl << std::endl;
+    //std::cout << std::endl << "initial sum: " << sum_dist << std::endl << std::endl;
 
     // Hooke Jeeves params preparation
     ublas::vector<float> point(mols.size()*6);
@@ -256,10 +261,10 @@ void HJLattice::pack() {
         	return -1.f;
 
         sum_dist = sum_dist - old_mol_sum + cur_mol_sum;
-        std::cout << "old_mol_sum: " << old_mol_sum << std::endl;
-        std::cout << "cur_mol_sum: " << old_mol_sum << std::endl;
-        std::cout << "sum_dist: " << sum_dist << std::endl;
-        std::cout << "--------------------" << std::endl;
+//        std::cout << "old_mol_sum: " << old_mol_sum << std::endl;
+//        std::cout << "cur_mol_sum: " << old_mol_sum << std::endl;
+//        std::cout << "sum_dist: " << sum_dist << std::endl;
+//        std::cout << "--------------------" << std::endl;
 
         return sum_dist;
     };
@@ -370,3 +375,113 @@ HJLattice::HJLattice(std::vector<Molecule> &molecules) : ClosestPackedLattice(mo
     len_k = len_i;
 }
 
+void HJLattice::saveToFile(std::string output_file, std::string output_format) {
+    if(output_format == "json") {
+        rapidjson::Document jsonDoc;
+        jsonDoc.SetObject();
+        rapidjson::Value mols_arr(rapidjson::kArrayType);
+        rapidjson::Document::AllocatorType& allocator = jsonDoc.GetAllocator();
+
+        for (int i = 0; i < mols.size(); ++i) {
+            rapidjson::Value mol(rapidjson::kObjectType);
+
+            rapidjson::Value bonds(rapidjson::kArrayType);
+
+            for (int j = 0; j < mols[i].BondsCount(); ++j) {
+                rapidjson::Value begin;
+                begin.SetString(rapidjson::StringRef(std::to_string(mols[i].GetBond(j).begin->atom_idx).c_str()));
+                rapidjson::Value end;
+                end.SetInt(mols[i].GetBond(j).end->atom_idx);
+                rapidjson::Value bond(rapidjson::kObjectType);
+                bond.AddMember(begin, end, allocator);
+
+                bonds.PushBack(bond, allocator);
+            }
+
+            rapidjson::Value atoms(rapidjson::kObjectType);
+            //atoms.SetObject();
+            for (int j = 0; j < mols[i].AtomsCount(); ++j) {
+                char buf[4];
+                int len = std::sprintf(buf, "%d", mols[i].GetAtom(j).atom_idx);
+                //std::string a_idx = std::to_string();
+                //std::cout << "a_idx: " << a_idx << std::endl;
+
+                rapidjson::Value atom(rapidjson::kObjectType);
+
+                rapidjson::Value atomic_num(mols[i].GetAtom(j).atomic_number);
+                atom.AddMember("atomic_num", atomic_num, allocator);
+
+                rapidjson::Value symbol(rapidjson::kObjectType);
+                symbol.SetString(mols[i].GetAtom(j).symbol.c_str(), allocator);
+                atom.AddMember("symbol", symbol, allocator);
+                rapidjson::Value position(rapidjson::kArrayType);
+                //position.SetArray();
+                position.PushBack(mols[i].GetAtom(j).coord.x, allocator).PushBack(mols[i].GetAtom(j).coord.y, allocator).PushBack(mols[i].GetAtom(j).coord.z, allocator);
+                atom.AddMember("position", position, allocator);
+
+                rapidjson::Value vdw_radius(mols[i].GetAtom(j).vdw_radius);
+                atom.AddMember("vdw_radius",vdw_radius, allocator);
+
+                rapidjson::Value color(rapidjson::kArrayType);
+                color.PushBack(mols[i].GetAtom(j).color.red, allocator).PushBack(mols[i].GetAtom(j).color.green, allocator).PushBack(mols[i].GetAtom(j).color.blue, allocator);
+                atom.AddMember("color", color, allocator);
+
+                rapidjson::Value atom_idx;
+                atom_idx.SetString(buf, len, allocator);
+                atoms.AddMember(atom_idx, atom, allocator);
+            }
+            mol.AddMember("atoms", atoms, allocator);
+            mol.AddMember("bonds", bonds, allocator);
+            mols_arr.PushBack(mol, allocator);
+        }
+
+        jsonDoc.AddMember("mols", mols_arr, jsonDoc.GetAllocator());
+        std::ofstream ofs(output_file);
+        rapidjson::OStreamWrapper osw(ofs);
+
+        rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+        jsonDoc.Accept(writer);
+
+        return;
+    }
+
+    std::filebuf fb;
+    fb.open (output_file, std::ios::out);
+
+    if(!fb.is_open()) {
+        std::cout << "Result: failed" << std::endl;
+        std::cerr << "error: Can't write to output file" << std::endl;
+    }
+
+    std::ostream out_stream(&fb);
+
+
+    OpenBabel::OBConversion obConversion;
+    obConversion.SetOutStream(&out_stream);
+    obConversion.SetOutFormat(output_format.c_str(), false);
+
+    std::shared_ptr<OpenBabel::OBMol> mol_lattice = std::make_shared<OpenBabel::OBMol>();
+    int atom_b_idx;
+    int atom_e_idx;
+
+    for (int i = 0; i < mols.size(); ++i) {
+        OpenBabel::OBMol cur_mol = mols[i].OBMol();
+
+        FOR_ATOMS_OF_MOL(a, cur_mol) {
+            mol_lattice->AddAtom(*a);
+        }
+
+        for (int j = 0; j < mol_proto.BondsCount(); ++j) {
+            atom_b_idx = i * mol_proto.AtomsCount() + mol_proto.GetBond(j).begin->atom_idx;
+            atom_e_idx = i * mol_proto.AtomsCount() + mol_proto.GetBond(j).end->atom_idx;
+            mol_lattice->AddBond(atom_b_idx, atom_e_idx, 1);
+        }
+    }
+
+    obConversion.Write(mol_lattice.get());
+    fb.close();
+
+    std::cout << "Result: success\nMolecules packed: " << mols.size()
+              /* << "\nBox size: " << res_box_size[0] << "x" << res_box_size[1] << "x" << res_box_size[2]
+               << "\nEdge length of cell: " << cell_len */ << std::endl;
+}
