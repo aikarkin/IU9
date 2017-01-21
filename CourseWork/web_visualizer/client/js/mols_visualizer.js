@@ -6,9 +6,10 @@ var deltaX, deltaY;
 var mouseDown = false;
 var vdw_rad_enabled = false;
 var rad_c0;
+
 var MAX_SCALE = 15;
 var MIN_SCALE = 1;
-var cur_scale = 8;
+var cur_scale = 2;
 
 var menu = document.getElementById( "menu" );
 var cur_id = 1;
@@ -18,6 +19,14 @@ var MOLECULES = {
     2: "Ethylene chloride",
     3: "Caffeine",
     4: "Chloroform"
+}
+
+function getBoundingBoxCenter() {
+    var root_bb = new THREE.Box3();
+    root_bb.setFromObject(root);
+    var root_c = root_bb.getCenter();
+
+    return root_c;
 }
 
 function addStick(start, end, color) {
@@ -82,6 +91,8 @@ function init() {
     root.scale.y = cur_scale;
     root.scale.z = cur_scale;
 
+    //root.position.set(-200, -200, -400);
+
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setClearColor( 0x050505 );
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -97,7 +108,7 @@ function init() {
     window.addEventListener( 'resize', onWindowResize, false );
 }
 
-function visualize_mol(mol, rad_c=0.3) {
+function add_mol(mol, rad_c=0.3) {
     var atoms = mol["atoms"];
     rad_c0 = rad_c;
 
@@ -205,8 +216,17 @@ function onMouseMove(evt) {
     mouseX = evt.clientX;
     mouseY = evt.clientY;
 
-    root.rotation.y -= deltaX / 100;
-    root.rotation.x += deltaY / 100;
+    var rot_dy = -deltaX / 100;
+    var rot_dx = deltaY / 100;
+
+    root.rotation.y += rot_dy;
+    root.rotation.x += rot_dx;
+
+    var root_c = getBoundingBoxCenter();
+
+    root.position.x -= root_c.x;
+    root.position.y -= root_c.y;
+    root.position.z -= root_c.z;
 }
 
 function onMouseDown(evt) {
@@ -234,11 +254,11 @@ function onKeyDown(evt) {
     console.log('V pressed!');
     vdw_rad_enabled = !vdw_rad_enabled;
 
+    var cur_rad;
 
     for(var child_key in root.children) {
         var child = root.children[child_key];
         if(child.name == 'atom') {
-            var cur_rad;
             if(vdw_rad_enabled) {
                 cur_rad = root.children[child_key].geometry.parameters.radius;
                 root.children[child_key].geometry.parameters.radius /= rad_c0;
@@ -319,7 +339,7 @@ function loadMol(mol_id) {
 				console.log(data['data']);
                 var mol = JSON.parse(data['data']);
                 console.log(mol);
-                visualize_mol(mol);
+                add_mol(mol);
                 render();
             }
         }
@@ -327,22 +347,21 @@ function loadMol(mol_id) {
 }
 
 function visualize_mols(lattice_conf) {
-    // while ( root.children.length > 0 ) {
-	// 	var object = root.children[0];
-	// 	object.parent.remove(object);
-	// }
     init();
     vdw_rad_enabled = false;
-    //console.log(lattice_conf);
     var mols = lattice_conf['mols'];
+    
     for(var mol of mols) {
-        //var mol = mols[m_key];
-        //console.log(mol);
-        visualize_mol(mol);
+        add_mol(mol);
     }
 
-    root.position.x += 200;
-    root.position.y += 200;
+    var root_c = getBoundingBoxCenter();
 
-    //console.log(mols);
+    root.position.x -= root_c.x;
+    root.position.y -= root_c.y;
+    root.position.z -= root_c.z;
+
+
+    render();
+
 }

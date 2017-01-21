@@ -1,86 +1,92 @@
 var path = require('path');
 var fs = require('fs');
-var fn_lobj = new Map();
 var child_process = require('child_process');
 
-class Lattice {
-    constructor(length, width, height, molecule_name, file_ext) {
-        this.l = parseInt(length);
-        this.w = parseInt(width);
-        this.h = parseInt(height);
-        this.mol_name = molecule_name;
-        var f_ext = file_ext;
-    };
+function isPositiveInteger(n) {
+    if (n == undefined)
+        return false;
+    return 0 === n % (!isNaN(parseFloat(n)) && 0 <= ~~n);
+}
 
-    equals(other) {
-        console.log('equals');
-        console.log(this);
-        console.log(other);
-        console.log();
-        return this.l = other.l && this.w == other.w && this.h == other.h && this.mol_file == other.mol_file;
+function isNumeric(n) {
+    if (n == undefined)
+        return false;
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function latticeParamsFromRequest(request, idToMolFile, latticeRoot) {
+    var queryParams = request.query;
+
+    if (!isNumeric(queryParams['length']) ||
+        !isNumeric(queryParams['width']) ||
+        !isNumeric(queryParams['height'])) {
+        console.error('Error: invalid request params; sizes of box is not a numbers');
+        return;
     }
 
-    static parse(str) {
-        var f_obj = path.parse(str);
-        this.f_ext = f_obj.ext;
-        // var l, w, h, m_name;
+    var molId = request.params.id;
 
-        var sep_idx = f_obj.name.lastIndexOf('_');
-        this.mol_name = f_obj.name.substring(0, sep_idx);
-        var size_str = f_obj.name.substring(sep_idx + 1, f_obj.name.length);
-        var lens_ss = size_str.split('x');
-        this.l = parseInt(lens_ss[0]);
-        this.w = parseInt(lens_ss[1]);
-        this.h = parseInt(lens_ss[2]);
+    if (!isPositiveInteger(molId) || !idToMolFile.hasOwnProperty(molId)) {
+        console.error('Error: invalid request params - molecule with such id is not exists');
+        return;
+    }
 
-        return new Lattice(this.l, this.w, this.h, this.mol_name, this.f_ext);
+    var latticeParams = {};
+
+    latticeParams.length = parseFloat(queryParams['length']).toFixed(3);
+    latticeParams.width = parseFloat(queryParams['width']).toFixed(3);
+    latticeParams.height = parseFloat(queryParams['height']).toFixed(3);
+
+    latticeParams.format = queryParams['format'] || 'json';
+
+    var molFile = idToMolFile[molId];
+    latticeParams.molFile = molFile.dir + '/' + molFile.base;
+    latticeParams.outFile = `${molFile.name}_${latticeParams.length}x${latticeParams.width}x${latticeParams.height}.${latticeParams.format}`;
+    latticeParams.outDir = latticeRoot;
+
+    return latticeParams;
+}
+
+function updateCache(cache, rootDir) {
+    for(var elem of cache.toArray())
+        cache.remove(elem);
+
+    var files = fs.readdirSync(rootDir);
+    for (var f of files) {
+        cache.add(f);
     }
 }
 
-function updateLattices(root, lattices) {
-    var files = fs.readdirSync(root);
-    for (var i in files) {
-        var fn = root + files[i];
-        if(!lattices.has(fn)) {
-            var cur_lattice = Lattice.parse(fn);
-            lattices.set(fn, cur_lattice);
+function reqParamsToCmdArgs(reqParams) {
+    var kargs = {
+        '-L': reqParams.length,
+        '-W': reqParams.width,
+        '-H': reqParams.height,
+        '-i': reqParams.molFile,
+        '-f': reqParams.format,
+        '-O': reqParams.outDir + reqParams.outFile
+    }
+    return kargs;
+}
+
+function exec(cmd, latticeParams, on_exec, on_error) {
+    var cmdArgs = cmd;
+    var kArgs = reqParamsToCmdArgs(latticeParams);
+
+    for (var arg in kArgs) {
+        cmdArgs += ` ${arg} ${kArgs[arg]}`;
+    }
+
+    child_process.exec(cmdArgs, function (error, stdout, stderr) {
+        if (error) {
+            on_error(error);
+            return;
         }
-    }
-    return lattices;
+
+        on_exec(stdout, stderr);
+    });
 }
 
-function exec(cmd, kargs, on_exec, on_error) {
-  var cmd_args = cmd;
-  for(var arg in kargs) {
-      cmd_args += ` ${arg} ${kargs[arg]}`;
-  }
-
-  console.log(cmd_args);
-
-  child_process.exec(cmd_args, function (error, stdout, stderr) {
-      if(error) {
-          console.error(error);
-          on_error(error);
-          return;
-      }
-
-      on_exec(stdout, stderr);
-  });
-}
-
-Map.prototype.indexOf = function(lattice) {
-    console.log('indexOf');
-    for(var [key, val] of this) {
-        if(lattice.equals(val)) {
-            console.log('equals!!');
-            return key;
-        }
-    }
-    return undefined;
-};
-
-exports.fn_lobj = fn_lobj;
-
-exports.Lattice = Lattice;
-exports.updateLattices = updateLattices;
 exports.exec = exec;
+exports.updateCache = updateCache;
+exports.latticeParamsFromRequest = latticeParamsFromRequest;

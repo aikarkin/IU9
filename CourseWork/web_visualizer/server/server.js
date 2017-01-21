@@ -1,28 +1,50 @@
 var express = require('express')
-  , app = express()
-  , port = 3000;
+    , app = express()
+    , port = 3000;
 var fs = require('fs');
 var pmols = require('./pmols_utils.js');
 var path = require('path');
+var HashSet = require('hashset');
 
+var LATTICES_ROOT = '../lattices/';
+var PACK_SCRIPT = './mols_packer';
+var CACHE = new HashSet();
 var MOLECULES = {
-    1: '../molecules/Structure3D_CID_962.sdf',
-    2: '../molecules/Structure3D_CID_11.sdf',
-    3: '../molecules/Structure3D_CID_6212.sdf',
-    4: '../molecules/Structure3D_CID_2519.sdf'
+    1: path.parse('../molecules/Structure3D_CID_962.sdf'),
+    2: path.parse('../molecules/Structure3D_CID_11.sdf'),
+    3: path.parse('../molecules/Structure3D_CID_6212.sdf'),
+    4: path.parse('../molecules/Structure3D_CID_2519.sdf')
 }
 
-pmols.updateLattices('../lattices/', pmols.fn_lobj);
+pmols.updateCache(CACHE, LATTICES_ROOT);
 
-function try_get_and_send(resp, lattice, debug) {
-  var lkey = pmols.fn_lobj.indexOf(lattice);
-  console.log(lkey)
-  if(lkey == undefined)
-    return undefined;
-  data = fs.readFileSync(lkey, 'utf8');
-  resp.send(JSON.stringify({'result': 'success', 'data': data, 'debug': debug}));
-  return lkey;
+
+/*  onSuccess(filePath, debugInfo)
+    onError(errType, errMessage)  */
+function getLattice(latticeParams, onSuccess, onError) {
+    var filePath = latticeParams.outDir + latticeParams.outFile;
+
+    if (CACHE.contains(latticeParams.outFile)) {
+        onSuccess(filePath, 'cache');
+        return;
+    }
+
+    pmols.exec(PACK_SCRIPT, latticeParams,
+        (debug, err) => {
+            if (typeof (err) === 'string' && err != '') {
+                onError('runtime error', err);
+                return;
+            }
+            CACHE.add(latticeParams.outFile);
+            onSuccess(filePath, debug);
+        },
+        (err) => {
+            onError('execution error', err);
+            return;
+        }
+    );
 }
+
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,39 +54,78 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/get/mol/:id', function (req, res) {
-  var mol_id = req.params.id;
-  if (mol_id in MOLECULES) {
-    var lparams = {
-      '-L': req.param('L'),
-      '-W': req.param('W'),
-      '-H': req.param('H'),
-      '-f': 'json',
-      '-i': MOLECULES[mol_id],
-      '-d': '../lattices/'
-    };
 
-    var mol_name = path.parse(MOLECULES[mol_id]).name;
-    req_lattice = new pmols.Lattice(lparams['-L'], lparams['-W'], lparams['-H'], mol_name, lparams['-f']);
-    sent_res = try_get_and_send(res, req_lattice, 'cache');
-    if(sent_res == undefined) {
-      pmols.exec('./mols_packer', lparams,
-        (stdout, stderr) => {
-          pmols.updateLattices('../lattices/', pmols.fn_lobj);
-          sent_res = try_get_and_send(res, req_lattice, stdout);
-          if(sent_res == undefined) {
-            res.send(JSON.stringify({'result': 'runtime error', 'errors': stderr, 'debug': stdout}));
-            return;
-          }
+app.get('/download/lattice/:id', function (req, res) {
+    latticeParams = pmols.latticeParamsFromRequest(req, MOLECULES, LATTICES_ROOT);
+    this.res = res;
+
+    getLattice(
+        latticeParams,
+        (filePath, debug) => {
+            if(debug == 'cache') {
+                console.log('Lattice configuration has taken from cache');
+            }
+            else {
+                console.log(`${PACK_SCRIPT} has successfully executed`);
+                console.log(`debug info: \n${debug}`);
+            }
+
+            res.download(path.resolve(filePath), latticeParams.outFile);
         },
-        (err) => { res.send(JSON.stringify({'result': 'execution error', 'error': err}));  });
-    }
-  }
-  else {
-    res.send(JSON.stringify({'result': 'error', 'message': 'there is no molecule with given id: {}' % mol_id }));
-  }
+        (errType, errMessage) => {
+            if(errType == 'execution error') {
+                console.log(console.log(`${PACK_SCRIPT} execution failed.\nError(s):${errMessage}`));
+            }
+            else if(errType == 'runtime error') {
+                console.log(console.log(`${PACK_SCRIPT} has executed with errors:\n${errMessage}`));
+            }
+
+            res.send(`Error: ${errType}.\n\t${errMessage}`);
+        }
+    );
 });
 
+
+app.get('/get/lattice/:id', function (req, res) {
+    latticeParams = pmols.latticeParamsFromRequest(req, MOLECULES, LATTICES_ROOT);
+    this.res = res;
+
+    getLattice(
+        latticeParams,
+        (filePath, debug) => {
+            if(debug == 'cache') {
+                console.log('Lattice configuration has taken from cache');
+            }
+            else {
+                console.log(`${PACK_SCRIPT} has successfully executed`);
+                console.log(`debug info: \n${debug}`);
+            }
+
+            data = fs.readFileSync(filePath, 'utf8');
+            res.send(JSON.stringify({
+                'result': 'success',
+                'debug': debug,
+                'data': data
+            }));
+        },
+        (errType, errMessage) => {
+            if(errType == 'execution error') {
+                console.log(console.log(`${PACK_SCRIPT} execution failed.\nError(s):${errMessage}`));
+            }
+            else if(errType == 'runtime error') {
+                console.log(console.log(`${PACK_SCRIPT} has executed with errors:\n${errMessage}`));
+            }
+
+            res.send(JSON.stringify({
+                'result': 'error',
+                'type': errType,
+                'discription': errMessage
+            }));
+        }
+    );
+});
+
+
 app.listen(port, function () {
-  console.log('Listening on port ', port)
+    console.log('Listening on port ', port);
 });
