@@ -1,0 +1,92 @@
+CellLinkedLists 
+	+setCellLength(float)
+	+setSize(float, float, float)
+	+*getAtomByInd(int, int, int)
+	
+	+addAtom(Atom&) => bool
+	+remAtom(Atom&) => bool
+	+repAtom(Atom&, Atom&) => bool
+	
+	+getNighbours(Atom*) => NeighbourAtoms
+
+_________________________________________
+NeighbourAtoms
+	+NeighbourAtoms(clLists, init_atom)
+	+getNext() => Atom*
+	+hasNext() => bool
+	+reset()
+	
+	-cllLists : CellLinkedLists*
+	-initial_atom : Atom*
+	-cur_atom : Atom*	
+	-trans_code : int
+	
+	-moveByCode()
+	
+
+NeighbourAtom::NeighbourAtom(clLists, init_atom) {
+	reset();
+	this.clLists = clLists;
+	initial_atom = init_atom;
+}
+
+NeighbourAtom::reset() {
+	cur_atom = NULL;
+	trans_code = 0;
+}
+
+NeighbourAtoms::getNext() {
+	moveByCode(); // moves in current direction and change cur_atom
+	trans_code++;
+	
+	if(trans_code == 11 || trans_code == 27)
+        trans_code += 5;
+    else if(trans_code % 4 == 3)
+        trans_code++;
+	
+	return cur_atom;
+}
+
+NeighbourAtoms::hasNext() {
+	return trans_code < 43;
+}
+
+NeighbourAtoms::moveByCode() {
+	int x = trans_code;
+    int bit_counter = 5;
+    char trans_code_bits[6] = {0};
+
+    while(x > 0) {
+        trans_code_bits[bit_counter--] = (char)(x%2);
+        x/=2;
+    }
+
+    char left = trans_code_bits[0];
+    char right = trans_code_bits[1];
+    char up = trans_code_bits[2];
+    char down = trans_code_bits[3];
+    char far = trans_code_bits[4];
+    char near = trans_code_bits[5];
+
+    float cell_length = cellLinkedLists->GetCellLength();
+
+    int i0 = (int)floorf(initial_atom->coord.x/cell_length);
+    int j0 = (int)floorf(initial_atom->coord.y/cell_length);
+    int k0 = (int)floorf(initial_atom->coord.z/cell_length);
+
+    int i = i0 + right - left;
+    int j = j0 + up - down;
+    int k = k0 + near - far;
+
+    cur_atom = cellLinkedLists->getAtomByInd(i, j, k);
+}	
+
+
+
+Ussage:
+	n_atoms = clLists.getNeighbours(a);
+	
+	while(n_atoms.hasNext()) {
+		Atom* n_atom = n_atoms.getNext();
+		...
+	}

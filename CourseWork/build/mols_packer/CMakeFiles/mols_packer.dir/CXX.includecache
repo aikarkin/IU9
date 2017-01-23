@@ -6,27 +6,11 @@
 
 #IncludeRegexTransform: 
 
-../mols_packer/../pmols/include/CellLinkedLists.h
-Molecule.h
+../mols_packer/../pmols/include/cell_linked_lists.h
+mol.h
 -
 
-../mols_packer/../pmols/include/MolLattice.h
-glm/glm.hpp
--
-MolShell.h
--
-CellLinkedLists.h
--
-vector
--
-
-../mols_packer/../pmols/include/MolShell.h
-Molecule.h
--
-functional
--
-
-../mols_packer/../pmols/include/Molecule.h
+../mols_packer/../pmols/include/mol.h
 string
 -
 openbabel/obconversion.h
@@ -43,9 +27,27 @@ glm/gtc/matrix_transform.hpp
 -
 glm/gtx/vector_angle.hpp
 -
+boost/tuple/tuple.hpp
+-
+
+../mols_packer/../pmols/include/mol_lattice.h
+glm/glm.hpp
+-
+mol_shell.h
+-
+cell_linked_lists.h
+-
+vector
+-
+
+../mols_packer/../pmols/include/mol_shell.h
+mol.h
+-
+functional
+-
 
 /home/alex/dev/src/cpp/CourseWork/mols_packer/mols_packer.cpp
-MolLattice.h
+mol_lattice.h
 -
 fstream
 -

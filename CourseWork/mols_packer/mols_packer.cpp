@@ -1,4 +1,4 @@
-#include <MolLattice.h>
+#include <mol_lattice.h>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -7,16 +7,10 @@
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/option.hpp>
 #include <iomanip>
-
-Molecule *mol_struct;
-MolCubeShell *shell;
-std::vector<Molecule> mols;
-
-HJLattice *hjLattice;
-ShellCellLattice *scLattice;
 namespace po = boost::program_options;
 
-float cell_len;
+std::vector<Molecule> mols;
+SimpleLattice *lattice;
 
 std::string float_to_string(float num, int prec) {
     std::stringstream stream;
@@ -78,25 +72,10 @@ struct MolPackingParams {
     }
 };
 
-void generateHJLattice(MolPackingParams& params) {
-    // mol_struct = new Molecule(params.mol_file);
-    hjLattice = new HJLattice(mols);
-    hjLattice->setBoxSize(params.a, params.b, params.c);
-    hjLattice->setPrecision(0.5f, 0.5f, 0.5f, 0.01f, 0.01f, 0.01f);
-    mols.clear();
-    hjLattice->packMax();
-
-    mols = hjLattice->getMolecules();
-}
-
-
-
-void generateSCLattice(MolPackingParams &params) {
-    mol_struct = new Molecule(params.mol_file);
-    shell = new MolCubeShell(mol_struct);
-
-    scLattice = new ShellCellLattice(*shell, glm::vec3(0, 0, 0), 2*params.a, 2*params.b, 2*params.c, 0);
-    mols = scLattice->getMolecules();
+void generateLattice(MolPackingParams &params) {
+    Molecule mol(params.mol_file);
+    lattice = new SimpleLattice(mol, params.a, params.b, params.c);
+    mols = lattice->getMolecules();
 }
 
 int main(int argc, const char *argv[]) {
@@ -110,7 +89,7 @@ int main(int argc, const char *argv[]) {
             ("length,L", po::value<float>(), "Set lattice length.")
             ("width,W", po::value<float>(), "Set lattice width.")
             ("height,H", po::value<float>(), "Set lattice height.")
-            ("input,i", po::value<std::string>(), "Set input molecule prototype file")
+            ("input,i", po::value<std::string>(), "Set input Molecule prototype file")
             ("output,O", po::value<std::string>(), "Output lattice file")
             ("format,f", po::value<std::string>(), "Output format")
             ("dir,d", po::value<std::string>(), "Output directory");
@@ -130,10 +109,6 @@ int main(int argc, const char *argv[]) {
     }
 
     if(vm.count("length") && vm.count("width") && vm.count("height")) {
-//        if(vm["size"].as<std::vector<float>>().size() != 3) {
-//            std::cerr << "Error: invalid box size argument. Size must contain 3 real positive numbers" << std::endl;
-//            return 0;
-//        }
         params.a = vm["length"].as<float>();
         params.b = vm["width"].as<float>();
         params.c = vm["height"].as<float>();
@@ -150,7 +125,7 @@ int main(int argc, const char *argv[]) {
         std::cout << "mol_file: " << params.mol_file << std::endl;
     }
     else {
-        std::cout << "Error: molecule prototype is not matched" << std::endl;
+        std::cout << "Error: Molecule prototype is not matched" << std::endl;
         return 0;
     }
 
@@ -186,19 +161,16 @@ int main(int argc, const char *argv[]) {
         std::cout << "out_file: " << out_file << std::endl;
     }
 
-    generateSCLattice(params);
-    generateHJLattice(params);
+    generateLattice(params);
 
     if (mols.size() > 0) {
-        hjLattice->saveToFile(out_file, params.output_format);
+        lattice->saveToFile(out_file, params.output_format);
     }
     else {
         std::cout << "Result: failed" << std::endl;
         std::cerr << "unknown error" << std::endl;
     }
 
-    delete mol_struct;
-    delete hjLattice;
-
+    delete lattice;
     return 0;
 }

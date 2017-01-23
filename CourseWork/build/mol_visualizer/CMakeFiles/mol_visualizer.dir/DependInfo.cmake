@@ -11,6 +11,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/local/include"
+  "/usr/include/libdrm"
   "/usr/local/include/openbabel-2.0"
   "../mol_visualizer/../pmols/include"
   "../pmols/include"

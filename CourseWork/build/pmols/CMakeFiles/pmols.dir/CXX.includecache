@@ -6,27 +6,11 @@
 
 #IncludeRegexTransform: 
 
-../pmols/include/CellLinkedLists.h
-Molecule.h
+../pmols/include/cell_linked_lists.h
+mol.h
 -
 
-../pmols/include/MolLattice.h
-glm/glm.hpp
--
-MolShell.h
--
-CellLinkedLists.h
--
-vector
--
-
-../pmols/include/MolShell.h
-Molecule.h
--
-functional
--
-
-../pmols/include/Molecule.h
+../pmols/include/mol.h
 string
 -
 openbabel/obconversion.h
@@ -43,41 +27,45 @@ glm/gtc/matrix_transform.hpp
 -
 glm/gtx/vector_angle.hpp
 -
+boost/tuple/tuple.hpp
+-
 
-../pmols/include/OptimizationAlgos.h
+../pmols/include/mol_lattice.h
+glm/glm.hpp
+-
+mol_shell.h
+-
+cell_linked_lists.h
+-
+vector
+-
+
+../pmols/include/mol_shell.h
+mol.h
+-
+functional
+-
+
+../pmols/include/pack_optimization.h
 boost/numeric/ublas/vector.hpp
 -
 boost/numeric/ublas/io.hpp
 -
 
-/home/alex/dev/src/cpp/CourseWork/pmols/include/Molecule.h
-string
+/home/alex/dev/src/cpp/CourseWork/pmols/src/cell_linked_lists.cpp
+mol.h
 -
-openbabel/obconversion.h
--
-openbabel/mol.h
--
-openbabel/obiter.h
--
-glm/glm.hpp
--
-glm/gtc/type_ptr.hpp
--
-glm/gtc/matrix_transform.hpp
--
-glm/gtx/vector_angle.hpp
+cell_linked_lists.h
 -
 
-/home/alex/dev/src/cpp/CourseWork/pmols/src/CellLinkedLists.cpp
-Molecule.h
--
-CellLinkedLists.h
+/home/alex/dev/src/cpp/CourseWork/pmols/src/mol.cpp
+mol.h
 -
 
-/home/alex/dev/src/cpp/CourseWork/pmols/src/MolLattice.cpp
-MolLattice.h
-/home/alex/dev/src/cpp/CourseWork/pmols/src/MolLattice.h
-OptimizationAlgos.h
+/home/alex/dev/src/cpp/CourseWork/pmols/src/mol_lattice.cpp
+mol_lattice.h
+/home/alex/dev/src/cpp/CourseWork/pmols/src/mol_lattice.h
+pack_optimization.h
 -
 rapidjson/document.h
 /home/alex/dev/src/cpp/CourseWork/pmols/src/rapidjson/document.h
@@ -88,19 +76,13 @@ rapidjson/writer.h
 fstream
 -
 
-/home/alex/dev/src/cpp/CourseWork/pmols/src/MolShell.cpp
-MolShell.h
+/home/alex/dev/src/cpp/CourseWork/pmols/src/mol_shell.cpp
+mol_shell.h
 -
 
-/home/alex/dev/src/cpp/CourseWork/pmols/src/Molecule.cpp
-Molecule.h
--
-../include/Molecule.h
-/home/alex/dev/src/cpp/CourseWork/pmols/include/Molecule.h
-
-/home/alex/dev/src/cpp/CourseWork/pmols/src/OptimizationAlgos.cpp
-OptimizationAlgos.h
-/home/alex/dev/src/cpp/CourseWork/pmols/src/OptimizationAlgos.h
+/home/alex/dev/src/cpp/CourseWork/pmols/src/pack_optimization.cpp
+pack_optimization.h
+/home/alex/dev/src/cpp/CourseWork/pmols/src/pack_optimization.h
 
 /usr/local/include/openbabel-2.0/openbabel/atom.h
 openbabel/babelconfig.h

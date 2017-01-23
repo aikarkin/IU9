@@ -1,4 +1,4 @@
-#include <MolLattice.h>
+#include <mol_lattice.h>
 #include <fstream>
 #include <iostream>
 #include <string>

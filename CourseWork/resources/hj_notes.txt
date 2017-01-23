@@ -14,7 +14,7 @@ CLLists
 +addMol(Molecule&) => bool
 +remMol(...) => bool
 +repMol(...) => bool
-+moveMol(mol, op_enum, val) => bool
++moveMol(Molecule, op_enum, val) => bool
 +totalDistance(Molecule&) => float
 
 -atom_grid[n][m][p]:Atom
@@ -23,10 +23,10 @@ ______________________
 
 CLLists clLists;
 
-float CLLists::totalDistance(Molecule &mol) {
+float CLLists::totalDistance(Molecule &Molecule) {
 	float res = 0;
 	
-	for(cur_atom in mol.atoms) {
+	for(cur_atom in Molecule.atoms) {
 		for(n_atom in getNeighbours(cur_atom)) {
 			if(cur_atom.parent_mol != n_atom.parent_mol) { // ! parent_mol is pointer ???
 				res += dist(cur_atom.coord, n_atom.coord) - cur_atom->vdw_radius - n_atom->vdw_radius;
@@ -37,17 +37,17 @@ float CLLists::totalDistance(Molecule &mol) {
 	return res;
 }
 
-bool CLLists::moveMol(Molecule& mol, MoveOperation op_enum, float val) => bool {
-  old_mol = mol; //copy
+bool CLLists::moveMol(Molecule& Molecule, MoveOperation op_enum, float val) => bool {
+  old_mol = Molecule; //copy
   
   switch(op_enum) {
   	case ROT_X:
-  		mol.rotateX(val);
+  		Molecule.RotateX(val);
   		break;
   	...
   }
   
-  if(!mol.repMol(old_mol, mol))
+  if(!Molecule.repMol(old_mol, Molecule))
   	return false;
   
   return true;

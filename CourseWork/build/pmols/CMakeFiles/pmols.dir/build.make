@@ -57,142 +57,142 @@ include pmols/CMakeFiles/pmols.dir/progress.make
 # Include the compile flags for this target's objects.
 include pmols/CMakeFiles/pmols.dir/flags.make
 
-pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
-pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o: ../pmols/src/CellLinkedLists.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/CellLinkedLists.cpp
+pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
+pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o: ../pmols/src/cell_linked_lists.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/cell_linked_lists.cpp
 
-pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.i"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/CellLinkedLists.cpp > CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.i
+pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.i"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/cell_linked_lists.cpp > CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.i
 
-pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.s"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/CellLinkedLists.cpp -o CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.s
+pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.s"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/cell_linked_lists.cpp -o CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.s
 
-pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o.requires:
+pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o.requires:
 
-.PHONY : pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o.requires
+.PHONY : pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o.requires
 
-pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o.requires
-	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o.provides.build
-.PHONY : pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o.provides
+pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o.requires
+	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o.provides.build
+.PHONY : pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o.provides
 
-pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o
-
-
-pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
-pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o: ../pmols/src/Molecule.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/Molecule.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/Molecule.cpp
-
-pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/Molecule.cpp.i"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/Molecule.cpp > CMakeFiles/pmols.dir/src/Molecule.cpp.i
-
-pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/Molecule.cpp.s"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/Molecule.cpp -o CMakeFiles/pmols.dir/src/Molecule.cpp.s
-
-pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o.requires:
-
-.PHONY : pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o.requires
-
-pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o.requires
-	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o.provides.build
-.PHONY : pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o.provides
-
-pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o
+pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o
 
 
-pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
-pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o: ../pmols/src/MolLattice.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/MolLattice.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/MolLattice.cpp
+pmols/CMakeFiles/pmols.dir/src/mol.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
+pmols/CMakeFiles/pmols.dir/src/mol.cpp.o: ../pmols/src/mol.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object pmols/CMakeFiles/pmols.dir/src/mol.cpp.o"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/mol.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/mol.cpp
 
-pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/MolLattice.cpp.i"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/MolLattice.cpp > CMakeFiles/pmols.dir/src/MolLattice.cpp.i
+pmols/CMakeFiles/pmols.dir/src/mol.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/mol.cpp.i"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/mol.cpp > CMakeFiles/pmols.dir/src/mol.cpp.i
 
-pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/MolLattice.cpp.s"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/MolLattice.cpp -o CMakeFiles/pmols.dir/src/MolLattice.cpp.s
+pmols/CMakeFiles/pmols.dir/src/mol.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/mol.cpp.s"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/mol.cpp -o CMakeFiles/pmols.dir/src/mol.cpp.s
 
-pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o.requires:
+pmols/CMakeFiles/pmols.dir/src/mol.cpp.o.requires:
 
-.PHONY : pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o.requires
+.PHONY : pmols/CMakeFiles/pmols.dir/src/mol.cpp.o.requires
 
-pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o.requires
-	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o.provides.build
-.PHONY : pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o.provides
+pmols/CMakeFiles/pmols.dir/src/mol.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/mol.cpp.o.requires
+	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol.cpp.o.provides.build
+.PHONY : pmols/CMakeFiles/pmols.dir/src/mol.cpp.o.provides
 
-pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o
-
-
-pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
-pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o: ../pmols/src/MolShell.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/MolShell.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/MolShell.cpp
-
-pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/MolShell.cpp.i"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/MolShell.cpp > CMakeFiles/pmols.dir/src/MolShell.cpp.i
-
-pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/MolShell.cpp.s"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/MolShell.cpp -o CMakeFiles/pmols.dir/src/MolShell.cpp.s
-
-pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o.requires:
-
-.PHONY : pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o.requires
-
-pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o.requires
-	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o.provides.build
-.PHONY : pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o.provides
-
-pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o
+pmols/CMakeFiles/pmols.dir/src/mol.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/mol.cpp.o
 
 
-pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
-pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o: ../pmols/src/OptimizationAlgos.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/OptimizationAlgos.cpp
+pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
+pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o: ../pmols/src/mol_lattice.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/mol_lattice.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/mol_lattice.cpp
 
-pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.i"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/OptimizationAlgos.cpp > CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.i
+pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/mol_lattice.cpp.i"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/mol_lattice.cpp > CMakeFiles/pmols.dir/src/mol_lattice.cpp.i
 
-pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.s"
-	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/OptimizationAlgos.cpp -o CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.s
+pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/mol_lattice.cpp.s"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/mol_lattice.cpp -o CMakeFiles/pmols.dir/src/mol_lattice.cpp.s
 
-pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o.requires:
+pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o.requires:
 
-.PHONY : pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o.requires
+.PHONY : pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o.requires
 
-pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o.requires
-	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o.provides.build
-.PHONY : pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o.provides
+pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o.requires
+	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o.provides.build
+.PHONY : pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o.provides
 
-pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o
+pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o
+
+
+pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
+pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o: ../pmols/src/mol_shell.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/mol_shell.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/mol_shell.cpp
+
+pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/mol_shell.cpp.i"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/mol_shell.cpp > CMakeFiles/pmols.dir/src/mol_shell.cpp.i
+
+pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/mol_shell.cpp.s"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/mol_shell.cpp -o CMakeFiles/pmols.dir/src/mol_shell.cpp.s
+
+pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o.requires:
+
+.PHONY : pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o.requires
+
+pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o.requires
+	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o.provides.build
+.PHONY : pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o.provides
+
+pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o
+
+
+pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o: pmols/CMakeFiles/pmols.dir/flags.make
+pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o: ../pmols/src/pack_optimization.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pmols.dir/src/pack_optimization.cpp.o -c /home/alex/dev/src/cpp/CourseWork/pmols/src/pack_optimization.cpp
+
+pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pmols.dir/src/pack_optimization.cpp.i"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/pmols/src/pack_optimization.cpp > CMakeFiles/pmols.dir/src/pack_optimization.cpp.i
+
+pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pmols.dir/src/pack_optimization.cpp.s"
+	cd /home/alex/dev/src/cpp/CourseWork/build/pmols && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/pmols/src/pack_optimization.cpp -o CMakeFiles/pmols.dir/src/pack_optimization.cpp.s
+
+pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o.requires:
+
+.PHONY : pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o.requires
+
+pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o.provides: pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o.requires
+	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o.provides.build
+.PHONY : pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o.provides
+
+pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o.provides.build: pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o
 
 
 # Object files for target pmols
 pmols_OBJECTS = \
-"CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o" \
-"CMakeFiles/pmols.dir/src/Molecule.cpp.o" \
-"CMakeFiles/pmols.dir/src/MolLattice.cpp.o" \
-"CMakeFiles/pmols.dir/src/MolShell.cpp.o" \
-"CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o"
+"CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o" \
+"CMakeFiles/pmols.dir/src/mol.cpp.o" \
+"CMakeFiles/pmols.dir/src/mol_lattice.cpp.o" \
+"CMakeFiles/pmols.dir/src/mol_shell.cpp.o" \
+"CMakeFiles/pmols.dir/src/pack_optimization.cpp.o"
 
 # External object files for target pmols
 pmols_EXTERNAL_OBJECTS =
 
-../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o
-../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o
-../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o
-../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o
-../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o
+../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o
+../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/mol.cpp.o
+../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o
+../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o
+../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o
 ../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/build.make
 ../lib/libpmols.a: pmols/CMakeFiles/pmols.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library ../../lib/libpmols.a"
@@ -204,11 +204,11 @@ pmols/CMakeFiles/pmols.dir/build: ../lib/libpmols.a
 
 .PHONY : pmols/CMakeFiles/pmols.dir/build
 
-pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o.requires
-pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o.requires
-pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o.requires
-pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o.requires
-pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o.requires
+pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o.requires
+pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/mol.cpp.o.requires
+pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o.requires
+pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o.requires
+pmols/CMakeFiles/pmols.dir/requires: pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o.requires
 
 .PHONY : pmols/CMakeFiles/pmols.dir/requires
 

@@ -125,140 +125,140 @@ pmols/fast:
 	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/build
 .PHONY : pmols/fast
 
-src/CellLinkedLists.o: src/CellLinkedLists.cpp.o
+src/cell_linked_lists.o: src/cell_linked_lists.cpp.o
 
-.PHONY : src/CellLinkedLists.o
-
-# target to build an object file
-src/CellLinkedLists.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.o
-.PHONY : src/CellLinkedLists.cpp.o
-
-src/CellLinkedLists.i: src/CellLinkedLists.cpp.i
-
-.PHONY : src/CellLinkedLists.i
-
-# target to preprocess a source file
-src/CellLinkedLists.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.i
-.PHONY : src/CellLinkedLists.cpp.i
-
-src/CellLinkedLists.s: src/CellLinkedLists.cpp.s
-
-.PHONY : src/CellLinkedLists.s
-
-# target to generate assembly for a file
-src/CellLinkedLists.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/CellLinkedLists.cpp.s
-.PHONY : src/CellLinkedLists.cpp.s
-
-src/MolLattice.o: src/MolLattice.cpp.o
-
-.PHONY : src/MolLattice.o
+.PHONY : src/cell_linked_lists.o
 
 # target to build an object file
-src/MolLattice.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.o
-.PHONY : src/MolLattice.cpp.o
+src/cell_linked_lists.cpp.o:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o
+.PHONY : src/cell_linked_lists.cpp.o
 
-src/MolLattice.i: src/MolLattice.cpp.i
+src/cell_linked_lists.i: src/cell_linked_lists.cpp.i
 
-.PHONY : src/MolLattice.i
+.PHONY : src/cell_linked_lists.i
 
 # target to preprocess a source file
-src/MolLattice.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.i
-.PHONY : src/MolLattice.cpp.i
+src/cell_linked_lists.cpp.i:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.i
+.PHONY : src/cell_linked_lists.cpp.i
 
-src/MolLattice.s: src/MolLattice.cpp.s
+src/cell_linked_lists.s: src/cell_linked_lists.cpp.s
 
-.PHONY : src/MolLattice.s
+.PHONY : src/cell_linked_lists.s
 
 # target to generate assembly for a file
-src/MolLattice.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/MolLattice.cpp.s
-.PHONY : src/MolLattice.cpp.s
+src/cell_linked_lists.cpp.s:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.s
+.PHONY : src/cell_linked_lists.cpp.s
 
-src/MolShell.o: src/MolShell.cpp.o
+src/mol.o: src/mol.cpp.o
 
-.PHONY : src/MolShell.o
+.PHONY : src/mol.o
 
 # target to build an object file
-src/MolShell.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.o
-.PHONY : src/MolShell.cpp.o
+src/mol.cpp.o:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol.cpp.o
+.PHONY : src/mol.cpp.o
 
-src/MolShell.i: src/MolShell.cpp.i
+src/mol.i: src/mol.cpp.i
 
-.PHONY : src/MolShell.i
+.PHONY : src/mol.i
 
 # target to preprocess a source file
-src/MolShell.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.i
-.PHONY : src/MolShell.cpp.i
+src/mol.cpp.i:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol.cpp.i
+.PHONY : src/mol.cpp.i
 
-src/MolShell.s: src/MolShell.cpp.s
+src/mol.s: src/mol.cpp.s
 
-.PHONY : src/MolShell.s
+.PHONY : src/mol.s
 
 # target to generate assembly for a file
-src/MolShell.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/MolShell.cpp.s
-.PHONY : src/MolShell.cpp.s
+src/mol.cpp.s:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol.cpp.s
+.PHONY : src/mol.cpp.s
 
-src/Molecule.o: src/Molecule.cpp.o
+src/mol_lattice.o: src/mol_lattice.cpp.o
 
-.PHONY : src/Molecule.o
+.PHONY : src/mol_lattice.o
 
 # target to build an object file
-src/Molecule.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.o
-.PHONY : src/Molecule.cpp.o
+src/mol_lattice.cpp.o:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.o
+.PHONY : src/mol_lattice.cpp.o
 
-src/Molecule.i: src/Molecule.cpp.i
+src/mol_lattice.i: src/mol_lattice.cpp.i
 
-.PHONY : src/Molecule.i
+.PHONY : src/mol_lattice.i
 
 # target to preprocess a source file
-src/Molecule.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.i
-.PHONY : src/Molecule.cpp.i
+src/mol_lattice.cpp.i:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.i
+.PHONY : src/mol_lattice.cpp.i
 
-src/Molecule.s: src/Molecule.cpp.s
+src/mol_lattice.s: src/mol_lattice.cpp.s
 
-.PHONY : src/Molecule.s
+.PHONY : src/mol_lattice.s
 
 # target to generate assembly for a file
-src/Molecule.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/Molecule.cpp.s
-.PHONY : src/Molecule.cpp.s
+src/mol_lattice.cpp.s:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol_lattice.cpp.s
+.PHONY : src/mol_lattice.cpp.s
 
-src/OptimizationAlgos.o: src/OptimizationAlgos.cpp.o
+src/mol_shell.o: src/mol_shell.cpp.o
 
-.PHONY : src/OptimizationAlgos.o
+.PHONY : src/mol_shell.o
 
 # target to build an object file
-src/OptimizationAlgos.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.o
-.PHONY : src/OptimizationAlgos.cpp.o
+src/mol_shell.cpp.o:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.o
+.PHONY : src/mol_shell.cpp.o
 
-src/OptimizationAlgos.i: src/OptimizationAlgos.cpp.i
+src/mol_shell.i: src/mol_shell.cpp.i
 
-.PHONY : src/OptimizationAlgos.i
+.PHONY : src/mol_shell.i
 
 # target to preprocess a source file
-src/OptimizationAlgos.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.i
-.PHONY : src/OptimizationAlgos.cpp.i
+src/mol_shell.cpp.i:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.i
+.PHONY : src/mol_shell.cpp.i
 
-src/OptimizationAlgos.s: src/OptimizationAlgos.cpp.s
+src/mol_shell.s: src/mol_shell.cpp.s
 
-.PHONY : src/OptimizationAlgos.s
+.PHONY : src/mol_shell.s
 
 # target to generate assembly for a file
-src/OptimizationAlgos.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/OptimizationAlgos.cpp.s
-.PHONY : src/OptimizationAlgos.cpp.s
+src/mol_shell.cpp.s:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/mol_shell.cpp.s
+.PHONY : src/mol_shell.cpp.s
+
+src/pack_optimization.o: src/pack_optimization.cpp.o
+
+.PHONY : src/pack_optimization.o
+
+# target to build an object file
+src/pack_optimization.cpp.o:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.o
+.PHONY : src/pack_optimization.cpp.o
+
+src/pack_optimization.i: src/pack_optimization.cpp.i
+
+.PHONY : src/pack_optimization.i
+
+# target to preprocess a source file
+src/pack_optimization.cpp.i:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.i
+.PHONY : src/pack_optimization.cpp.i
+
+src/pack_optimization.s: src/pack_optimization.cpp.s
+
+.PHONY : src/pack_optimization.s
+
+# target to generate assembly for a file
+src/pack_optimization.cpp.s:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/src/pack_optimization.cpp.s
+.PHONY : src/pack_optimization.cpp.s
 
 # Help Target
 help:
@@ -269,21 +269,21 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... pmols"
-	@echo "... src/CellLinkedLists.o"
-	@echo "... src/CellLinkedLists.i"
-	@echo "... src/CellLinkedLists.s"
-	@echo "... src/MolLattice.o"
-	@echo "... src/MolLattice.i"
-	@echo "... src/MolLattice.s"
-	@echo "... src/MolShell.o"
-	@echo "... src/MolShell.i"
-	@echo "... src/MolShell.s"
-	@echo "... src/Molecule.o"
-	@echo "... src/Molecule.i"
-	@echo "... src/Molecule.s"
-	@echo "... src/OptimizationAlgos.o"
-	@echo "... src/OptimizationAlgos.i"
-	@echo "... src/OptimizationAlgos.s"
+	@echo "... src/cell_linked_lists.o"
+	@echo "... src/cell_linked_lists.i"
+	@echo "... src/cell_linked_lists.s"
+	@echo "... src/mol.o"
+	@echo "... src/mol.i"
+	@echo "... src/mol.s"
+	@echo "... src/mol_lattice.o"
+	@echo "... src/mol_lattice.i"
+	@echo "... src/mol_lattice.s"
+	@echo "... src/mol_shell.o"
+	@echo "... src/mol_shell.i"
+	@echo "... src/mol_shell.s"
+	@echo "... src/pack_optimization.o"
+	@echo "... src/pack_optimization.i"
+	@echo "... src/pack_optimization.s"
 .PHONY : help
 
 

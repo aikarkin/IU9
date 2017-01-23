@@ -6,13 +6,7 @@
 
 #IncludeRegexTransform: 
 
-../mol_visualizer/../pmols/include/MolShell.h
-Molecule.h
--
-functional
--
-
-../mol_visualizer/../pmols/include/Molecule.h
+../mol_visualizer/../pmols/include/mol.h
 string
 -
 openbabel/obconversion.h
@@ -28,6 +22,14 @@ glm/gtc/type_ptr.hpp
 glm/gtc/matrix_transform.hpp
 -
 glm/gtx/vector_angle.hpp
+-
+boost/tuple/tuple.hpp
+-
+
+../mol_visualizer/../pmols/include/mol_shell.h
+mol.h
+-
+functional
 -
 
 /home/alex/dev/src/cpp/CourseWork/mol_visualizer/mol_visualizer.cpp
@@ -45,7 +47,9 @@ GL/glut.h
 -
 GLFW/glfw3.h
 -
-MolShell.h
+mol_shell.h
+-
+boost/tuple/tuple.hpp
 -
 
 /usr/local/include/GL/glew.h
