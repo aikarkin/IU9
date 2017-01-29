@@ -66,6 +66,11 @@ struct Atom {
         return !(this->operator==(other));
     }
 
+    std::string toString() {
+        std::string atom_info = "{" + symbol + ", " + vec_to_string(coord) + "}";
+        return atom_info;
+    }
+
     OpenBabel::OBAtom OBAtom() {
         OpenBabel::OBAtom atom;
         atom.SetVector(coord.x, coord.y, coord.z);

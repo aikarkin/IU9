@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from subprocess import call
 from os.path import isfile, exists
 from os import remove

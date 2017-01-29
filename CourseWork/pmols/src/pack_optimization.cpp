@@ -15,6 +15,7 @@ public:
             { }
 
     int exploringSearch(ublas::vector<float> &x) {
+        std::cout << "exploring search ..." << std::endl;
         float f0, f1, f2, x0;
         bool changed = false;
         bool terminate = true;
@@ -61,6 +62,7 @@ public:
     }
 
     int patternSearch(ublas::vector<float> &x1, ublas::vector<float> &x2) {
+        std::cout << "pattern search ..." << std::endl;
         ublas::vector<float> x3 = x1 + HJ_LAMBDA * (x2 - x1);
         int exp_res = exploringSearch(x3);
 
@@ -84,6 +86,7 @@ private:
 
 ublas::vector<float> HookeJeevesOptimize(ublas::vector<float> &coord, std::vector<float> &displacement,
                                          std::vector<float> &epsilon, OFuncCallback &func) {
+    std::cout << "Hooke Jeeves optimization ..." << std::endl;
     HJOptimizationHelper hj_helper(displacement, epsilon, func);
 
     ublas::vector<float> x1 = coord;

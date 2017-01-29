@@ -29,6 +29,9 @@ public:
     bool repMol(Molecule &old_mol, Molecule &new_mol);
     bool moveMol(Molecule &mol, MoveOperation move_op, float val);
     float totalNAtomsDist(Molecule &mol);
+    boost::tuple<int, int, int> atomsCountPerAxis();
+
+    void saveToCSV(std::string file_path);
 
     ~CellLinkedLists();
 
@@ -57,12 +60,10 @@ public:
     Atom *getNext();
     bool hasNext();
     void reset();
-
 private:
     CellLinkedLists *clLists;
     Atom *initial_atom;
-    Atom *natom_cursor;
     int trans_code;
-
-    void moveByCode();
+    int i0, j0, k0;
+    int atoms_count_x, atoms_count_y, atoms_count_z;
 };

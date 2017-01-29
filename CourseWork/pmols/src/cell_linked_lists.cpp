@@ -6,7 +6,7 @@
 #include <cell_linked_lists.h>
 
 CellLinkedLists::CellLinkedLists(float cell_length, float len_a, float len_b, float len_c) {
-
+    std::cout << "CLL: initialization" << std::endl;
     cell_len = cell_length;
     
     cell_len_setted = true;
@@ -15,6 +15,12 @@ CellLinkedLists::CellLinkedLists(float cell_length, float len_a, float len_b, fl
     box_length = len_a;
     box_width = len_b;
     box_height = len_c;
+
+    std::cout << "\tcell_len:" << cell_len << std::endl;
+
+    std::cout << "\tbox_length:" << box_length << std::endl;
+    std::cout << "\tbox_width:" << box_width << std::endl;
+    std::cout << "\tbox_height:" << box_height << std::endl;
 
 
     formCellLinkedLists();
@@ -29,6 +35,8 @@ bool CellLinkedLists::addAtom(Atom &atom) {
     int i = (int)floorf(atom.coord.x/cell_len);
     int j = (int)floorf(atom.coord.y/cell_len);
     int k = (int)floorf(atom.coord.z/cell_len);
+
+    std::cout << "\tadding atom " << atom.toString() << " to cell (" << i << ", " << j << ", " << k << ")" << std::endl;
 
     if (i < 0 || i >= atoms_count_x ||
         j < 0 || j >= atoms_count_y ||
@@ -158,6 +166,7 @@ bool CellLinkedLists::repAtom(Atom &old_atom, Atom &new_atom) {
 }
 
 bool CellLinkedLists::addMol(Molecule &mol) {
+    std::cout << "CLL: adding molecule ..." << std::endl;
     for (int i = 0; i < mol.AtomsCount(); ++i) {
         if(!addAtom(mol.GetAtom(i))) {
             for(int j = i; j >= 0; --j) {
@@ -189,6 +198,7 @@ bool CellLinkedLists::repMol(Molecule &old_mol, Molecule &new_mol) {
 
 bool CellLinkedLists::moveMol(Molecule &mol, MoveOperation move_op, float val) {
     Molecule old_mol = mol;
+
     glm::vec3 vec_i(1, 0, 0);
     glm::vec3 vec_j(0, 1, 0);
     glm::vec3 vec_k(0, 0, 1);
@@ -227,32 +237,104 @@ float CellLinkedLists::totalNAtomsDist(Molecule &mol) {
         CLLNeighbourAtoms neighbourAtoms = getNeighbours(&mol.GetAtom(i));
         while(neighbourAtoms.hasNext()) {
             Atom *n_atom = neighbourAtoms.getNext();
-            if(mol.GetAtom(i).parent_mol_id != n_atom->parent_mol_id) {
+            if(n_atom == NULL) {
+                cur_dist = 2.0;
+            }
+            else if(mol.GetAtom(i).parent_mol_id != n_atom->parent_mol_id) {
                 cur_dist = std::fabs(glm::distance(mol.GetAtom(i).coord, n_atom->coord)
                        - mol.GetAtom(i).vdw_radius - n_atom->vdw_radius);
-                sum += cur_dist;
             }
+            sum += cur_dist;
         }
     }
 
     return sum;
 }
 
+boost::tuple<int, int, int> CellLinkedLists::atomsCountPerAxis() {
+    return boost::tuple<int, int, int>(atoms_count_x, atoms_count_y, atoms_count_z);
+}
+
+void CellLinkedLists::saveToCSV(std::string file_path) {
+    std::ofstream outf_stream(file_path);
+
+    if(!outf_stream.is_open()) {
+        outf_stream.close();
+        std::cerr << "Error: unable to save Cell Linked Lists to CSV. File could not be open." << std::endl;
+        return;
+    }
+    for (int k = 0; k < atoms_count_z; ++k) {
+        outf_stream << "\"Layer #" << k + 1 << "\"" << std::endl;
+        for (int j = 0; j < atoms_count_y; ++j) {
+            for (int i = 0; i < atoms_count_x; ++i) {
+                Atom *atom = getAtomByInd(i, j, k);
+                if(atom != NULL) {
+                    std::string atom_info = atom->toString();
+                    outf_stream << "\"" << atom_info.c_str() << "\",";
+                }
+                else {
+                    outf_stream << "\"EMPTY\",";
+                }
+            }
+            outf_stream << std::endl;
+        }
+        outf_stream << std::endl;
+    }
+
+    outf_stream.close();
+}
+
 CLLNeighbourAtoms::CLLNeighbourAtoms(CellLinkedLists *clLists, Atom *initialAtom) {
     this->clLists = clLists;
     this->initial_atom = initialAtom;
+    boost::tuple<int, int, int> atoms_count = clLists->atomsCountPerAxis();
+
+    atoms_count_x = atoms_count.get<0>();
+    atoms_count_y = atoms_count.get<1>();
+    atoms_count_z = atoms_count.get<2>();
     reset();
 }
 
 Atom *CLLNeighbourAtoms::getNext() {
-    moveByCode();
-    trans_code++;
-    if(trans_code == 11 || trans_code == 27)
-        trans_code += 5;
-    else if(trans_code % 4 == 3)
-        trans_code++;
+    int x;
+    int bit_counter;
+    char trans_code_bits[6] = {0};
+    char left, right, up, down, far, near;
+    int i, j, k;
 
-    return natom_cursor;
+    do {
+        x = trans_code;
+        bit_counter = 5;
+
+        while (x > 0) {
+            trans_code_bits[bit_counter--] = (char) (x % 2);
+            x /= 2;
+        }
+        for (int l = bit_counter; l >= 0; --l) {
+            trans_code_bits[l] = 0;
+        }
+
+        left = trans_code_bits[0];
+        right = trans_code_bits[1];
+        up = trans_code_bits[2];
+        down = trans_code_bits[3];
+        far = trans_code_bits[4];
+        near = trans_code_bits[5];
+
+        i = i0 + right - left;
+        j = j0 + up - down;
+        k = k0 + near - far;
+
+        trans_code++;
+        if(trans_code == 11 || trans_code == 27)
+            trans_code += 5;
+        else if(trans_code % 4 == 3)
+            trans_code++;
+    } while (i < 0 || i >= atoms_count_x ||
+             j < 0 || j >= atoms_count_y ||
+             k < 0 || k >= atoms_count_z);
+
+    return clLists->getAtomByInd(i, j, k);
 }
 
 bool CLLNeighbourAtoms::hasNext() {
@@ -260,36 +342,12 @@ bool CLLNeighbourAtoms::hasNext() {
 }
 
 void CLLNeighbourAtoms::reset() {
-    natom_cursor = NULL;
     trans_code = 0;
-}
-
-void CLLNeighbourAtoms::moveByCode() {
-    int x = trans_code;
-    int bit_counter = 5;
-    char trans_code_bits[6] = {0};
-
-    while(x > 0) {
-        trans_code_bits[bit_counter--] = (char)(x%2);
-        x/=2;
-    }
-
-    char left = trans_code_bits[0];
-    char right = trans_code_bits[1];
-    char up = trans_code_bits[2];
-    char down = trans_code_bits[3];
-    char far = trans_code_bits[4];
-    char near = trans_code_bits[5];
 
     float cell_length = clLists->GetCellLength();
-
-    int i0 = (int)floorf(initial_atom->coord.x/cell_length);
-    int j0 = (int)floorf(initial_atom->coord.y/cell_length);
-    int k0 = (int)floorf(initial_atom->coord.z/cell_length);
-
-    int i = i0 + right - left;
-    int j = j0 + up - down;
-    int k = k0 + near - far;
-
-    natom_cursor = clLists->getAtomByInd(i, j, k);
+    i0 = (int)floorf(initial_atom->coord.x/cell_length);
+    j0 = (int)floorf(initial_atom->coord.y/cell_length);
+    k0 = (int)floorf(initial_atom->coord.z/cell_length);
 }
+
+
