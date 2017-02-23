@@ -8,12 +8,12 @@ std::string vec_to_string(glm::vec3 vec) {
     return "(" + std::to_string(vec.x) + ", " + std::to_string(vec.y) + ", " + std::to_string(vec.z) + ")";
 }
 
-int Molecule::molecules_count = 0;
+int pmols::Molecule::molecules_count = 0;
 
-int Atom::atoms_number = 0;
-int Atom::proto_nums = 0;
+int pmols::Atom::atoms_number = 0;
+int pmols::Atom::proto_nums = 0;
 
-Molecule::Molecule(std::string file_path) {
+pmols::Molecule::Molecule(std::string file_path) {
     mol_id = molecules_count;
     molecules_count++;
 
@@ -60,15 +60,15 @@ Molecule::Molecule(std::string file_path) {
     bar_vec = GetBarycenter();
 }
 
-int Molecule::AtomsCount() {
+int pmols::Molecule::AtomsCount() {
     return atoms_count;
 }
 
-int Molecule::BondsCount() {
+int pmols::Molecule::BondsCount() {
     return bonds_count;
 }
 
-Atom &Molecule::GetAtom(int idx) {
+pmols::Atom &pmols::Molecule::GetAtom(int idx) {
     if(idx < 0)
         throw std::out_of_range("index can't be negative");
     else if(idx > atoms_count)
@@ -76,7 +76,7 @@ Atom &Molecule::GetAtom(int idx) {
     return atoms[idx];
 }
 
-Bond &Molecule::GetBond(int idx) {
+pmols::Bond &pmols::Molecule::GetBond(int idx) {
     if(idx < 0)
         throw std::out_of_range("index can't be negative");
     else if(idx > bonds_count)
@@ -84,7 +84,7 @@ Bond &Molecule::GetBond(int idx) {
     return bonds[idx];
 }
 
-Molecule::~Molecule() {
+pmols::Molecule::~Molecule() {
     if (atoms != NULL)
         delete []atoms;
 
@@ -92,11 +92,11 @@ Molecule::~Molecule() {
         delete []bonds;
 }
 
-std::string Molecule::GetFormula() {
+std::string pmols::Molecule::GetFormula() {
     return mol.GetFormula();
 }
 
-glm::vec3 Molecule::GetBarycenter() {
+glm::vec3 pmols::Molecule::GetBarycenter() {
     glm::vec3 sum_p(0, 0, 0);
 
     for (int i = 0; i < atoms_count; ++i) {
@@ -108,19 +108,19 @@ glm::vec3 Molecule::GetBarycenter() {
     return glm::vec3(sum_p.x/atoms_count, sum_p.y/atoms_count, sum_p.z/atoms_count);
 }
 
-void Molecule::RotateX(float alpha) {
+void pmols::Molecule::RotateX(float alpha) {
     RotateOn(bar_vec, alpha, glm::vec3(1, 0, 0));
 }
 
-void Molecule::RotateY(float beta) {
+void pmols::Molecule::RotateY(float beta) {
     RotateOn(bar_vec, beta, glm::vec3(0, 1, 0));
 }
 
-void Molecule::RotateZ(float gamma) {
+void pmols::Molecule::RotateZ(float gamma) {
     RotateOn(bar_vec, gamma, glm::vec3(0, 0, 1));
 }
 
-void Molecule::Translate(glm::vec3 v) {
+void pmols::Molecule::Translate(glm::vec3 v) {
     for (int i = 0; i < atoms_count; ++i) {
         atoms[i].coord.x += v.x;
         atoms[i].coord.y += v.y;
@@ -131,7 +131,7 @@ void Molecule::Translate(glm::vec3 v) {
     bar_vec.z += v.z;
 }
 
-void Molecule::RotateOn(glm::vec3 point, float angle, glm::vec3 dir) {
+void pmols::Molecule::RotateOn(glm::vec3 point, float angle, glm::vec3 dir) {
     glm::mat4 m_rot(1.0);
     m_rot = glm::rotate(m_rot, angle, dir);
 
@@ -146,12 +146,13 @@ void Molecule::RotateOn(glm::vec3 point, float angle, glm::vec3 dir) {
     }
 }
 
-Molecule::Molecule(const Molecule &other) {
+pmols::Molecule::Molecule(const Molecule &other) {
 //    std::cout << "mol copy" << std::endl;
     mol_id = molecules_count;
     molecules_count++;
     atoms_count = other.atoms_count;
     bonds_count = other.bonds_count;
+
     bar_vec = other.bar_vec;
     mol = other.mol;
 
@@ -175,7 +176,7 @@ Molecule::Molecule(const Molecule &other) {
     }
 }
 
-OpenBabel::OBMol Molecule::OBMol() {
+OpenBabel::OBMol pmols::Molecule::OBMol() {
     OpenBabel::OBMol cur_mol;
     OpenBabel::OBBond cur_bond;
 
@@ -188,11 +189,11 @@ OpenBabel::OBMol Molecule::OBMol() {
     return cur_mol;
 }
 
-int Molecule::GetMolId() {
+int pmols::Molecule::GetMolId() {
     return mol_id;
 }
 
-boost::tuple<glm::vec3, boost::tuple<float, float, float>> Molecule::GetRectangularShell() {
+boost::tuple<glm::vec3, boost::tuple<float, float, float>> pmols::Molecule::GetRectangularShell() {
     float min_x = GetAtom(0).coord.x - GetAtom(0).vdw_radius,
             max_x = min_x + GetAtom(0).vdw_radius;
 
@@ -241,21 +242,16 @@ boost::tuple<glm::vec3, boost::tuple<float, float, float>> Molecule::GetRectangu
 }
 
 
-void Atom::print() {
-    std::cout << "color: (" << color.red << ", " << color.green << ", " << color.blue << ")" << std::endl;
-    std::cout << "symbol: " << symbol << std::endl;
-    std::cout << "vdw_radius: " << vdw_radius << std::endl;
-    std::cout << "coord: (" << coord.x << ", " <<  coord.y << ", " << coord.z << ")" << std::endl;
-    std::cout << "radius: " << radius << std::endl;
-}
-
-
-void Bond::print() {
-    std:: cout << begin->symbol << " -- " << end->symbol << ": " << length << std::endl;
-}
-
-
-bool Colorf::operator==(const Colorf &other) {
+bool pmols::Colorf::operator==(const Colorf &other) {
     return this->red == other.red && this->blue == other.blue && this->green == other.green;
 }
 
+bool pmols::Atom::operator==(const Atom& other) {
+    //return &other == this;
+    bool res =
+            this->atomic_number == other.atomic_number &&
+            this->coord == other.coord &&
+            this->vdw_radius == other.vdw_radius;
+    //std::cout << "==: atoms equals - " << res << std::endl;
+    return res;
+}

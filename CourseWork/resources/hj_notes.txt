@@ -4,7 +4,7 @@ CLLists
 ----------------------
 +CLLists(cell_len, length, width, height)
 
-+getAtomByInd(i, j, k) => Atom
++getCellListByInd(i, j, k) => Atom
 
 +addAtom(Atom&) => bool
 +remAtom(Atom&) => bool

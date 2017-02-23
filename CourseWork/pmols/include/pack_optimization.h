@@ -10,9 +10,11 @@
 
 
 namespace ublas = boost::numeric::ublas;
-typedef std::function<float(ublas::vector<float>&,int)> OFuncCallback;
 
-ublas::vector<float> HookeJeevesOptimize(ublas::vector<float> &coord, std::vector<float> &displacement,
-                                         std::vector<float> &epsilon, OFuncCallback &func);
+namespace pmols {
+    typedef std::function<float(ublas::vector<float> &, int)> OFuncCallback;
 
+    ublas::vector<float> HookeJeevesOptimize(ublas::vector<float> &coord, std::vector<float> &displacement,
+                                             std::vector<float> &epsilon, OFuncCallback &func);
+}
 #endif //COURSEWORK_HOOKEJEEVESOPRIMIZATION_H

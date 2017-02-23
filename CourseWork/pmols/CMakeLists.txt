@@ -4,8 +4,8 @@ project(pmols)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
-set(HEADER_FILES include/cell_linked_lists.h include/mol.h include/mol_lattice.h include/mol_shell.h src/pack_optimization.cpp include/pack_optimization.h)
-set(SOURCE_FILES src/cell_linked_lists.cpp src/mol.cpp src/mol_lattice.cpp src/mol_shell.cpp src/pack_optimization.cpp include/pack_optimization.h)
+set(HEADER_FILES include/cell_linked_lists.h include/mol.h include/mol_lattice.h src/pack_optimization.cpp include/pack_optimization.h)
+set(SOURCE_FILES src/cell_linked_lists.cpp src/mol.cpp src/mol_lattice.cpp src/pack_optimization.cpp include/pack_optimization.h)
 set(RAPIDJSON_INCLUDE_DIRS /home/alex/dev/libs/rapidjson-master/include)
 
 find_package(PkgConfig REQUIRED)

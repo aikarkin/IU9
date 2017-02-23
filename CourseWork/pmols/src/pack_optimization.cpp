@@ -10,7 +10,7 @@
 class HJOptimizationHelper {
 public:
     HJOptimizationHelper(std::vector<float> &displacement,
-                   std::vector<float> &epsilon, OFuncCallback &func) :
+                   std::vector<float> &epsilon, pmols::OFuncCallback &func) :
             disp(displacement), eps(epsilon), F(func)
             { }
 
@@ -80,13 +80,13 @@ public:
 private:
     std::vector<float> &disp;
     std::vector<float> &eps;
-    OFuncCallback &F;
+    pmols::OFuncCallback &F;
 };
 
 
-ublas::vector<float> HookeJeevesOptimize(ublas::vector<float> &coord, std::vector<float> &displacement,
-                                         std::vector<float> &epsilon, OFuncCallback &func) {
-    std::cout << "Hooke Jeeves optimization ..." << std::endl;
+ublas::vector<float> pmols::HookeJeevesOptimize(ublas::vector<float> &coord, std::vector<float> &displacement,
+                                         std::vector<float> &epsilon, pmols::OFuncCallback &func) {
+    //std::cout << "Hooke Jeeves optimization ..." << std::endl;
     HJOptimizationHelper hj_helper(displacement, epsilon, func);
 
     ublas::vector<float> x1 = coord;

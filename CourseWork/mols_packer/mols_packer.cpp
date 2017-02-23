@@ -9,8 +9,8 @@
 #include <iomanip>
 namespace po = boost::program_options;
 
-std::vector<Molecule> mols;
-HJLattice *lattice;
+std::vector<pmols::Molecule> mols;
+pmols::HJLattice *lattice;
 
 std::string float_to_string(float num, int prec) {
     std::stringstream stream;
@@ -73,14 +73,14 @@ struct MolPackingParams {
 };
 
 void generateLattice(MolPackingParams &params) {
-    Molecule mol(params.mol_file);
-    lattice = new HJLattice(mol);
+    pmols::Molecule mol(params.mol_file);
+    lattice = new pmols::HJLattice(mol);
 
     lattice->setBoxSize(params.a, params.b, params.c);
     lattice->setInitialDisplacement(1, 1, 1, 45, 45, 45);
     lattice->setPrecision(0.01, 0.01, 0.01, 0.5, 0.5, 0.5);
 
-    lattice->pack();
+    //lattice->pack();
 
     mols = lattice->getMolecules();
 }

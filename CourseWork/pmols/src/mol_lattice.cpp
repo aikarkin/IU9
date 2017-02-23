@@ -13,7 +13,7 @@ bool isOrthogonal(glm::vec3 vec1, glm::vec3 vec2) {
     return std::abs(glm::angle(vec1, vec2) - (float)M_PI_2) < 0.0001f;
 };
 
-void ClosestPackedLattice::formLattice() {
+void pmols::ClosestPackedLattice::formLattice() {
     boost::tuple<glm::vec3, boost::tuple<float, float, float>> rect_shell = mol_proto.GetRectangularShell();
     glm::vec3 appos_point = rect_shell.get<0>();
 
@@ -21,7 +21,7 @@ void ClosestPackedLattice::formLattice() {
             dy = rect_shell.get<1>().get<1>(),
             dz = rect_shell.get<1>().get<2>();
 
-    std::cout << "shell size: " << dx << "x" << dy << "x" << dz << std::endl;
+//    std::cout << "shell size: " << dx << "x" << dy << "x" << dz << std::endl;
 
     int nx = (int)ceilf(length / dx),
             ny = (int)ceilf(width / dy),
@@ -44,7 +44,7 @@ void ClosestPackedLattice::formLattice() {
     }
 }
 
-void ClosestPackedLattice::saveToFile(std::string output_file, std::string output_format) {
+void pmols::ClosestPackedLattice::saveToFile(std::string output_file, std::string output_format) {
     if(output_format == "json") {
         rapidjson::Document jsonDoc;
         jsonDoc.SetObject();
@@ -62,14 +62,14 @@ void ClosestPackedLattice::saveToFile(std::string output_file, std::string outpu
                 std::string b_str = std::to_string(mols[i].GetBond(j).begin->atom_idx);
 
                 int buf_len = sprintf(b_str_buf, "%s", b_str.c_str());
-//                std::cout << "buf_len: " << buf_len << std::endl;
-//                std::cout << "buf: " << b_str_buf << std::endl;
+////                std::cout << "buf_len: " << buf_len << std::endl;
+////                std::cout << "buf: " << b_str_buf << std::endl;
                 begin.SetString(b_str_buf, buf_len, allocator);
                 memset(b_str_buf, 0, 7);
 
                 rapidjson::Value end;
                 end.SetInt(mols[i].GetBond(j).end->atom_idx);
-//                std::cout << "json - bond # " << j << ": " << begin.GetString() << " --> " << end.GetInt() << std::endl;
+////                std::cout << "json - bond # " << j << ": " << begin.GetString() << " --> " << end.GetInt() << std::endl;
 
                 rapidjson::Value bond(rapidjson::kObjectType);
                 bond.AddMember(begin, end, allocator);
@@ -124,7 +124,7 @@ void ClosestPackedLattice::saveToFile(std::string output_file, std::string outpu
     fb.open (output_file, std::ios::out);
 
     if(!fb.is_open()) {
-        std::cout << "Result: failed" << std::endl;
+//        std::cout << "Result: failed" << std::endl;
         std::cerr << "error: Can't write to output file" << std::endl;
     }
 
@@ -161,7 +161,7 @@ void ClosestPackedLattice::saveToFile(std::string output_file, std::string outpu
 }
 
 
-void HJLattice::setPrecision(float tx_eps, float ty_eps, float tz_eps, float x_eps, float y_eps, float z_eps) {
+void pmols::HJLattice::setPrecision(float tx_eps, float ty_eps, float tz_eps, float x_eps, float y_eps, float z_eps) {
     tx_e = tx_eps;
     ty_e = ty_eps;
     tz_e = tz_eps;
@@ -172,8 +172,8 @@ void HJLattice::setPrecision(float tx_eps, float ty_eps, float tz_eps, float x_e
 }
 
 
-void HJLattice::pack() {
-    std::cout << "packing ..." << std::endl;
+void pmols::HJLattice::pack() {
+//    std::cout << "packing ..." << std::endl;
     // ! Optimization params preparation
     cll_cell_len = 2*getMaxAtomRadius();
 
@@ -184,11 +184,9 @@ void HJLattice::pack() {
     bool mol_added;
     for (int i = 0; i < mols.size(); ++i) {
         mol_added = clLists->addMol(mols[i]);
-        if(!mol_added)
-            std::cout << "Cell Linked Lists: unable to add molecule!" << std::endl;
     }
-
     clLists -> saveToCSV("../resources/cell_linked_lists_initial.csv");
+    std::cout << "Cell Linked lists has successfully." << std::endl;
 
     // calc initial sum
     float sum_dist = 0;
@@ -198,25 +196,34 @@ void HJLattice::pack() {
         cur_dist = clLists->totalNAtomsDist(mols[i]);
         sum_dist += cur_dist;
     }
+    std::cout << "initial sum of dist: " << sum_dist << std::endl;
 
     prepareOptimizationParams();
 
     // optimized function
     OFuncCallback opt_func = [&sum_dist, mols=mols, clLists](ublas::vector<float>& p, int c_idx) -> float {
-        std::cout << "update optimization function value ..." << std::endl;
         float c_val = p[c_idx];
         int mol_idx = c_idx / 6;
         int op_num = c_idx % 6;
+
+//        std::cout << "opt_func - initial params: c_val: " << c_val
+//                  << "mol_idx: " << mol_idx
+//                  << "op_num: " << op_num << std::endl;
 
         MoveOperation  m_op = (MoveOperation)op_num;
         Molecule cur_mol = mols[mol_idx];
 
         float old_mol_sum = clLists->totalNAtomsDist(cur_mol);
-        std::cout << "old_mol_sum: " << old_mol_sum << std::endl;
+        //std::cout << "old_mol_sum: " << old_mol_sum << std::endl;
+        bool mol_moved = clLists->moveMol(cur_mol, m_op, c_val);
+        //std::cout << "opt_func - mol_moved=" << mol_moved << std::endl;
 
-        if(!clLists->moveMol(cur_mol, m_op, c_val));
+        if(!mol_moved)
+        {
+            //std::cout << "mol was not move" << std::endl;
             return -1.f;
-
+        }
+        //std::cout << "\tmol moved" << std::endl;
         float cur_mol_sum = clLists->totalNAtomsDist(cur_mol);
 
         clLists->moveMol(cur_mol, m_op, -c_val);
@@ -225,11 +232,11 @@ void HJLattice::pack() {
             return -1.f;
 
         sum_dist = sum_dist - old_mol_sum + cur_mol_sum;
-//        std::cout << "old_mol_sum: " << old_mol_sum << std::endl;
-//        std::cout << "cur_mol_sum: " << old_mol_sum << std::endl;
-        std::cout << "sum_dist: " << sum_dist << std::endl;
-//        std::cout << "--------------------" << std::endl;
-
+////        std::cout << "old_mol_sum: " << old_mol_sum << std::endl;
+////        std::cout << "cur_mol_sum: " << old_mol_sum << std::endl;
+//        //std::cout << "sum_dist: " << sum_dist << std::endl;
+////        std::cout << "--------------------" << std::endl;
+        std::cout << "cur sum_dist: " << sum_dist << std::endl;
         return sum_dist;
     };
 
@@ -246,12 +253,17 @@ void HJLattice::pack() {
         moveMol(mols[mol_idx], m_op, c_val);
     }
 
+//    std::cout << "final sum of dist: " << sum_dist << std::endl;
+
     bool in_box;
+
+//    std::cout << "Result atoms: " << std::endl;
     for (int i = 0; i < mols.size(); ++i) {
         in_box = true;
         glm::vec3 atom_coord;
         for (int j = 0; j < mols[i].AtomsCount(); ++j) {
             atom_coord = mols[i].GetAtom(j).coord;
+
             if(atom_coord.x < 0 || atom_coord.x > length
                || atom_coord.y < 0 || atom_coord.y > width
                || atom_coord.z < 0 || atom_coord.z > height) {
@@ -261,6 +273,10 @@ void HJLattice::pack() {
         }
         if(in_box) {
             new_mols.push_back(mols[i]);
+//            std::cout << "Mol #" << i + 1 << " - " << new_mols[i].GetFormula() << std::endl;
+//            for (int j = 0; j < new_mols[i].AtomsCount(); ++j) {
+//                std::cout << "\tatom" << j + 1 << new_mols[i].GetAtom(j).toString() << std:: endl;
+//            }
         }
     }
     mols.clear();
@@ -269,24 +285,24 @@ void HJLattice::pack() {
 }
 
 
-float HJLattice::getMaxAtomRadius() {
+float pmols::HJLattice::getMaxAtomRadius() {
     float max_radius = 0;
     float cur_radius;
-    std::cout << "HJLattice params preparation: finding maximum Van Der Waals radius" << std::endl;
+//    std::cout << "HJLattice params preparation: finding maximum Van Der Waals radius" << std::endl;
 
     for (int i = 0; i < mol_proto.AtomsCount(); ++i) {
         cur_radius = mol_proto.GetAtom(i).vdw_radius;
-        std::cout << "\tcur rad: " << cur_radius << std::endl;
+//        std::cout << "\tcur rad: " << cur_radius << std::endl;
         if (cur_radius > max_radius)
             max_radius = cur_radius;
     }
 
 
-    std::cout << "\tmax rad: " << max_radius << std::endl;
+//    std::cout << "\tmax rad: " << max_radius << std::endl;
     return max_radius;
 }
 
-void HJLattice::moveMol(Molecule &mol, MoveOperation move_op, float val) {
+void pmols::HJLattice::moveMol(Molecule &mol, MoveOperation move_op, float val) {
     glm::vec3 vec_i(1, 0, 0);
     glm::vec3 vec_j(0, 1, 0);
     glm::vec3 vec_k(0, 0, 1);
@@ -315,7 +331,7 @@ void HJLattice::moveMol(Molecule &mol, MoveOperation move_op, float val) {
     }
 }
 
-void HJLattice::setInitialDisplacement(float shift_x=0.5, float shift_y=0.5, float shift_z=0.5,
+void pmols::HJLattice::setInitialDisplacement(float shift_x=0.5, float shift_y=0.5, float shift_z=0.5,
                                        float shift_alpha=45, float shift_beta=45, float shift_gamma=45) {
     this->shift_x = shift_x;
     this->shift_y = shift_y;
@@ -326,7 +342,7 @@ void HJLattice::setInitialDisplacement(float shift_x=0.5, float shift_y=0.5, flo
     this->shift_gamma = shift_gamma;
 }
 
-void HJLattice::prepareOptimizationParams() {
+void pmols::HJLattice::prepareOptimizationParams() {
     points = ublas::vector<float>(mols.size()*6);
     precisions = std::vector<float>(points.size());
 
@@ -361,4 +377,21 @@ void HJLattice::prepareOptimizationParams() {
                 break;
         }
     }
+}
+
+void pmols::HJLattice::formLattice() {
+    float init_length = length;
+    float init_width = width;
+    float init_height = height;
+
+/*
+    length *= 2;
+    width *= 2;
+    height *= 2;
+*/    
+
+    ClosestPackedLattice::formLattice();
+    length = init_length;
+    width = init_width;
+    height = init_height;
 }
