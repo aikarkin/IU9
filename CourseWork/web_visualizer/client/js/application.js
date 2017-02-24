@@ -37,7 +37,7 @@ $('#btn_pack').click(function(evt){
     $('#preloader').append(preloader_html);
 
     $.ajax({
-        url: `http://127.0.0.1:3000/get/lattice/${mol_id}/?length=${l}&height=${h}&width=${w}`,
+        url: `/get/lattice/${mol_id}/?length=${l}&height=${h}&width=${w}`,
         type: 'GET',
         dataType: 'json',
         success: function (data, textStatus) {
@@ -68,7 +68,7 @@ $('#btn_pack').click(function(evt){
                 storage.setItem('lattice_data', data['data']);
                 
                 $('#preloader').empty();
-                var download_href = `http://127.0.0.1:3000/download/lattice/${mol_id}/?length=${l}&width=${w}&height=${h}`;
+                var download_href = `/download/lattice/${mol_id}/?length=${l}&width=${w}&height=${h}`;
                 var dropdownItems = [
                     {'href': `${download_href}&format=json`, 'text': 'JSON'},
                     {'href': `${download_href}&format=mol2`, 'text': 'MOL2'},

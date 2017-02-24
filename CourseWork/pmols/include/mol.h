@@ -44,10 +44,13 @@ namespace pmols {
     const Colorf BLACK(0.0, 0.0, 0.0);
 
     struct Atom {
-        static int atoms_number;
-        static int proto_nums;
+        static int obatom_count;
+        static int atoms_count;
+
         int atomic_number;
         int atom_idx;
+        int atom_id;
+
         int parent_mol_id;
         Colorf color;
         std::string symbol;
@@ -56,9 +59,8 @@ namespace pmols {
         float radius;
 
         Atom() : color(Colorf(0.0, 0.0, 0.0)) {
-            proto_nums++;
-            atom_idx = proto_nums;
-            //std::cout << "created atom with idx: " << atom_idx << std::endl;
+            atoms_count++;
+            atom_idx = atoms_count;
         };
 
         Atom(const Atom &other) : color(other.color) {
@@ -82,10 +84,10 @@ namespace pmols {
             OpenBabel::OBAtom atom;
             atom.SetVector(coord.x, coord.y, coord.z);
             atom.SetType(symbol);
-            atoms_number++;
-            this->atom_idx = atoms_number;
-            atom.SetIdx(atoms_number);
-            atom.SetId((unsigned int) (atoms_number + 1));
+            obatom_count++;
+            atom_id = obatom_count;
+            atom.SetIdx(obatom_count);
+            atom.SetId((unsigned int) (obatom_count + 1));
             atom.SetAtomicNum(atomic_number);
 
             return atom;

@@ -4,6 +4,14 @@ var windowHalfX, windowHalfY;
 var mouseX, mouseY;
 var deltaX, deltaY;
 var mouseDown = false;
+
+var touchX, touchY;
+var touchDown = false;
+var deltaTouchX, deltaTouchY;
+
+var touchDist;
+var deltaTouchDist;
+
 var vdw_rad_enabled = false;
 var rad_c0;
 
@@ -34,8 +42,8 @@ function addStick(start, end, color) {
     var s = new THREE.Vector3(start.x, start.y, start.z);
     var e = new THREE.Vector3(end.x, end.y, end.z);
 
-    console.log(s);
-    console.log(e);
+    // console.log(s);
+    // console.log(e);
 
     var b_color = new THREE.Color();
     b_color.r = color[0];
@@ -72,6 +80,17 @@ function init() {
     deltaX = 0;
     deltaY = 0;
 
+    touchDown = false;
+    touchX = 0;
+    touchY = 0;
+    touch2X = 0;
+    touch2Y = 0;
+    deltaTouchX = 0;
+    deltaTouchY = 0;
+
+    touchDist = 0;
+    deltaTouchDist = 0;
+
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 5000 );
 	camera.position.z = 1000;
 	scene.add( camera );
@@ -104,6 +123,10 @@ function init() {
     document.addEventListener('mousedown', onMouseDown, false);
     document.addEventListener('keydown', onKeyDown, false);
     document.addEventListener('mousewheel', onMouseWheel, false);
+
+    document.addEventListener("touchstart", onTouchStart, {passive: false});
+    document.addEventListener("touchmove", onTouchMove, {passive: false});
+    //document.addEventListener("touchend", onTouchEnd, false);
 
     window.addEventListener( 'resize', onWindowResize, false );
 }
@@ -219,6 +242,11 @@ function onMouseMove(evt) {
     var rot_dy = -deltaX / 100;
     var rot_dx = deltaY / 100;
 
+    console.log('mouse move');
+    console.log(rot_dx);
+    console.log(rot_dy);
+    console.log('------------');
+
     root.rotation.y += rot_dy;
     root.rotation.x += rot_dx;
 
@@ -229,6 +257,7 @@ function onMouseMove(evt) {
     root.position.z -= root_c.z;
 }
 
+
 function onMouseDown(evt) {
     evt.preventDefault();
 
@@ -238,22 +267,15 @@ function onMouseDown(evt) {
     mouseY = evt.clientY;
 }
 
+
+
  function onMouseUp(evt) {
     evt.preventDefault();
 
     mouseDown = false;
 }
 
-function onKeyDown(evt) {
-    //alert('key pressed!');
-    evt.preventDefault();
-    var code = evt.keyCode;
-    if (code != 86)
-        return;
-
-    console.log('V pressed!');
-    vdw_rad_enabled = !vdw_rad_enabled;
-
+function redrawAtomRadii() {
     var cur_rad;
 
     for(var child_key in root.children) {
@@ -273,13 +295,21 @@ function onKeyDown(evt) {
                 root.children[child_key].scale.y *= rad_c0;
                 root.children[child_key].scale.z *= rad_c0;
             }
-            console.log('atom radius');
-            console.log(root.children[child_key].geometry.parameters.radius);
-            console.log(root.children[child_key]);
         }
     }
-    //render();
-    //root.updateMatrix();
+}
+
+function onKeyDown(evt) {
+    //alert('key pressed!');
+    evt.preventDefault();
+    var code = evt.keyCode;
+    if (code != 86)
+        return;
+
+    console.log('V pressed!');
+    vdw_rad_enabled = !vdw_rad_enabled;
+
+    redrawAtomRadii();
 }
 
 function onMouseWheel(e) {
@@ -328,7 +358,7 @@ function loadMol(mol_id) {
     vdw_rad_enabled = false;
 
     $.ajax({
-        url: `http://127.0.0.1:3000/get/mol/${mol_id}/`,
+        url: `/get/mol/${mol_id}/`,
         type: 'GET',
         dataType: 'json',
         success: function (data, textStatus) {
@@ -364,4 +394,78 @@ function visualize_mols(lattice_conf) {
 
     render();
 
+}
+
+function calcDistBtnFingers(touches) {
+    var dx = touches[1].pageX - touches[0].pageX;
+    var dy = touches[1].pageY - touches[0].pageY;
+
+    return Math.sqrt(dx*dx + dy*dy);
+}
+
+// touch events
+function onTouchMove(evt) {
+    if ( evt.touches.length === 1 ) {
+        console.log('touch moved');
+
+        evt.preventDefault();
+
+        deltaTouchX = evt.touches[ 0 ].pageX - touchX;
+        deltaTouchY = evt.touches[ 0 ].pageY - touchY;
+        touchX = evt.touches[ 0 ].pageX;
+        touchY = evt.touches[ 0 ].pageY;
+
+
+        var rot_dy = -deltaTouchX / 100;
+        var rot_dx = deltaTouchY / 100;
+
+        console.log(rot_dy);
+        console.log(rot_dx);
+        console.log('----------');
+
+        root.rotation.y += rot_dy;
+        root.rotation.x += rot_dx;
+
+        var root_c = getBoundingBoxCenter();
+
+        root.position.x -= root_c.x;
+        root.position.y -= root_c.y;
+        root.position.z -= root_c.z;
+    }
+    if ( evt.touches.length === 2 ) {
+        evt.preventDefault();
+
+        var dist = calcDistBtnFingers(evt.touches);
+
+        deltaTouchDist = dist - touchDist;
+        touchDist = dist;
+        
+        var scale = cur_scale + deltaTouchDist / 100;
+
+        if (scale < MIN_SCALE || scale > MAX_SCALE)
+            return;
+
+        cur_scale = scale;
+        root.scale.x = scale;
+        root.scale.y = scale;
+        root.scale.z = scale;
+    }
+}
+
+function onTouchStart(evt) {
+    if ( evt.touches.length === 1 ) {
+        evt.preventDefault();
+
+        touchX = evt.touches[ 0 ].pageX;
+        touchY = evt.touches[ 0 ].pageY;
+    }
+    else if (evt.touches.length === 2) {
+        evt.preventDefault();
+        touchDist = calcDistBtnFingers(evt.touches);
+    }
+    else if (evt.touches.length === 3) {
+        evt.preventDefault();
+        vdw_rad_enabled = !vdw_rad_enabled;
+        redrawAtomRadii();
+    }
 }

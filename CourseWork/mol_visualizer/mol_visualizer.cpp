@@ -26,7 +26,7 @@ pmols::Molecule mol(WORK_DIR + "resources/Structure3D_CID_6212.sdf");
 glm::vec3 appos_point;
 
 
-void packMoleculeToCube() {2
+void packMoleculeToCube() {
     boost::tuple<glm::vec3, boost::tuple<float, float, float>> rect_shell = mol.GetRectangularShell();
     appos_point = rect_shell.get<0>();
     boost::tuple<float, float, float> sizes = rect_shell.get<1>();

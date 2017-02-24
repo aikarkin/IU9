@@ -10,8 +10,8 @@ std::string vec_to_string(glm::vec3 vec) {
 
 int pmols::Molecule::molecules_count = 0;
 
-int pmols::Atom::atoms_number = 0;
-int pmols::Atom::proto_nums = 0;
+int pmols::Atom::obatom_count = 0;
+int pmols::Atom::atoms_count = 0;
 
 pmols::Molecule::Molecule(std::string file_path) {
     mol_id = molecules_count;
@@ -147,7 +147,6 @@ void pmols::Molecule::RotateOn(glm::vec3 point, float angle, glm::vec3 dir) {
 }
 
 pmols::Molecule::Molecule(const Molecule &other) {
-//    std::cout << "mol copy" << std::endl;
     mol_id = molecules_count;
     molecules_count++;
     atoms_count = other.atoms_count;
@@ -247,11 +246,9 @@ bool pmols::Colorf::operator==(const Colorf &other) {
 }
 
 bool pmols::Atom::operator==(const Atom& other) {
-    //return &other == this;
     bool res =
             this->atomic_number == other.atomic_number &&
             this->coord == other.coord &&
             this->vdw_radius == other.vdw_radius;
-    //std::cout << "==: atoms equals - " << res << std::endl;
     return res;
 }

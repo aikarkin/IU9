@@ -7,7 +7,6 @@
 #include <memory>
 
 pmols::CellLinkedLists::CellLinkedLists(float cell_length, float len_a, float len_b, float len_c) {
-//    std::cout << "CLL: initialization" << std::endl;
     cell_len = cell_length;
     
     cell_len_setted = true;
@@ -16,13 +15,6 @@ pmols::CellLinkedLists::CellLinkedLists(float cell_length, float len_a, float le
     box_length = len_a;
     box_width = len_b;
     box_height = len_c;
-
-//    std::cout << "\tcell_len:" << cell_len << std::endl;
-
-//    std::cout << "\tbox_length:" << box_length << std::endl;
-//    std::cout << "\tbox_width:" << box_width << std::endl;
-//    std::cout << "\tbox_height:" << box_height << std::endl;
-
 
     formCellLinkedLists();
 }
@@ -37,12 +29,9 @@ bool pmols::CellLinkedLists::addAtom(Atom &atom) {
     int j = (int)floorf(atom.coord.y/cell_len);
     int k = (int)floorf(atom.coord.z/cell_len);
 
-//    std::cout << "\tadding atom " << atom.toString() << " to cell (" << i << ", " << j << ", " << k << ")" << std::endl;
-
     if (i < 0 || i >= atoms_count_x ||
         j < 0 || j >= atoms_count_y ||
         k < 0 || k >= atoms_count_z) {
-       // std::cout << "unable to add atom " << atom.toString() << " to cell (" << i << "," << j << "," << k << ")\n";
         return false;
     }
     
@@ -52,21 +41,17 @@ bool pmols::CellLinkedLists::addAtom(Atom &atom) {
 }
 
 bool pmols::CellLinkedLists::remAtom(Atom &atom) {
-//    std::cout << "remAtom" << std::endl;
     int i = (int)floorf(atom.coord.x/cell_len);
     int j = (int)floorf(atom.coord.y/cell_len);
     int k = (int)floorf(atom.coord.z/cell_len);
-    //std::cout << "remAtom() - cell idx of atom: " << i << " " << j << " " << k << std::endl;
 
     if (i < 0 || i >= atoms_count_x ||
         j < 0 || j >= atoms_count_y ||
         k < 0 || k >= atoms_count_z)
         return false;
 
-    //std::cout << "cur cell size: " << atom_grid[i][j][k].size() << std::endl;
     for(auto atom_it = atom_grid[i][j][k].begin(); atom_it != atom_grid[i][j][k].end(); atom_it++) {
         if(atom_it->atom_idx == atom.atom_idx) {
-            //std::cout << "CLL: remove - atom exists" << std::endl;
             atom_grid[i][j][k].erase(atom_it);
             return true;
         }
@@ -177,13 +162,12 @@ bool pmols::CellLinkedLists::addMol(Molecule &mol) {
 }
 
 bool pmols::CellLinkedLists::remMol(Molecule &mol) {
-//    std::cout << "remMol" << std::endl;
     for (int i = 0; i < mol.AtomsCount(); ++i) {
         if(!remAtom(mol.GetAtom(i))) {
             for(int j = i; j >= 0; --j) {
                 addAtom(mol.GetAtom(j));
             }
-            //std::cout << "\tunable to remove mol" << std::endl;
+
             return false;
         }
     }
@@ -194,7 +178,7 @@ bool pmols::CellLinkedLists::remMol(Molecule &mol) {
 bool pmols::CellLinkedLists::repMol(Molecule &old_mol, Molecule &new_mol) {
     bool rem_mol_res = remMol(old_mol);
     bool add_mol_res = addMol(new_mol);
-    //std::cout << "repMol - " << "rem mol: " << rem_mol_res << ", add mol: " << add_mol_res << std::endl;
+
     return rem_mol_res && add_mol_res;
 }
 
