@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++14 -g   CMakeFiles/tests.dir/tests.cpp.o  -o ../../bin/tests  -L/home/alex/dev/src/cpp/CourseWork/tests/{CMAKE_CURRENT_SOURCE_DIR}/../lib -lopenbabel ../../lib/libpmols.a -lopenbabel -Wl,-rpath,/home/alex/dev/src/cpp/CourseWork/tests/{CMAKE_CURRENT_SOURCE_DIR}/../lib 

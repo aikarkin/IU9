@@ -1,4 +1,4 @@
-MoveOperation {ROT_X, ROT_Y, ROT_Z, TRANS_X, TRANS_Y, TRANS_Z};
+MOVE_OPERATION {ROT_X, ROT_Y, ROT_Z, TRANS_X, TRANS_Y, TRANS_Z};
 
 CLLists
 ----------------------
@@ -37,7 +37,7 @@ float CLLists::totalDistance(Molecule &Molecule) {
 	return res;
 }
 
-bool CLLists::moveMol(Molecule& Molecule, MoveOperation op_enum, float val) => bool {
+bool CLLists::moveMol(Molecule& Molecule, MOVE_OPERATION op_enum, float val) => bool {
   old_mol = Molecule; //copy
   
   switch(op_enum) {
@@ -67,7 +67,7 @@ opt_func = [dist_sum, &mols, &clLists](vec<float>& p, int c_idx) => float {
 	int mol_idx = c_idx / 6;
 	int op_num = c_idx % 6;
 	
-	MoveOperation m_op = (MoveOperation)op_num;
+	MOVE_OPERATION m_op = (MOVE_OPERATION)op_num;
 	Molecule cur_mol = mols[mol_idx];
 	
 	old_mol_sum = cllLists.totalDistance(cur_mol);

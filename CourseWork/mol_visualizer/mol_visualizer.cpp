@@ -27,10 +27,11 @@ glm::vec3 appos_point;
 
 
 void packMoleculeToCube() {
-    boost::tuple<glm::vec3, boost::tuple<float, float, float>> rect_shell = mol.GetRectangularShell();
-    appos_point = rect_shell.get<0>();
-    boost::tuple<float, float, float> sizes = rect_shell.get<1>();
-    float a = sizes.get<0>(), b = sizes.get<1>(), c = sizes.get<2>();
+    //boost::tuple<glm::vec3, boost::tuple<float, float, float>> rect_shell = mol.GetRectangularShell();
+    std::tuple<float, float, float> size;
+    std::tie(appos_point, size) = mol.GetRectangularShell();
+    float a, b, c;
+    std::tie(a, b, c) = size;
     std::cout << "shell sizes: " << a << "x" << b << "x" << c << std::endl;
 
     cubePoints.emplace_back(appos_point);

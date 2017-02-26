@@ -8,14 +8,10 @@ std::string vec_to_string(glm::vec3 vec) {
     return "(" + std::to_string(vec.x) + ", " + std::to_string(vec.y) + ", " + std::to_string(vec.z) + ")";
 }
 
-int pmols::Molecule::molecules_count = 0;
-
 int pmols::Atom::obatom_count = 0;
 int pmols::Atom::atoms_count = 0;
 
 pmols::Molecule::Molecule(std::string file_path) {
-    mol_id = molecules_count;
-    molecules_count++;
 
     OpenBabel::OBConversion conversion;
 
@@ -43,7 +39,6 @@ pmols::Molecule::Molecule(std::string file_path) {
         atoms[idx].coord =  glm::vec3(atom->GetX(), atom->GetY(), atom->GetZ());
         atoms[idx].vdw_radius = (float)table.GetVdwRad(atomic_num);
         atoms[idx].radius = atoms[idx].vdw_radius / 5.0f;
-        atoms[idx].parent_mol_id = mol_id;
     }
 
     int i = 0;
@@ -147,8 +142,6 @@ void pmols::Molecule::RotateOn(glm::vec3 point, float angle, glm::vec3 dir) {
 }
 
 pmols::Molecule::Molecule(const Molecule &other) {
-    mol_id = molecules_count;
-    molecules_count++;
     atoms_count = other.atoms_count;
     bonds_count = other.bonds_count;
 
@@ -161,7 +154,6 @@ pmols::Molecule::Molecule(const Molecule &other) {
 
     for (int i = 0; i < atoms_count; ++i) {
         atoms[i] = other.atoms[i];
-        atoms[i].parent_mol_id = mol_id;
 
         other_current[other.atoms + i] = atoms + i;
     }
@@ -188,11 +180,8 @@ OpenBabel::OBMol pmols::Molecule::OBMol() {
     return cur_mol;
 }
 
-int pmols::Molecule::GetMolId() {
-    return mol_id;
-}
 
-boost::tuple<glm::vec3, boost::tuple<float, float, float>> pmols::Molecule::GetRectangularShell() {
+std::tuple<glm::vec3, std::tuple<float, float, float>> pmols::Molecule::GetRectangularShell() {
     float min_x = GetAtom(0).coord.x - GetAtom(0).vdw_radius,
             max_x = min_x + GetAtom(0).vdw_radius;
 
@@ -234,10 +223,39 @@ boost::tuple<glm::vec3, boost::tuple<float, float, float>> pmols::Molecule::GetR
         }
     }
 
-    boost::tuple<float, float, float> sizes(std::fabs(max_x - min_x), std::fabs(max_y - min_y), std::fabs(max_z - min_z));
+    std::tuple<float, float, float> sizes(std::fabs(max_x - min_x), std::fabs(max_y - min_y), std::fabs(max_z - min_z));
     glm::vec3 appos_point(min_x, min_y, min_z);
 
-    return boost::make_tuple(appos_point, sizes);
+    return std::make_tuple(appos_point, sizes);
+}
+
+pmols::Molecule &pmols::Molecule::operator=(const pmols::Molecule &other) {
+    if(this != &other) {
+        atoms_count = other.atoms_count;
+        bonds_count = other.bonds_count;
+
+        bar_vec = other.bar_vec;
+        mol = other.mol;
+
+        atoms = new Atom[atoms_count];
+        bonds = new Bond[bonds_count];
+        std::map<Atom*, Atom*> other_current;
+
+        for (int i = 0; i < atoms_count; ++i) {
+            atoms[i] = other.atoms[i];
+            other_current[other.atoms + i] = atoms + i;
+        }
+
+        for (int i = 0; i < bonds_count; ++i) {
+            Atom *b_atom = other_current[other.bonds[i].begin];
+            Atom *e_atom = other_current[other.bonds[i].end];
+            bonds[i].begin = b_atom;
+            bonds[i].end = e_atom;
+            bonds[i].length = other.bonds[i].length;
+        }
+    }
+
+    return *this;
 }
 
 

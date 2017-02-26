@@ -41,8 +41,6 @@ namespace pmols {
         bool operator==(const Colorf &other);
     };
 
-    const Colorf BLACK(0.0, 0.0, 0.0);
-
     struct Atom {
         static int obatom_count;
         static int atoms_count;
@@ -61,6 +59,7 @@ namespace pmols {
         Atom() : color(Colorf(0.0, 0.0, 0.0)) {
             atoms_count++;
             atom_idx = atoms_count;
+            parent_mol_id = 0;
         };
 
         Atom(const Atom &other) : color(other.color) {
@@ -74,7 +73,7 @@ namespace pmols {
         }
 
         std::string toString() {
-            std::string atom_info = "{" + symbol + ", " + vec_to_string(coord) + "}";
+            std::string atom_info = "{" + std::to_string(parent_mol_id) + ", " + symbol + ", " + vec_to_string(coord) + "}";
             return atom_info;
         }
 
@@ -83,7 +82,7 @@ namespace pmols {
         OpenBabel::OBAtom OBAtom() {
             OpenBabel::OBAtom atom;
             atom.SetVector(coord.x, coord.y, coord.z);
-            atom.SetType(symbol);
+//            atom.SetType(symbol);
             obatom_count++;
             atom_id = obatom_count;
             atom.SetIdx(obatom_count);
@@ -105,6 +104,7 @@ namespace pmols {
     public:
         Molecule(std::string file_path);
         Molecule(const Molecule &other);
+        Molecule &operator=(Molecule const &other);
         OpenBabel::OBMol OBMol();
         int AtomsCount();
         int BondsCount();
@@ -117,15 +117,12 @@ namespace pmols {
         void RotateZ(float gamma);
         void RotateOn(glm::vec3 point, float angle, glm::vec3 dir);
         void Translate(glm::vec3 v);
-        boost::tuple<glm::vec3, boost::tuple<float, float, float>> GetRectangularShell();
-        int GetMolId();
+        std::tuple<glm::vec3, std::tuple<float, float, float>> GetRectangularShell();
         ~Molecule();
     private:
-        static int molecules_count;
         glm::vec3 bar_vec;
         int atoms_count;
         int bonds_count;
-        int mol_id;
         OpenBabel::OBMol mol;
         Atom *atoms;
         Bond *bonds;

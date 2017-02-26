@@ -8,5 +8,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 add_subdirectory(pmols)
 add_subdirectory(mols_packer)
 add_subdirectory(mol_visualizer)
-
-
+add_subdirectory(tests)

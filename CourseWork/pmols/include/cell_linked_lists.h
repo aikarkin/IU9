@@ -1,4 +1,6 @@
 #include <mol.h>
+#include <functional>
+#include <memory>
 
 #ifndef COURSEWORK_CELLLINKEDLISTS_H
 #define COURSEWORK_CELLLINKEDLISTS_H
@@ -6,59 +8,63 @@
 #endif //COURSEWORK_CELLLINKEDLISTS_H
 
 namespace pmols {
-
     class CLLNeighbourCells;
 
-    enum MoveOperation {
-        ROT_X, ROT_Y, ROT_Z, TRANS_X, TRANS_Y, TRANS_Z
+    enum MOVE_OP {
+        TRANS_X,
+        TRANS_Y,
+        TRANS_Z,
+        ROT_X,
+        ROT_Y,
+        ROT_Z,
     };
 
+    typedef std::function<float(pmols::Atom*, pmols::Atom*)> DistFunc;
+
     class CellLinkedLists {
+        friend class CLLNeighbourCells;
     public:
-        CellLinkedLists();
-        CellLinkedLists(float cell_length, float len_a, float len_b, float len_c);
-        void setCellLength(float cell_length);
-        void setSize(float len_a, float len_b, float len_c);
-        std::list<Atom> getCellListByInd(int i, int j, int k);
-        float GetCellLength();
+        CellLinkedLists() {};
+        CellLinkedLists(std::vector<Molecule> &mols, float cellLen, DistFunc distFunc);
+        CellLinkedLists(float cellLen, DistFunc distFunc);
+        void Set(float cellLen, DistFunc distFunc);
+        void FormCellLinkedLists();
 
-        CLLNeighbourCells getNeighbourCells(Atom &atom);
+        Molecule &GetMol(int molIdx);
+        bool AddMol(Molecule &mol);
+        bool MoveMol(int molIdx, MOVE_OP moveOp, float val);
+        void CancelMove();
+        float MolDist(int molIdx);
+        void SaveToCSV(std::string file_path);
 
-        bool addAtom(Atom &atom);
-        bool remAtom(Atom &atom);
-        bool repAtom(Atom &old_atom, Atom &new_atom);
-
-        bool addMol(Molecule &mol);
-        bool remMol(Molecule &mol);
-        bool repMol(Molecule &old_mol, Molecule &new_mol);
-        bool moveMol(Molecule &mol, MoveOperation move_op, float val);
-
-        float totalNAtomsDist(Molecule &mol);
-
-        boost::tuple<int, int, int> atomsCountPerAxis();
-        void saveToCSV(std::string file_path);
+        size_t MolsCount();
         ~CellLinkedLists();
-
     private:
-        void formCellLinkedLists();
-        void freeAtomGrid();
-        std::list<Atom> ***atom_grid;
-        bool size_setted;
-        bool cell_len_setted;
+        void calcBoundingBox();
+        bool molInsideBox(Molecule& mol);
+        void repMol(Molecule &old_mol, Molecule &new_mol);
+        std::tuple<int, int, int> getCellIndex(Atom &atom);
 
-        int atoms_count_x;
-        int atoms_count_y;
-        int atoms_count_z;
+        int atoms_count_x, atoms_count_y, atoms_count_z;
+
+        glm::vec3 appos_point;
+        float box_length, box_width, box_height;
 
         float cell_len;
+        DistFunc dist_func;
 
-        float box_width, box_length, box_height;
+        bool formed;
+        bool mol_moved;
+
+        std::vector<Molecule> mols;
+        std::list<Atom> ***atom_grid;
+        std::shared_ptr<std::tuple<Molecule, int>> last_mol;
     };
 
 
     class CLLNeighbourCells {
     public:
-        CLLNeighbourCells(CellLinkedLists *, Atom &);
+        CLLNeighbourCells(CellLinkedLists *cellLinkedLists, Atom &atom);
         std::list<Atom> next();
         bool hasNext();
         void reset();
