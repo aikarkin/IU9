@@ -125,32 +125,59 @@ mols_packer/fast:
 	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/build
 .PHONY : mols_packer/fast
 
-mols_packer.o: mols_packer.cpp.o
+src/conf_parser.o: src/conf_parser.cpp.o
 
-.PHONY : mols_packer.o
+.PHONY : src/conf_parser.o
 
 # target to build an object file
-mols_packer.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o
-.PHONY : mols_packer.cpp.o
+src/conf_parser.cpp.o:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o
+.PHONY : src/conf_parser.cpp.o
 
-mols_packer.i: mols_packer.cpp.i
+src/conf_parser.i: src/conf_parser.cpp.i
 
-.PHONY : mols_packer.i
+.PHONY : src/conf_parser.i
 
 # target to preprocess a source file
-mols_packer.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.i
-.PHONY : mols_packer.cpp.i
+src/conf_parser.cpp.i:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.i
+.PHONY : src/conf_parser.cpp.i
 
-mols_packer.s: mols_packer.cpp.s
+src/conf_parser.s: src/conf_parser.cpp.s
 
-.PHONY : mols_packer.s
+.PHONY : src/conf_parser.s
 
 # target to generate assembly for a file
-mols_packer.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.s
-.PHONY : mols_packer.cpp.s
+src/conf_parser.cpp.s:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.s
+.PHONY : src/conf_parser.cpp.s
+
+src/mols_packer.o: src/mols_packer.cpp.o
+
+.PHONY : src/mols_packer.o
+
+# target to build an object file
+src/mols_packer.cpp.o:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o
+.PHONY : src/mols_packer.cpp.o
+
+src/mols_packer.i: src/mols_packer.cpp.i
+
+.PHONY : src/mols_packer.i
+
+# target to preprocess a source file
+src/mols_packer.cpp.i:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.i
+.PHONY : src/mols_packer.cpp.i
+
+src/mols_packer.s: src/mols_packer.cpp.s
+
+.PHONY : src/mols_packer.s
+
+# target to generate assembly for a file
+src/mols_packer.cpp.s:
+	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.s
+.PHONY : src/mols_packer.cpp.s
 
 # Help Target
 help:
@@ -161,9 +188,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... mols_packer"
-	@echo "... mols_packer.o"
-	@echo "... mols_packer.i"
-	@echo "... mols_packer.s"
+	@echo "... src/conf_parser.o"
+	@echo "... src/conf_parser.i"
+	@echo "... src/conf_parser.s"
+	@echo "... src/mols_packer.o"
+	@echo "... src/mols_packer.i"
+	@echo "... src/mols_packer.s"
 .PHONY : help
 
 

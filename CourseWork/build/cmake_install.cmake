@@ -37,6 +37,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/alex/dev/src/cpp/CourseWork/build/pmols/cmake_install.cmake")
   include("/home/alex/dev/src/cpp/CourseWork/build/mols_packer/cmake_install.cmake")
   include("/home/alex/dev/src/cpp/CourseWork/build/mol_visualizer/cmake_install.cmake")
+  include("/home/alex/dev/src/cpp/CourseWork/build/tests/cmake_install.cmake")
 
 endif()
 

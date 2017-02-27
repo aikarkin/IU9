@@ -1,14 +1,4 @@
 {
-    "lattice": {
-        "box_length": 10.0,
-        "box_width": 10.0,
-        "box_height": 10.0,
-        "expansivity": 1.5,
-        "substance": "H2O",
-        "mol_file": "../resources/Structure3D_CID_962.sdf",
-        "out_file": "../resources/Structure3D_CID_962_10x10x10.mol2",
-        "out_format": "mol2"
-    },
     "packing_params": {
         "steps": {
             "trans_x": 1.2,
@@ -32,7 +22,6 @@
         }
     },
     "cell_linked_lists": {
-        "distance_func": "Lennard Jones potential",
         "cell_length": 3.0
     }
 }

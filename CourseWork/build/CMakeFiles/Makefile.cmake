@@ -16,6 +16,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../mol_visualizer/CMakeLists.txt"
   "../mols_packer/CMakeLists.txt"
   "../pmols/CMakeLists.txt"
+  "../tests/CMakeLists.txt"
   "/usr/local/lib/cmake/RapidJSON/RapidJSONConfig.cmake"
   "/usr/local/lib/cmake/RapidJSON/RapidJSONConfigVersion.cmake"
   "/usr/local/share/cmake-3.5/Modules/CMakeCCompiler.cmake.in"
@@ -121,6 +122,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "pmols/CMakeFiles/CMakeDirectoryInformation.cmake"
   "mols_packer/CMakeFiles/CMakeDirectoryInformation.cmake"
   "mol_visualizer/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -128,4 +130,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "pmols/CMakeFiles/pmols.dir/DependInfo.cmake"
   "mols_packer/CMakeFiles/mols_packer.dir/DependInfo.cmake"
   "mol_visualizer/CMakeFiles/mol_visualizer.dir/DependInfo.cmake"
+  "tests/CMakeFiles/tests.dir/DependInfo.cmake"
   )

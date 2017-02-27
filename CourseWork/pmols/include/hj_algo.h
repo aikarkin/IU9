@@ -18,36 +18,36 @@ namespace pmols {
     // WARNING: don't change order of field, it used in parsing
     struct HJParams {
         // size of box to be packed
-        float box_length; // 0
-        float box_width; // 1
-        float box_height; // 2
-        float expansivity; // 3
+        float box_length = 0.f;    // (0)  !!!
+        float box_width = 0.f;     // (1)  !!!
+        float box_height = 0.f;    // (2)  !!!
+        float expansivity = 1.f;   // (3)
 
         // initial step in matched directions
-        float step_x; // 4
-        float step_y; // 5
-        float step_z; // 6
-        float step_alpha; // 7
-        float step_betta; // 8
-        float step_gamma; // 9
+        float step_x = 1.f;         // (4)
+        float step_y = 1.f;         // (5)
+        float step_z = 1.f;         // (6)
+        float step_alpha = 90.f;    // (7)
+        float step_betta = 90.f;    // (8)
+        float step_gamma = 90.f;    // (9)
 
         // Hooke Jeeves pattern search step coefficient
-        float lambda; //10
-        float step_coefficient; // 11
+        float lambda = 2.0;             // (10)
+        float step_coefficient = 0.25f; // (11)
 
         // precision of Hooke Jeeves algorithm
-        float trans_eps; // 12
-        float rot_eps; // 13
-        float lj_epsilon; // 14
-        float lj_sigma; // 15
-        float cell_length; // 16
+        float trans_eps = 0.1f;     // (12)
+        float rot_eps = 0.1f;       // (13)
+        float lj_epsilon = 0.648f;  // (14)
+        float lj_sigma = 3.153f;    // (15)
+        float cell_length = 0.0f;   // (16) !!!
 
         // input/output file paths and output file format
-        std::string substance;
-        std::string mol_file;
-        std::string out_file;
-        std::string out_format;
-        std::string distance_func;
+        std::string substance = "";   // (17) !!
+        std::string mol_file = "";    // (18) !!!
+        std::string out_file = "";    // (19) !!!
+        std::string out_format = "";  // (20) !!!
+        DistFunc distanceFunc;        // (21)
 
         std::string to_string() {
             std::stringstream ss;
@@ -73,10 +73,11 @@ namespace pmols {
                       << "\tlj_epsilon: " << lj_epsilon << "; \n"
                       << "\tlj_sigma: " << lj_sigma << "; \n"
                       << "\tcell_length: " << cell_length << "; \n"
-                      << "\tdistance_func: " << distance_func.c_str()
                       << "\n}";
             return ss.str();
         }
+        
+        bool val_setted[22] = {0};
     };
 
     class HJPacker {

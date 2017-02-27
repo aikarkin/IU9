@@ -84,7 +84,7 @@ pmols/preinstall:
 pmols/CMakeFiles/pmols.dir/all:
 	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/depend
 	$(MAKE) -f pmols/CMakeFiles/pmols.dir/build.make pmols/CMakeFiles/pmols.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=5,6,7,8 "Built target pmols"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=6,7,8,9 "Built target pmols"
 .PHONY : pmols/CMakeFiles/pmols.dir/all
 
 # Include target in all.
@@ -139,7 +139,7 @@ mols_packer/preinstall:
 mols_packer/CMakeFiles/mols_packer.dir/all: pmols/CMakeFiles/pmols.dir/all
 	$(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/depend
 	$(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=3,4 "Built target mols_packer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=3,4,5 "Built target mols_packer"
 .PHONY : mols_packer/CMakeFiles/mols_packer.dir/all
 
 # Include target in all.
@@ -149,7 +149,7 @@ all: mols_packer/CMakeFiles/mols_packer.dir/all
 
 # Build rule for subdir invocation for target.
 mols_packer/CMakeFiles/mols_packer.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles 7
 	$(MAKE) -f CMakeFiles/Makefile2 mols_packer/CMakeFiles/mols_packer.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles 0
 .PHONY : mols_packer/CMakeFiles/mols_packer.dir/rule
@@ -221,6 +221,61 @@ mol_visualizer/CMakeFiles/mol_visualizer.dir/clean:
 
 # clean rule for target.
 clean: mol_visualizer/CMakeFiles/mol_visualizer.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory tests
+
+# Convenience name for "all" pass in the directory.
+tests/all: tests/CMakeFiles/tests.dir/all
+
+.PHONY : tests/all
+
+# Convenience name for "clean" pass in the directory.
+tests/clean: tests/CMakeFiles/tests.dir/clean
+
+.PHONY : tests/clean
+
+# Convenience name for "preinstall" pass in the directory.
+tests/preinstall:
+
+.PHONY : tests/preinstall
+
+#=============================================================================
+# Target rules for target tests/CMakeFiles/tests.dir
+
+# All Build rule for target.
+tests/CMakeFiles/tests.dir/all: pmols/CMakeFiles/pmols.dir/all
+	$(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/depend
+	$(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=10,11 "Built target tests"
+.PHONY : tests/CMakeFiles/tests.dir/all
+
+# Include target in all.
+all: tests/CMakeFiles/tests.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+tests/CMakeFiles/tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 tests/CMakeFiles/tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles 0
+.PHONY : tests/CMakeFiles/tests.dir/rule
+
+# Convenience name for target.
+tests: tests/CMakeFiles/tests.dir/rule
+
+.PHONY : tests
+
+# clean rule for target.
+tests/CMakeFiles/tests.dir/clean:
+	$(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/clean
+.PHONY : tests/CMakeFiles/tests.dir/clean
+
+# clean rule for target.
+clean: tests/CMakeFiles/tests.dir/clean
 
 .PHONY : clean
 

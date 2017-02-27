@@ -1,0 +1,37 @@
+{
+    "lattice": {
+        "box_length": 10.0,
+        "box_width": 10.0,
+        "box_height": 10.0,
+        "expansivity": 1.2,
+        "substance": "H2O",
+        "mol_file": "../resources/Structure3D_CID_962.sdf",
+        "out_file": "../resources/Structure3D_CID_962_10x10x10.mol2",
+        "out_format": "mol2"
+    },
+    "packing_params": {
+        "steps": {
+            "trans_x": 1.2,
+            "trans_y": 1.2,
+            "trans_z": 1.2,
+            "rot_x": 90,
+            "rot_y": 90,
+            "rot_z": 90,
+            "dec_coefficient": 0.125
+        },
+        "precision": {
+            "trans_eps": 0.05,
+            "rot_eps": 0.5
+        },
+        "lambda": 2,
+        "lennard_jones_potential": {
+            "H2O": {
+                "epsilon": 0.6368,
+                "sigma": 3.1506
+            }
+        }
+    },
+    "cell_linked_lists": {
+        "cell_length": 3.5
+    }
+}

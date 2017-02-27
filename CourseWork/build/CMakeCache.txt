@@ -246,6 +246,12 @@ pmols_LIB_DEPENDS:STATIC=general;openbabel;
 //Value Computed by CMake
 pmols_SOURCE_DIR:STATIC=/home/alex/dev/src/cpp/CourseWork/pmols
 
+//Value Computed by CMake
+tests_BINARY_DIR:STATIC=/home/alex/dev/src/cpp/CourseWork/build/tests
+
+//Value Computed by CMake
+tests_SOURCE_DIR:STATIC=/home/alex/dev/src/cpp/CourseWork/tests
+
 
 ########################
 # INTERNAL cache entries
@@ -351,7 +357,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

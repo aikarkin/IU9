@@ -4,6 +4,8 @@
 
 #include<iostream>
 #include<cell_linked_lists.h>
+#include<boost/any.hpp>
+#include<functional>
 
 const float EXP = 1.0;
 
@@ -127,6 +129,6 @@ void testCellLinkedLists(std::string mol_file, float box_length, float box_width
 
 int main() {
     testCellLinkedLists("../resources/Structure3D_CID_962.sdf", 10, 10, 10);
-
+    
     return 0;
 }

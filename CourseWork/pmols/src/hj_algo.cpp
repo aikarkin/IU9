@@ -34,33 +34,8 @@ void pmols::HJPacker::init() {
     atoms_count_y = (int)ceilf(exp_width / shell_width);
     atoms_count_z = (int)ceilf(exp_height / shell_height);
 
-    float max_radius = 0;
-    float radius;
 
-    std::cout << "atoms_count: " << atoms_count_x << " " << atoms_count_y << " " << atoms_count_z << std::endl;
-
-    for (int i = 0; i < mol.AtomsCount(); ++i) {
-        radius = mol.GetAtom(i).vdw_radius;
-        if (radius > max_radius)
-            max_radius = radius;
-    }
-
-    std::cout << "max atom radius: " << max_radius << std::endl;
-
-
-    cellLinkedLists = std::make_shared<CellLinkedLists>(2.5 * max_radius, [](Atom *a, Atom *b) -> float {
-        //float dist = std::fabs((float)glm::distance(a->coord, b->coord) - a->vdw_radius - b->vdw_radius);
-        const float EPS_4 = /*38.5472f*/ 1.f;
-//        const float SIGMA = 3.1506f;
-        const float SIGMA = /*2.352f*/ 2.06;
-
-        float dist = (float)glm::distance(a->coord, b->coord);
-        float energy = EPS_4 * (std::pow(SIGMA/dist, 12.f) - std::pow(SIGMA/dist, 6.f));
-         if (a == NULL || b == NULL)
-            return 10.0f;
-         else
-             return energy;
-    });
+    cellLinkedLists = std::make_shared<CellLinkedLists>(params.cell_length, params.distanceFunc);
 
     float shift_x, shift_y, shift_z;
 

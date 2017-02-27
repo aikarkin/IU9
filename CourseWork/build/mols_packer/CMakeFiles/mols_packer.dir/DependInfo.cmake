@@ -4,7 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/alex/dev/src/cpp/CourseWork/mols_packer/mols_packer.cpp" "/home/alex/dev/src/cpp/CourseWork/build/mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o"
+  "/home/alex/dev/src/cpp/CourseWork/mols_packer/src/conf_parser.cpp" "/home/alex/dev/src/cpp/CourseWork/build/mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o"
+  "/home/alex/dev/src/cpp/CourseWork/mols_packer/src/mols_packer.cpp" "/home/alex/dev/src/cpp/CourseWork/build/mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -12,6 +13,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/local/include/openbabel-2.0"
   "../mols_packer/../pmols/include"
+  "../mols_packer/include"
   "../pmols/include"
   )
 

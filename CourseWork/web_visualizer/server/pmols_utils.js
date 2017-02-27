@@ -62,9 +62,10 @@ function reqParamsToCmdArgs(reqParams) {
         '-L': reqParams.length,
         '-W': reqParams.width,
         '-H': reqParams.height,
-        '-i': reqParams.molFile,
-        '-f': reqParams.format,
+        '-I': reqParams.molFile,
+        '-F': reqParams.format,
         '-O': reqParams.outDir + reqParams.outFile
+        '-c': 'default.json'
     }
     return kargs;
 }

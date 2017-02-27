@@ -57,44 +57,70 @@ include mols_packer/CMakeFiles/mols_packer.dir/progress.make
 # Include the compile flags for this target's objects.
 include mols_packer/CMakeFiles/mols_packer.dir/flags.make
 
-mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o: mols_packer/CMakeFiles/mols_packer.dir/flags.make
-mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o: ../mols_packer/mols_packer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o"
-	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mols_packer.dir/mols_packer.cpp.o -c /home/alex/dev/src/cpp/CourseWork/mols_packer/mols_packer.cpp
+mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o: mols_packer/CMakeFiles/mols_packer.dir/flags.make
+mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o: ../mols_packer/src/mols_packer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o"
+	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o -c /home/alex/dev/src/cpp/CourseWork/mols_packer/src/mols_packer.cpp
 
-mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mols_packer.dir/mols_packer.cpp.i"
-	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/mols_packer/mols_packer.cpp > CMakeFiles/mols_packer.dir/mols_packer.cpp.i
+mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mols_packer.dir/src/mols_packer.cpp.i"
+	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/mols_packer/src/mols_packer.cpp > CMakeFiles/mols_packer.dir/src/mols_packer.cpp.i
 
-mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mols_packer.dir/mols_packer.cpp.s"
-	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/mols_packer/mols_packer.cpp -o CMakeFiles/mols_packer.dir/mols_packer.cpp.s
+mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mols_packer.dir/src/mols_packer.cpp.s"
+	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/mols_packer/src/mols_packer.cpp -o CMakeFiles/mols_packer.dir/src/mols_packer.cpp.s
 
-mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o.requires:
+mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o.requires:
 
-.PHONY : mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o.requires
+.PHONY : mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o.requires
 
-mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o.provides: mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o.requires
-	$(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o.provides.build
-.PHONY : mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o.provides
+mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o.provides: mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o.requires
+	$(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o.provides.build
+.PHONY : mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o.provides
 
-mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o.provides.build: mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o
+mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o.provides.build: mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o
+
+
+mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o: mols_packer/CMakeFiles/mols_packer.dir/flags.make
+mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o: ../mols_packer/src/conf_parser.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o"
+	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o -c /home/alex/dev/src/cpp/CourseWork/mols_packer/src/conf_parser.cpp
+
+mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mols_packer.dir/src/conf_parser.cpp.i"
+	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/dev/src/cpp/CourseWork/mols_packer/src/conf_parser.cpp > CMakeFiles/mols_packer.dir/src/conf_parser.cpp.i
+
+mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mols_packer.dir/src/conf_parser.cpp.s"
+	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/dev/src/cpp/CourseWork/mols_packer/src/conf_parser.cpp -o CMakeFiles/mols_packer.dir/src/conf_parser.cpp.s
+
+mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o.requires:
+
+.PHONY : mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o.requires
+
+mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o.provides: mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o.requires
+	$(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o.provides.build
+.PHONY : mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o.provides
+
+mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o.provides.build: mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o
 
 
 # Object files for target mols_packer
 mols_packer_OBJECTS = \
-"CMakeFiles/mols_packer.dir/mols_packer.cpp.o"
+"CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o" \
+"CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o"
 
 # External object files for target mols_packer
 mols_packer_EXTERNAL_OBJECTS =
 
-../bin/mols_packer: mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o
+../bin/mols_packer: mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o
+../bin/mols_packer: mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o
 ../bin/mols_packer: mols_packer/CMakeFiles/mols_packer.dir/build.make
 ../bin/mols_packer: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
 ../bin/mols_packer: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
 ../bin/mols_packer: ../lib/libpmols.a
 ../bin/mols_packer: mols_packer/CMakeFiles/mols_packer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../../bin/mols_packer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../../bin/mols_packer"
 	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mols_packer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -102,7 +128,8 @@ mols_packer/CMakeFiles/mols_packer.dir/build: ../bin/mols_packer
 
 .PHONY : mols_packer/CMakeFiles/mols_packer.dir/build
 
-mols_packer/CMakeFiles/mols_packer.dir/requires: mols_packer/CMakeFiles/mols_packer.dir/mols_packer.cpp.o.requires
+mols_packer/CMakeFiles/mols_packer.dir/requires: mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o.requires
+mols_packer/CMakeFiles/mols_packer.dir/requires: mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o.requires
 
 .PHONY : mols_packer/CMakeFiles/mols_packer.dir/requires
 
