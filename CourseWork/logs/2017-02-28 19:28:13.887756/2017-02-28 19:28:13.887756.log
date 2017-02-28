@@ -1,0 +1,4024 @@
+HJParams{
+	box_length:10; 
+	box_width:10; 
+	box_height:10; 
+	step_x:1.2; 
+	step_y:1.2; 
+	step_z:1.2; 
+	step_alpha:90; 
+	step_betta:90; 
+	step_gamma:90; 
+	lambda:2; 
+	expansivity:1.5; 
+	step_coefficient:0.125; 
+	trans_eps:1e-05; 
+	rot_eps:0.0001; 
+	mol_file:../resources/Structure3D_CID_962.sdf; 
+	out_file:../logs/2017-02-28 19:28:13.887756/Structure3D_CID_962_10x10x10__2017-02-28 19:28:13.887756.mol2; 
+	out_format:mol2; 
+	substance: H2O; 
+	lj_epsilon: 0.6368; 
+	lj_sigma: 2; 
+	cell_length: 3; 
+
+}
+mol red: 3
+mols_count: 125
+init success!
+objective function value: -1050.38
+STEP #1
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -1050.38
+  prevTotalDist: -1050.38
+  totalDist: -1050.38
+	max rotation step: 90
+	max translation step: 1.2
+
+	min rotation step: 90
+	min translation step: 1.2
+ —— objective func after iteration: -1174.56
+——————————————————————————————————————————————
+STEP #2
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: 7.02431e+08
+  prevTotalDist: -1050.38
+  totalDist: 7.02431e+08
+	max rotation step: 90
+	max translation step: 1.2
+
+	min rotation step: 11.25
+	min translation step: 0.15
+ —— objective func after iteration: 3.51224e+08
+step change_extension
+——————————————————————————————————————————————
+STEP #3
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: 3.51224e+08
+  prevTotalDist: -1050.38
+  totalDist: 3.51224e+08
+	max rotation step: 90
+	max translation step: 1.2
+
+	min rotation step: 11.25
+	min translation step: 0.15
+ —— objective func after iteration: 3.51215e+08
+——————————————————————————————————————————————
+STEP #4
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: 1.24365e+07
+  prevTotalDist: -1050.38
+  totalDist: 1.24365e+07
+	max rotation step: 90
+	max translation step: 1.2
+
+	min rotation step: 1.40625
+	min translation step: 0.01875
+ —— objective func after iteration: 6.21654e+06
+step change_extension
+——————————————————————————————————————————————
+STEP #5
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: 6.21654e+06
+  prevTotalDist: -1050.38
+  totalDist: 6.21654e+06
+	max rotation step: 90
+	max translation step: 1.2
+
+	min rotation step: 1.40625
+	min translation step: 0.01875
+ —— objective func after iteration: 6.21651e+06
+——————————————————————————————————————————————
+STEP #6
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1216.9
+  prevTotalDist: -1050.38
+  totalDist: -1216.9
+	max rotation step: 11.25
+	max translation step: 0.15
+
+	min rotation step: 0.175781
+	min translation step: 0.00234375
+ —— objective func after iteration: -1301.53
+no step change
+——————————————————————————————————————————————
+STEP #7
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1038.92
+  prevTotalDist: -1301.53
+  totalDist: -1038.92
+	max rotation step: 11.25
+	max translation step: 0.15
+
+	min rotation step: 0.175781
+	min translation step: 0.00234375
+ —— objective func after iteration: -1233.02
+step change_extension
+——————————————————————————————————————————————
+STEP #8
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -1233.02
+  prevTotalDist: -1301.53
+  totalDist: -1233.02
+	max rotation step: 11.25
+	max translation step: 0.15
+
+	min rotation step: 0.175781
+	min translation step: 0.00234375
+ —— objective func after iteration: -1245.64
+——————————————————————————————————————————————
+STEP #9
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1426.71
+  prevTotalDist: -1301.53
+  totalDist: -1426.71
+	max rotation step: 1.40625
+	max translation step: 0.15
+
+	min rotation step: 0.0219727
+	min translation step: 0.000292969
+ —— objective func after iteration: -1450.93
+no step change
+——————————————————————————————————————————————
+STEP #10
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1264.39
+  prevTotalDist: -1450.93
+  totalDist: -1264.39
+	max rotation step: 1.40625
+	max translation step: 0.15
+
+	min rotation step: 0.0219727
+	min translation step: 0.000292969
+ —— objective func after iteration: -1380.16
+step change_extension
+——————————————————————————————————————————————
+STEP #11
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -1380.16
+  prevTotalDist: -1450.93
+  totalDist: -1380.16
+	max rotation step: 1.40625
+	max translation step: 0.15
+
+	min rotation step: 0.0219727
+	min translation step: 0.000292969
+ —— objective func after iteration: -1388.46
+——————————————————————————————————————————————
+STEP #12
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1486.83
+  prevTotalDist: -1450.93
+  totalDist: -1486.83
+	max rotation step: 1.40625
+	max translation step: 0.15
+
+	min rotation step: 0.00274658
+	min translation step: 3.66211e-05
+ —— objective func after iteration: -1510.46
+no step change
+——————————————————————————————————————————————
+STEP #13
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1522.42
+  prevTotalDist: -1510.46
+  totalDist: -1522.42
+	max rotation step: 1.40625
+	max translation step: 0.15
+
+	min rotation step: 0.00274658
+	min translation step: 3.66211e-05
+ —— objective func after iteration: -1537.15
+no step change
+——————————————————————————————————————————————
+STEP #14
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1539.52
+  prevTotalDist: -1537.15
+  totalDist: -1539.52
+	max rotation step: 1.40625
+	max translation step: 0.15
+
+	min rotation step: 0.00274658
+	min translation step: 3.66211e-05
+ —— objective func after iteration: -1555.84
+no step change
+——————————————————————————————————————————————
+STEP #15
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1516.04
+  prevTotalDist: -1555.84
+  totalDist: -1516.04
+	max rotation step: 1.40625
+	max translation step: 0.15
+
+	min rotation step: 0.00274658
+	min translation step: 3.66211e-05
+ —— objective func after iteration: -1555.22
+step change_extension
+——————————————————————————————————————————————
+STEP #16
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -1555.22
+  prevTotalDist: -1555.84
+  totalDist: -1555.22
+	max rotation step: 1.40625
+	max translation step: 0.15
+
+	min rotation step: 0.00274658
+	min translation step: 3.66211e-05
+ —— objective func after iteration: -1561.85
+——————————————————————————————————————————————
+STEP #17
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1607.79
+  prevTotalDist: -1555.84
+  totalDist: -1607.79
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1616.62
+no step change
+——————————————————————————————————————————————
+STEP #18
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1621.35
+  prevTotalDist: -1616.62
+  totalDist: -1621.35
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1633.25
+no step change
+——————————————————————————————————————————————
+STEP #19
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1650.88
+  prevTotalDist: -1633.25
+  totalDist: -1650.88
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1658.44
+no step change
+——————————————————————————————————————————————
+STEP #20
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1661.27
+  prevTotalDist: -1658.44
+  totalDist: -1661.27
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1670.04
+no step change
+——————————————————————————————————————————————
+STEP #21
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1683.78
+  prevTotalDist: -1670.04
+  totalDist: -1683.78
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1694.31
+no step change
+——————————————————————————————————————————————
+STEP #22
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1705.46
+  prevTotalDist: -1694.31
+  totalDist: -1705.46
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1714.45
+no step change
+——————————————————————————————————————————————
+STEP #23
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1732.77
+  prevTotalDist: -1714.45
+  totalDist: -1732.77
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1743.26
+no step change
+——————————————————————————————————————————————
+STEP #24
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1756.88
+  prevTotalDist: -1743.26
+  totalDist: -1756.88
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1769.52
+no step change
+——————————————————————————————————————————————
+STEP #25
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1761.04
+  prevTotalDist: -1769.52
+  totalDist: -1761.04
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1780.36
+no step change
+——————————————————————————————————————————————
+STEP #26
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1756.46
+  prevTotalDist: -1780.36
+  totalDist: -1756.46
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1786.69
+no step change
+——————————————————————————————————————————————
+STEP #27
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1797.71
+  prevTotalDist: -1786.69
+  totalDist: -1797.71
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1825.14
+no step change
+——————————————————————————————————————————————
+STEP #28
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1806.2
+  prevTotalDist: -1825.14
+  totalDist: -1806.2
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1838.47
+no step change
+——————————————————————————————————————————————
+STEP #29
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1831.99
+  prevTotalDist: -1838.47
+  totalDist: -1831.99
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1868.12
+no step change
+——————————————————————————————————————————————
+STEP #30
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1868.64
+  prevTotalDist: -1868.12
+  totalDist: -1868.64
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1901.8
+no step change
+——————————————————————————————————————————————
+STEP #31
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1883.06
+  prevTotalDist: -1901.8
+  totalDist: -1883.06
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1924.38
+no step change
+——————————————————————————————————————————————
+STEP #32
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1931.94
+  prevTotalDist: -1924.38
+  totalDist: -1931.94
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1968.25
+no step change
+——————————————————————————————————————————————
+STEP #33
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1942.41
+  prevTotalDist: -1968.25
+  totalDist: -1942.41
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1988.32
+no step change
+——————————————————————————————————————————————
+STEP #34
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1972.6
+  prevTotalDist: -1988.32
+  totalDist: -1972.6
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2013.04
+no step change
+——————————————————————————————————————————————
+STEP #35
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1967.8
+  prevTotalDist: -2013.04
+  totalDist: -1967.8
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2014.24
+no step change
+——————————————————————————————————————————————
+STEP #36
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -1935.69
+  prevTotalDist: -2014.24
+  totalDist: -1935.69
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -1995.53
+step change_extension
+——————————————————————————————————————————————
+STEP #37
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -1995.53
+  prevTotalDist: -2014.24
+  totalDist: -1995.53
+	max rotation step: 1.40625
+	max translation step: 0.01875
+
+	min rotation step: 0.000343323
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2028.9
+——————————————————————————————————————————————
+STEP #38
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2154.6
+  prevTotalDist: -2014.24
+  totalDist: -2154.6
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2185.8
+no step change
+——————————————————————————————————————————————
+STEP #39
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2259.47
+  prevTotalDist: -2185.8
+  totalDist: -2259.47
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2277.55
+no step change
+——————————————————————————————————————————————
+STEP #40
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2316.54
+  prevTotalDist: -2277.55
+  totalDist: -2316.54
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2337.69
+no step change
+——————————————————————————————————————————————
+STEP #41
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2376.95
+  prevTotalDist: -2337.69
+  totalDist: -2376.95
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2389.7
+no step change
+——————————————————————————————————————————————
+STEP #42
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2397.92
+  prevTotalDist: -2389.7
+  totalDist: -2397.92
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2410.77
+no step change
+——————————————————————————————————————————————
+STEP #43
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2412.09
+  prevTotalDist: -2410.77
+  totalDist: -2412.09
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2425.99
+no step change
+——————————————————————————————————————————————
+STEP #44
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2422.14
+  prevTotalDist: -2425.99
+  totalDist: -2422.14
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2437.97
+no step change
+——————————————————————————————————————————————
+STEP #45
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2451.27
+  prevTotalDist: -2437.97
+  totalDist: -2451.27
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2460.96
+no step change
+——————————————————————————————————————————————
+STEP #46
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2479.54
+  prevTotalDist: -2460.96
+  totalDist: -2479.54
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2489.57
+no step change
+——————————————————————————————————————————————
+STEP #47
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2502.48
+  prevTotalDist: -2489.57
+  totalDist: -2502.48
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2513.18
+no step change
+——————————————————————————————————————————————
+STEP #48
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2532.16
+  prevTotalDist: -2513.18
+  totalDist: -2532.16
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2541.8
+no step change
+——————————————————————————————————————————————
+STEP #49
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2544.04
+  prevTotalDist: -2541.8
+  totalDist: -2544.04
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2557.39
+no step change
+——————————————————————————————————————————————
+STEP #50
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2564.96
+  prevTotalDist: -2557.39
+  totalDist: -2564.96
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2580.73
+no step change
+——————————————————————————————————————————————
+STEP #51
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2575.86
+  prevTotalDist: -2580.73
+  totalDist: -2575.86
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2591.83
+no step change
+——————————————————————————————————————————————
+STEP #52
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2565.12
+  prevTotalDist: -2591.83
+  totalDist: -2565.12
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2584.05
+step change_extension
+——————————————————————————————————————————————
+STEP #53
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -2584.05
+  prevTotalDist: -2591.83
+  totalDist: -2584.05
+	max rotation step: 0.175781
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2595.61
+——————————————————————————————————————————————
+STEP #54
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2636.9
+  prevTotalDist: -2591.83
+  totalDist: -2636.9
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2648.07
+no step change
+——————————————————————————————————————————————
+STEP #55
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2671.71
+  prevTotalDist: -2648.07
+  totalDist: -2671.71
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2679.67
+no step change
+——————————————————————————————————————————————
+STEP #56
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2696.23
+  prevTotalDist: -2679.67
+  totalDist: -2696.23
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2704.84
+no step change
+——————————————————————————————————————————————
+STEP #57
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2716.43
+  prevTotalDist: -2704.84
+  totalDist: -2716.43
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2724.54
+no step change
+——————————————————————————————————————————————
+STEP #58
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2729.01
+  prevTotalDist: -2724.54
+  totalDist: -2729.01
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2735.19
+no step change
+——————————————————————————————————————————————
+STEP #59
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2744.18
+  prevTotalDist: -2735.19
+  totalDist: -2744.18
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2750.59
+no step change
+——————————————————————————————————————————————
+STEP #60
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2763.79
+  prevTotalDist: -2750.59
+  totalDist: -2763.79
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2772.32
+no step change
+——————————————————————————————————————————————
+STEP #61
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2785.21
+  prevTotalDist: -2772.32
+  totalDist: -2785.21
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2789.26
+no step change
+——————————————————————————————————————————————
+STEP #62
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2804.09
+  prevTotalDist: -2789.26
+  totalDist: -2804.09
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2807.69
+no step change
+——————————————————————————————————————————————
+STEP #63
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2824.38
+  prevTotalDist: -2807.69
+  totalDist: -2824.38
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2829.94
+no step change
+——————————————————————————————————————————————
+STEP #64
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2841.24
+  prevTotalDist: -2829.94
+  totalDist: -2841.24
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2845.22
+no step change
+——————————————————————————————————————————————
+STEP #65
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2856.29
+  prevTotalDist: -2845.22
+  totalDist: -2856.29
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2860.26
+no step change
+——————————————————————————————————————————————
+STEP #66
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2878.94
+  prevTotalDist: -2860.26
+  totalDist: -2878.94
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2886.24
+no step change
+——————————————————————————————————————————————
+STEP #67
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2900.42
+  prevTotalDist: -2886.24
+  totalDist: -2900.42
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2904.95
+no step change
+——————————————————————————————————————————————
+STEP #68
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2904.6
+  prevTotalDist: -2904.95
+  totalDist: -2904.6
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2918.35
+no step change
+——————————————————————————————————————————————
+STEP #69
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2912.2
+  prevTotalDist: -2918.35
+  totalDist: -2912.2
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2920.39
+no step change
+——————————————————————————————————————————————
+STEP #70
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2923.6
+  prevTotalDist: -2920.39
+  totalDist: -2923.6
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2930.89
+no step change
+——————————————————————————————————————————————
+STEP #71
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2932.87
+  prevTotalDist: -2930.89
+  totalDist: -2932.87
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2941.67
+no step change
+——————————————————————————————————————————————
+STEP #72
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2927.69
+  prevTotalDist: -2941.67
+  totalDist: -2927.69
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2936.88
+step change_extension
+——————————————————————————————————————————————
+STEP #73
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -2936.88
+  prevTotalDist: -2941.67
+  totalDist: -2936.88
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2945.89
+——————————————————————————————————————————————
+STEP #74
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2966.67
+  prevTotalDist: -2941.67
+  totalDist: -2966.67
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2972.8
+no step change
+——————————————————————————————————————————————
+STEP #75
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2985.46
+  prevTotalDist: -2972.8
+  totalDist: -2985.46
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -2991.17
+no step change
+——————————————————————————————————————————————
+STEP #76
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -2995
+  prevTotalDist: -2991.17
+  totalDist: -2995
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3001.53
+no step change
+——————————————————————————————————————————————
+STEP #77
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3018.82
+  prevTotalDist: -3001.53
+  totalDist: -3018.82
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3022.26
+no step change
+——————————————————————————————————————————————
+STEP #78
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3029.53
+  prevTotalDist: -3022.26
+  totalDist: -3029.53
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3034.75
+no step change
+——————————————————————————————————————————————
+STEP #79
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3038.57
+  prevTotalDist: -3034.75
+  totalDist: -3038.57
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3046.43
+no step change
+——————————————————————————————————————————————
+STEP #80
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3049.36
+  prevTotalDist: -3046.43
+  totalDist: -3049.36
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3055.65
+no step change
+——————————————————————————————————————————————
+STEP #81
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3073.64
+  prevTotalDist: -3055.65
+  totalDist: -3073.64
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3076.67
+no step change
+——————————————————————————————————————————————
+STEP #82
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3074.02
+  prevTotalDist: -3076.67
+  totalDist: -3074.02
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3077.93
+no step change
+——————————————————————————————————————————————
+STEP #83
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3082.43
+  prevTotalDist: -3077.93
+  totalDist: -3082.43
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3088.62
+no step change
+——————————————————————————————————————————————
+STEP #84
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3100.2
+  prevTotalDist: -3088.62
+  totalDist: -3100.2
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3102.61
+no step change
+——————————————————————————————————————————————
+STEP #85
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3109.49
+  prevTotalDist: -3102.61
+  totalDist: -3109.49
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3115.66
+no step change
+——————————————————————————————————————————————
+STEP #86
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3119.28
+  prevTotalDist: -3115.66
+  totalDist: -3119.28
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3124.77
+no step change
+——————————————————————————————————————————————
+STEP #87
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3121.19
+  prevTotalDist: -3124.77
+  totalDist: -3121.19
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3129.29
+no step change
+——————————————————————————————————————————————
+STEP #88
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3137.72
+  prevTotalDist: -3129.29
+  totalDist: -3137.72
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3142.87
+no step change
+——————————————————————————————————————————————
+STEP #89
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3146.3
+  prevTotalDist: -3142.87
+  totalDist: -3146.3
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3152.59
+no step change
+——————————————————————————————————————————————
+STEP #90
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3141.71
+  prevTotalDist: -3152.59
+  totalDist: -3141.71
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3150.89
+step change_extension
+——————————————————————————————————————————————
+STEP #91
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3150.89
+  prevTotalDist: -3152.59
+  totalDist: -3150.89
+	max rotation step: 0.0219727
+	max translation step: 0.01875
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3154.05
+——————————————————————————————————————————————
+STEP #92
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3173.42
+  prevTotalDist: -3152.59
+  totalDist: -3173.42
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3176.64
+no step change
+——————————————————————————————————————————————
+STEP #93
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3178.72
+  prevTotalDist: -3176.64
+  totalDist: -3178.72
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3185
+no step change
+——————————————————————————————————————————————
+STEP #94
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3186.78
+  prevTotalDist: -3185
+  totalDist: -3186.78
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3195.17
+no step change
+——————————————————————————————————————————————
+STEP #95
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3187.94
+  prevTotalDist: -3195.17
+  totalDist: -3187.94
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3198.47
+no step change
+——————————————————————————————————————————————
+STEP #96
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3215.92
+  prevTotalDist: -3198.47
+  totalDist: -3215.92
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3217.2
+no step change
+——————————————————————————————————————————————
+STEP #97
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3218.36
+  prevTotalDist: -3217.2
+  totalDist: -3218.36
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3223.27
+no step change
+——————————————————————————————————————————————
+STEP #98
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3242
+  prevTotalDist: -3223.27
+  totalDist: -3242
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3244.11
+no step change
+——————————————————————————————————————————————
+STEP #99
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3249.06
+  prevTotalDist: -3244.11
+  totalDist: -3249.06
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3253.9
+no step change
+——————————————————————————————————————————————
+STEP #100
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3252.01
+  prevTotalDist: -3253.9
+  totalDist: -3252.01
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3256.22
+no step change
+——————————————————————————————————————————————
+STEP #101
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3261.77
+  prevTotalDist: -3256.22
+  totalDist: -3261.77
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3263.82
+no step change
+——————————————————————————————————————————————
+STEP #102
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3268.03
+  prevTotalDist: -3263.82
+  totalDist: -3268.03
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3269.29
+no step change
+——————————————————————————————————————————————
+STEP #103
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3282.13
+  prevTotalDist: -3269.29
+  totalDist: -3282.13
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3285.63
+no step change
+——————————————————————————————————————————————
+STEP #104
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3284.85
+  prevTotalDist: -3285.63
+  totalDist: -3284.85
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3287.18
+no step change
+——————————————————————————————————————————————
+STEP #105
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3291.51
+  prevTotalDist: -3287.18
+  totalDist: -3291.51
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3294.07
+no step change
+——————————————————————————————————————————————
+STEP #106
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3300.67
+  prevTotalDist: -3294.07
+  totalDist: -3300.67
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3308.05
+no step change
+——————————————————————————————————————————————
+STEP #107
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3324.88
+  prevTotalDist: -3308.05
+  totalDist: -3324.88
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3327.24
+no step change
+——————————————————————————————————————————————
+STEP #108
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3328.92
+  prevTotalDist: -3327.24
+  totalDist: -3328.92
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3332.16
+no step change
+——————————————————————————————————————————————
+STEP #109
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3335.79
+  prevTotalDist: -3332.16
+  totalDist: -3335.79
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3340.5
+no step change
+——————————————————————————————————————————————
+STEP #110
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3345.51
+  prevTotalDist: -3340.5
+  totalDist: -3345.51
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3347.3
+no step change
+——————————————————————————————————————————————
+STEP #111
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3342.92
+  prevTotalDist: -3347.3
+  totalDist: -3342.92
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3348.48
+no step change
+——————————————————————————————————————————————
+STEP #112
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3324.92
+  prevTotalDist: -3348.48
+  totalDist: -3324.92
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3330.43
+step change_extension
+——————————————————————————————————————————————
+STEP #113
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3330.43
+  prevTotalDist: -3348.48
+  totalDist: -3330.43
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3332.31
+——————————————————————————————————————————————
+STEP #114
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3343.68
+  prevTotalDist: -3348.48
+  totalDist: -3343.68
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3345.26
+step change_extension
+——————————————————————————————————————————————
+STEP #115
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3345.26
+  prevTotalDist: -3348.48
+  totalDist: -3345.26
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3346.7
+——————————————————————————————————————————————
+STEP #116
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3345.73
+  prevTotalDist: -3348.48
+  totalDist: -3345.73
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3350.08
+no step change
+——————————————————————————————————————————————
+STEP #117
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3356.74
+  prevTotalDist: -3350.08
+  totalDist: -3356.74
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3358.37
+no step change
+——————————————————————————————————————————————
+STEP #118
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3365.23
+  prevTotalDist: -3358.37
+  totalDist: -3365.23
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3366.14
+no step change
+——————————————————————————————————————————————
+STEP #119
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3371.28
+  prevTotalDist: -3366.14
+  totalDist: -3371.28
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3372.28
+no step change
+——————————————————————————————————————————————
+STEP #120
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3382.76
+  prevTotalDist: -3372.28
+  totalDist: -3382.76
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3385.38
+no step change
+——————————————————————————————————————————————
+STEP #121
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3391.82
+  prevTotalDist: -3385.38
+  totalDist: -3391.82
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3392.45
+no step change
+——————————————————————————————————————————————
+STEP #122
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3395.05
+  prevTotalDist: -3392.45
+  totalDist: -3395.05
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3395.64
+no step change
+——————————————————————————————————————————————
+STEP #123
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3405.92
+  prevTotalDist: -3395.64
+  totalDist: -3405.92
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3406.52
+no step change
+——————————————————————————————————————————————
+STEP #124
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3406.29
+  prevTotalDist: -3406.52
+  totalDist: -3406.29
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3408.47
+no step change
+——————————————————————————————————————————————
+STEP #125
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3408.01
+  prevTotalDist: -3408.47
+  totalDist: -3408.01
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3410.07
+no step change
+——————————————————————————————————————————————
+STEP #126
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3414.38
+  prevTotalDist: -3410.07
+  totalDist: -3414.38
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3415.56
+no step change
+——————————————————————————————————————————————
+STEP #127
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3417.82
+  prevTotalDist: -3415.56
+  totalDist: -3417.82
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3418.49
+no step change
+——————————————————————————————————————————————
+STEP #128
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3412.13
+  prevTotalDist: -3418.49
+  totalDist: -3412.13
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3412.91
+step change_extension
+——————————————————————————————————————————————
+STEP #129
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3412.91
+  prevTotalDist: -3418.49
+  totalDist: -3412.91
+	max rotation step: 0.0219727
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3413.56
+——————————————————————————————————————————————
+STEP #130
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3416.68
+  prevTotalDist: -3418.49
+  totalDist: -3416.68
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3417.23
+step change_extension
+——————————————————————————————————————————————
+STEP #131
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3417.23
+  prevTotalDist: -3418.49
+  totalDist: -3417.23
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3417.73
+——————————————————————————————————————————————
+STEP #132
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3419.81
+  prevTotalDist: -3418.49
+  totalDist: -3419.81
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3420.24
+no step change
+——————————————————————————————————————————————
+STEP #133
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3422.28
+  prevTotalDist: -3420.24
+  totalDist: -3422.28
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3422.64
+no step change
+——————————————————————————————————————————————
+STEP #134
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3424.82
+  prevTotalDist: -3422.64
+  totalDist: -3424.82
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3425.12
+no step change
+——————————————————————————————————————————————
+STEP #135
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3431.09
+  prevTotalDist: -3425.12
+  totalDist: -3431.09
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3431.37
+no step change
+——————————————————————————————————————————————
+STEP #136
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3433.37
+  prevTotalDist: -3431.37
+  totalDist: -3433.37
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3434.13
+no step change
+——————————————————————————————————————————————
+STEP #137
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3436.07
+  prevTotalDist: -3434.13
+  totalDist: -3436.07
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3436.3
+no step change
+——————————————————————————————————————————————
+STEP #138
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3436.67
+  prevTotalDist: -3436.3
+  totalDist: -3436.67
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3437.37
+no step change
+——————————————————————————————————————————————
+STEP #139
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3439.39
+  prevTotalDist: -3437.37
+  totalDist: -3439.39
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3439.64
+no step change
+——————————————————————————————————————————————
+STEP #140
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3441.15
+  prevTotalDist: -3439.64
+  totalDist: -3441.15
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3441.42
+no step change
+——————————————————————————————————————————————
+STEP #141
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3443.12
+  prevTotalDist: -3441.42
+  totalDist: -3443.12
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3443.36
+no step change
+——————————————————————————————————————————————
+STEP #142
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3445.19
+  prevTotalDist: -3443.36
+  totalDist: -3445.19
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3445.43
+no step change
+——————————————————————————————————————————————
+STEP #143
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3447.41
+  prevTotalDist: -3445.43
+  totalDist: -3447.41
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3447.64
+no step change
+——————————————————————————————————————————————
+STEP #144
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3449.77
+  prevTotalDist: -3447.64
+  totalDist: -3449.77
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3449.97
+no step change
+——————————————————————————————————————————————
+STEP #145
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3451.73
+  prevTotalDist: -3449.97
+  totalDist: -3451.73
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3451.92
+no step change
+——————————————————————————————————————————————
+STEP #146
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3455.31
+  prevTotalDist: -3451.92
+  totalDist: -3455.31
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3455.49
+no step change
+——————————————————————————————————————————————
+STEP #147
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3457.2
+  prevTotalDist: -3455.49
+  totalDist: -3457.2
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3457.37
+no step change
+——————————————————————————————————————————————
+STEP #148
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3465.21
+  prevTotalDist: -3457.37
+  totalDist: -3465.21
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3466.12
+no step change
+——————————————————————————————————————————————
+STEP #149
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3469.85
+  prevTotalDist: -3466.12
+  totalDist: -3469.85
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3470.02
+no step change
+——————————————————————————————————————————————
+STEP #150
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3471.48
+  prevTotalDist: -3470.02
+  totalDist: -3471.48
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3471.66
+no step change
+——————————————————————————————————————————————
+STEP #151
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3473.04
+  prevTotalDist: -3471.66
+  totalDist: -3473.04
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3473.22
+no step change
+——————————————————————————————————————————————
+STEP #152
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3474.53
+  prevTotalDist: -3473.22
+  totalDist: -3474.53
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3474.7
+no step change
+——————————————————————————————————————————————
+STEP #153
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3475.92
+  prevTotalDist: -3474.7
+  totalDist: -3475.92
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3476.09
+no step change
+——————————————————————————————————————————————
+STEP #154
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3477.23
+  prevTotalDist: -3476.09
+  totalDist: -3477.23
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3477.38
+no step change
+——————————————————————————————————————————————
+STEP #155
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3476.83
+  prevTotalDist: -3477.38
+  totalDist: -3476.83
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3478.07
+no step change
+——————————————————————————————————————————————
+STEP #156
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3481.77
+  prevTotalDist: -3478.07
+  totalDist: -3481.77
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3482.57
+no step change
+——————————————————————————————————————————————
+STEP #157
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3483.04
+  prevTotalDist: -3482.57
+  totalDist: -3483.04
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3483.58
+no step change
+——————————————————————————————————————————————
+STEP #158
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3484.89
+  prevTotalDist: -3483.58
+  totalDist: -3484.89
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3485.39
+no step change
+——————————————————————————————————————————————
+STEP #159
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3486.39
+  prevTotalDist: -3485.39
+  totalDist: -3486.39
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3486.56
+no step change
+——————————————————————————————————————————————
+STEP #160
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3487.82
+  prevTotalDist: -3486.56
+  totalDist: -3487.82
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3488.42
+no step change
+——————————————————————————————————————————————
+STEP #161
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3485.94
+  prevTotalDist: -3488.42
+  totalDist: -3485.94
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3486.45
+step change_extension
+——————————————————————————————————————————————
+STEP #162
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3486.45
+  prevTotalDist: -3488.42
+  totalDist: -3486.45
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3487.01
+——————————————————————————————————————————————
+STEP #163
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3485.06
+  prevTotalDist: -3488.42
+  totalDist: -3485.06
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3487.41
+step change_extension
+——————————————————————————————————————————————
+STEP #164
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3487.41
+  prevTotalDist: -3488.42
+  totalDist: -3487.41
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3487.53
+——————————————————————————————————————————————
+STEP #165
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3490.37
+  prevTotalDist: -3488.42
+  totalDist: -3490.37
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3490.47
+no step change
+——————————————————————————————————————————————
+STEP #166
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3488.1
+  prevTotalDist: -3490.47
+  totalDist: -3488.1
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3488.62
+step change_extension
+——————————————————————————————————————————————
+STEP #167
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3488.62
+  prevTotalDist: -3490.47
+  totalDist: -3488.62
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3488.71
+——————————————————————————————————————————————
+STEP #168
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3490.51
+  prevTotalDist: -3490.47
+  totalDist: -3490.51
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3490.6
+no step change
+——————————————————————————————————————————————
+STEP #169
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3491.01
+  prevTotalDist: -3490.6
+  totalDist: -3491.01
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3491.08
+no step change
+——————————————————————————————————————————————
+STEP #170
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3491.59
+  prevTotalDist: -3491.08
+  totalDist: -3491.59
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3491.66
+no step change
+——————————————————————————————————————————————
+STEP #171
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3492.22
+  prevTotalDist: -3491.66
+  totalDist: -3492.22
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3492.29
+no step change
+——————————————————————————————————————————————
+STEP #172
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3492.9
+  prevTotalDist: -3492.29
+  totalDist: -3492.9
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3492.96
+no step change
+——————————————————————————————————————————————
+STEP #173
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3492.28
+  prevTotalDist: -3492.96
+  totalDist: -3492.28
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3492.33
+step change_extension
+——————————————————————————————————————————————
+STEP #174
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3492.33
+  prevTotalDist: -3492.96
+  totalDist: -3492.33
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3492.38
+——————————————————————————————————————————————
+STEP #175
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3492.58
+  prevTotalDist: -3492.96
+  totalDist: -3492.58
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3492.62
+step change_extension
+——————————————————————————————————————————————
+STEP #176
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3492.62
+  prevTotalDist: -3492.96
+  totalDist: -3492.62
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3492.67
+——————————————————————————————————————————————
+STEP #177
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3492.83
+  prevTotalDist: -3492.96
+  totalDist: -3492.83
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3492.87
+step change_extension
+——————————————————————————————————————————————
+STEP #178
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3492.87
+  prevTotalDist: -3492.96
+  totalDist: -3492.87
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3492.91
+——————————————————————————————————————————————
+STEP #179
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3493.06
+  prevTotalDist: -3492.96
+  totalDist: -3493.06
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3493.1
+no step change
+——————————————————————————————————————————————
+STEP #180
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3493.28
+  prevTotalDist: -3493.1
+  totalDist: -3493.28
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3493.32
+no step change
+——————————————————————————————————————————————
+STEP #181
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3493.54
+  prevTotalDist: -3493.32
+  totalDist: -3493.54
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3493.58
+no step change
+——————————————————————————————————————————————
+STEP #182
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3493.84
+  prevTotalDist: -3493.58
+  totalDist: -3493.84
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3493.87
+no step change
+——————————————————————————————————————————————
+STEP #183
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3494.16
+  prevTotalDist: -3493.87
+  totalDist: -3494.16
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3494.18
+no step change
+——————————————————————————————————————————————
+STEP #184
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3494.45
+  prevTotalDist: -3494.18
+  totalDist: -3494.45
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3494.48
+no step change
+——————————————————————————————————————————————
+STEP #185
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3494.74
+  prevTotalDist: -3494.48
+  totalDist: -3494.74
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3494.76
+no step change
+——————————————————————————————————————————————
+STEP #186
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3495
+  prevTotalDist: -3494.76
+  totalDist: -3495
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3495.02
+no step change
+——————————————————————————————————————————————
+STEP #187
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3495.23
+  prevTotalDist: -3495.02
+  totalDist: -3495.23
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3495.25
+no step change
+——————————————————————————————————————————————
+STEP #188
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3495.44
+  prevTotalDist: -3495.25
+  totalDist: -3495.44
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3495.46
+no step change
+——————————————————————————————————————————————
+STEP #189
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3495.64
+  prevTotalDist: -3495.46
+  totalDist: -3495.64
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3495.66
+no step change
+——————————————————————————————————————————————
+STEP #190
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3495.82
+  prevTotalDist: -3495.66
+  totalDist: -3495.82
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3495.83
+no step change
+——————————————————————————————————————————————
+STEP #191
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3495.98
+  prevTotalDist: -3495.83
+  totalDist: -3495.98
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496
+no step change
+——————————————————————————————————————————————
+STEP #192
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.13
+  prevTotalDist: -3496
+  totalDist: -3496.13
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.15
+no step change
+——————————————————————————————————————————————
+STEP #193
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.26
+  prevTotalDist: -3496.15
+  totalDist: -3496.26
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.27
+no step change
+——————————————————————————————————————————————
+STEP #194
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.36
+  prevTotalDist: -3496.27
+  totalDist: -3496.36
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.37
+no step change
+——————————————————————————————————————————————
+STEP #195
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.43
+  prevTotalDist: -3496.37
+  totalDist: -3496.43
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.45
+no step change
+——————————————————————————————————————————————
+STEP #196
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.48
+  prevTotalDist: -3496.45
+  totalDist: -3496.48
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.5
+no step change
+——————————————————————————————————————————————
+STEP #197
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.48
+  prevTotalDist: -3496.5
+  totalDist: -3496.48
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.49
+step change_extension
+——————————————————————————————————————————————
+STEP #198
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3496.49
+  prevTotalDist: -3496.5
+  totalDist: -3496.49
+	max rotation step: 0.00274658
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.51
+——————————————————————————————————————————————
+STEP #199
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.56
+  prevTotalDist: -3496.5
+  totalDist: -3496.56
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.57
+no step change
+——————————————————————————————————————————————
+STEP #200
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.62
+  prevTotalDist: -3496.57
+  totalDist: -3496.62
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.63
+no step change
+——————————————————————————————————————————————
+STEP #201
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.7
+  prevTotalDist: -3496.63
+  totalDist: -3496.7
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.71
+no step change
+——————————————————————————————————————————————
+STEP #202
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.79
+  prevTotalDist: -3496.71
+  totalDist: -3496.79
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.8
+no step change
+——————————————————————————————————————————————
+STEP #203
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.87
+  prevTotalDist: -3496.8
+  totalDist: -3496.87
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.88
+no step change
+——————————————————————————————————————————————
+STEP #204
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3496.96
+  prevTotalDist: -3496.88
+  totalDist: -3496.96
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3496.97
+no step change
+——————————————————————————————————————————————
+STEP #205
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.04
+  prevTotalDist: -3496.97
+  totalDist: -3497.04
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.05
+no step change
+——————————————————————————————————————————————
+STEP #206
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.1
+  prevTotalDist: -3497.05
+  totalDist: -3497.1
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.11
+no step change
+——————————————————————————————————————————————
+STEP #207
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.15
+  prevTotalDist: -3497.11
+  totalDist: -3497.15
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.16
+no step change
+——————————————————————————————————————————————
+STEP #208
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.19
+  prevTotalDist: -3497.16
+  totalDist: -3497.19
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.19
+no step change
+——————————————————————————————————————————————
+STEP #209
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.22
+  prevTotalDist: -3497.19
+  totalDist: -3497.22
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.23
+no step change
+——————————————————————————————————————————————
+STEP #210
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.24
+  prevTotalDist: -3497.23
+  totalDist: -3497.24
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.25
+no step change
+——————————————————————————————————————————————
+STEP #211
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.26
+  prevTotalDist: -3497.25
+  totalDist: -3497.26
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.27
+no step change
+——————————————————————————————————————————————
+STEP #212
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.27
+  prevTotalDist: -3497.27
+  totalDist: -3497.27
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.28
+no step change
+——————————————————————————————————————————————
+STEP #213
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.3
+  prevTotalDist: -3497.28
+  totalDist: -3497.3
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.31
+no step change
+——————————————————————————————————————————————
+STEP #214
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.32
+  prevTotalDist: -3497.31
+  totalDist: -3497.32
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.33
+no step change
+——————————————————————————————————————————————
+STEP #215
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.35
+  prevTotalDist: -3497.33
+  totalDist: -3497.35
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.36
+no step change
+——————————————————————————————————————————————
+STEP #216
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.4
+  prevTotalDist: -3497.36
+  totalDist: -3497.4
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.4
+no step change
+——————————————————————————————————————————————
+STEP #217
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.44
+  prevTotalDist: -3497.4
+  totalDist: -3497.44
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.45
+no step change
+——————————————————————————————————————————————
+STEP #218
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.5
+  prevTotalDist: -3497.45
+  totalDist: -3497.5
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.51
+no step change
+——————————————————————————————————————————————
+STEP #219
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.56
+  prevTotalDist: -3497.51
+  totalDist: -3497.56
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.57
+no step change
+——————————————————————————————————————————————
+STEP #220
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.63
+  prevTotalDist: -3497.57
+  totalDist: -3497.63
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.64
+no step change
+——————————————————————————————————————————————
+STEP #221
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.7
+  prevTotalDist: -3497.64
+  totalDist: -3497.7
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.71
+no step change
+——————————————————————————————————————————————
+STEP #222
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.76
+  prevTotalDist: -3497.71
+  totalDist: -3497.76
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.77
+no step change
+——————————————————————————————————————————————
+STEP #223
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.83
+  prevTotalDist: -3497.77
+  totalDist: -3497.83
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.83
+no step change
+——————————————————————————————————————————————
+STEP #224
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.89
+  prevTotalDist: -3497.83
+  totalDist: -3497.89
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.9
+no step change
+——————————————————————————————————————————————
+STEP #225
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.94
+  prevTotalDist: -3497.9
+  totalDist: -3497.94
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.95
+no step change
+——————————————————————————————————————————————
+STEP #226
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3497.99
+  prevTotalDist: -3497.95
+  totalDist: -3497.99
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3497.99
+no step change
+——————————————————————————————————————————————
+STEP #227
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.03
+  prevTotalDist: -3497.99
+  totalDist: -3498.03
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.03
+no step change
+——————————————————————————————————————————————
+STEP #228
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.06
+  prevTotalDist: -3498.03
+  totalDist: -3498.06
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.07
+no step change
+——————————————————————————————————————————————
+STEP #229
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.09
+  prevTotalDist: -3498.07
+  totalDist: -3498.09
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.1
+no step change
+——————————————————————————————————————————————
+STEP #230
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.13
+  prevTotalDist: -3498.1
+  totalDist: -3498.13
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.14
+no step change
+——————————————————————————————————————————————
+STEP #231
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.17
+  prevTotalDist: -3498.14
+  totalDist: -3498.17
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.18
+no step change
+——————————————————————————————————————————————
+STEP #232
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.22
+  prevTotalDist: -3498.18
+  totalDist: -3498.22
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.22
+no step change
+——————————————————————————————————————————————
+STEP #233
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.27
+  prevTotalDist: -3498.22
+  totalDist: -3498.27
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.27
+no step change
+——————————————————————————————————————————————
+STEP #234
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.32
+  prevTotalDist: -3498.27
+  totalDist: -3498.32
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.32
+no step change
+——————————————————————————————————————————————
+STEP #235
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.37
+  prevTotalDist: -3498.32
+  totalDist: -3498.37
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.38
+no step change
+——————————————————————————————————————————————
+STEP #236
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.42
+  prevTotalDist: -3498.38
+  totalDist: -3498.42
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.43
+no step change
+——————————————————————————————————————————————
+STEP #237
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.48
+  prevTotalDist: -3498.43
+  totalDist: -3498.48
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.48
+no step change
+——————————————————————————————————————————————
+STEP #238
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.52
+  prevTotalDist: -3498.48
+  totalDist: -3498.52
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.52
+no step change
+——————————————————————————————————————————————
+STEP #239
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.56
+  prevTotalDist: -3498.52
+  totalDist: -3498.56
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.56
+no step change
+——————————————————————————————————————————————
+STEP #240
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.59
+  prevTotalDist: -3498.56
+  totalDist: -3498.59
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.6
+no step change
+——————————————————————————————————————————————
+STEP #241
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.62
+  prevTotalDist: -3498.6
+  totalDist: -3498.62
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.62
+no step change
+——————————————————————————————————————————————
+STEP #242
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.64
+  prevTotalDist: -3498.62
+  totalDist: -3498.64
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.64
+no step change
+——————————————————————————————————————————————
+STEP #243
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.65
+  prevTotalDist: -3498.64
+  totalDist: -3498.65
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.65
+no step change
+——————————————————————————————————————————————
+STEP #244
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.66
+  prevTotalDist: -3498.65
+  totalDist: -3498.66
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.66
+no step change
+——————————————————————————————————————————————
+STEP #245
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.66
+  prevTotalDist: -3498.66
+  totalDist: -3498.66
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.66
+no step change
+——————————————————————————————————————————————
+STEP #246
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.66
+  prevTotalDist: -3498.66
+  totalDist: -3498.66
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.67
+no step change
+——————————————————————————————————————————————
+STEP #247
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.66
+  prevTotalDist: -3498.67
+  totalDist: -3498.66
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.67
+no step change
+——————————————————————————————————————————————
+STEP #248
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.67
+  prevTotalDist: -3498.67
+  totalDist: -3498.67
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.68
+no step change
+——————————————————————————————————————————————
+STEP #249
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.67
+  prevTotalDist: -3498.68
+  totalDist: -3498.67
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.68
+no step change
+——————————————————————————————————————————————
+STEP #250
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.68
+  prevTotalDist: -3498.68
+  totalDist: -3498.68
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.68
+no step change
+——————————————————————————————————————————————
+STEP #251
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.68
+  prevTotalDist: -3498.68
+  totalDist: -3498.68
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.68
+step change_extension
+——————————————————————————————————————————————
+STEP #252
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3498.68
+  prevTotalDist: -3498.68
+  totalDist: -3498.68
+	max rotation step: 0.000343323
+	max translation step: 0.00234375
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.69
+——————————————————————————————————————————————
+STEP #253
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.69
+  prevTotalDist: -3498.68
+  totalDist: -3498.69
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.69
+no step change
+——————————————————————————————————————————————
+STEP #254
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.7
+  prevTotalDist: -3498.69
+  totalDist: -3498.7
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.7
+no step change
+——————————————————————————————————————————————
+STEP #255
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.71
+  prevTotalDist: -3498.7
+  totalDist: -3498.71
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.71
+no step change
+——————————————————————————————————————————————
+STEP #256
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.72
+  prevTotalDist: -3498.71
+  totalDist: -3498.72
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.72
+no step change
+——————————————————————————————————————————————
+STEP #257
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.72
+  prevTotalDist: -3498.72
+  totalDist: -3498.72
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.73
+no step change
+——————————————————————————————————————————————
+STEP #258
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.73
+  prevTotalDist: -3498.73
+  totalDist: -3498.73
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.73
+no step change
+——————————————————————————————————————————————
+STEP #259
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.74
+  prevTotalDist: -3498.73
+  totalDist: -3498.74
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.74
+no step change
+——————————————————————————————————————————————
+STEP #260
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.74
+  prevTotalDist: -3498.74
+  totalDist: -3498.74
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.74
+no step change
+——————————————————————————————————————————————
+STEP #261
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.74
+  prevTotalDist: -3498.74
+  totalDist: -3498.74
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.75
+no step change
+——————————————————————————————————————————————
+STEP #262
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.75
+  prevTotalDist: -3498.75
+  totalDist: -3498.75
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.75
+no step change
+——————————————————————————————————————————————
+STEP #263
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.75
+  prevTotalDist: -3498.75
+  totalDist: -3498.75
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.76
+no step change
+——————————————————————————————————————————————
+STEP #264
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.76
+  prevTotalDist: -3498.76
+  totalDist: -3498.76
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.76
+no step change
+——————————————————————————————————————————————
+STEP #265
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.77
+  prevTotalDist: -3498.76
+  totalDist: -3498.77
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.77
+no step change
+——————————————————————————————————————————————
+STEP #266
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.78
+  prevTotalDist: -3498.77
+  totalDist: -3498.78
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.79
+no step change
+——————————————————————————————————————————————
+STEP #267
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.8
+  prevTotalDist: -3498.79
+  totalDist: -3498.8
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.8
+no step change
+——————————————————————————————————————————————
+STEP #268
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.81
+  prevTotalDist: -3498.8
+  totalDist: -3498.81
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.81
+no step change
+——————————————————————————————————————————————
+STEP #269
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.82
+  prevTotalDist: -3498.81
+  totalDist: -3498.82
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.82
+no step change
+——————————————————————————————————————————————
+STEP #270
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.84
+  prevTotalDist: -3498.82
+  totalDist: -3498.84
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.84
+no step change
+——————————————————————————————————————————————
+STEP #271
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.85
+  prevTotalDist: -3498.84
+  totalDist: -3498.85
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.85
+no step change
+——————————————————————————————————————————————
+STEP #272
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.87
+  prevTotalDist: -3498.85
+  totalDist: -3498.87
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.87
+no step change
+——————————————————————————————————————————————
+STEP #273
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.88
+  prevTotalDist: -3498.87
+  totalDist: -3498.88
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.88
+no step change
+——————————————————————————————————————————————
+STEP #274
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.89
+  prevTotalDist: -3498.88
+  totalDist: -3498.89
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.9
+no step change
+——————————————————————————————————————————————
+STEP #275
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.91
+  prevTotalDist: -3498.9
+  totalDist: -3498.91
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.91
+no step change
+——————————————————————————————————————————————
+STEP #276
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.92
+  prevTotalDist: -3498.91
+  totalDist: -3498.92
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.92
+no step change
+——————————————————————————————————————————————
+STEP #277
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.93
+  prevTotalDist: -3498.92
+  totalDist: -3498.93
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.93
+no step change
+——————————————————————————————————————————————
+STEP #278
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.94
+  prevTotalDist: -3498.93
+  totalDist: -3498.94
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.94
+no step change
+——————————————————————————————————————————————
+STEP #279
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.95
+  prevTotalDist: -3498.94
+  totalDist: -3498.95
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.95
+no step change
+——————————————————————————————————————————————
+STEP #280
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.95
+  prevTotalDist: -3498.95
+  totalDist: -3498.95
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.95
+no step change
+——————————————————————————————————————————————
+STEP #281
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.95
+  totalDist: -3498.96
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+no step change
+——————————————————————————————————————————————
+STEP #282
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.96
+  totalDist: -3498.96
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+no step change
+——————————————————————————————————————————————
+STEP #283
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.96
+  totalDist: -3498.96
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+no step change
+——————————————————————————————————————————————
+STEP #284
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.96
+  totalDist: -3498.96
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+step change_extension
+——————————————————————————————————————————————
+STEP #285
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.96
+  totalDist: -3498.96
+	max rotation step: 0.000343323
+	max translation step: 0.000292969
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+——————————————————————————————————————————————
+STEP #286
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.96
+  totalDist: -3498.96
+	max rotation step: 0.000343323
+	max translation step: 3.66211e-05
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+no step change
+——————————————————————————————————————————————
+STEP #287
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.96
+  totalDist: -3498.96
+	max rotation step: 0.000343323
+	max translation step: 3.66211e-05
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+step change_extension
+——————————————————————————————————————————————
+STEP #288
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.96
+  totalDist: -3498.96
+	max rotation step: 0.000343323
+	max translation step: 3.66211e-05
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+——————————————————————————————————————————————
+STEP #289
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: -3498.96
+  prevTotalDist: -3498.96
+  totalDist: -3498.96
+	max rotation step: 4.29153e-05
+	max translation step: 4.57764e-06
+
+	min rotation step: 4.29153e-05
+	min translation step: 4.57764e-06
+ —— objective func after iteration: -3498.96
+——————————————————————————————————————————————

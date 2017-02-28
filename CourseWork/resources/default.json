@@ -20,7 +20,7 @@
             "dec_coefficient": 0.125
         },
         "precision": {
-            "trans_eps": 0.05,
+            "trans_eps": 0.01,
             "rot_eps": 0.5
         },
         "lambda": 2,

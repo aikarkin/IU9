@@ -91,6 +91,9 @@ tests_EXTERNAL_OBJECTS =
 ../bin/tests: tests/CMakeFiles/tests.dir/tests.cpp.o
 ../bin/tests: tests/CMakeFiles/tests.dir/build.make
 ../bin/tests: ../lib/libpmols.a
+../bin/tests: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+../bin/tests: /usr/lib/x86_64-linux-gnu/libboost_system.so
+../bin/tests: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 ../bin/tests: tests/CMakeFiles/tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../../bin/tests"
 	cd /home/alex/dev/src/cpp/CourseWork/build/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tests.dir/link.txt --verbose=$(VERBOSE)

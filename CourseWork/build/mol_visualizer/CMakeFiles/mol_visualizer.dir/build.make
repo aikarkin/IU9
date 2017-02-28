@@ -93,6 +93,9 @@ mol_visualizer_EXTERNAL_OBJECTS =
 ../bin/mol_visualizer: /usr/lib/x86_64-linux-gnu/libGL.so
 ../bin/mol_visualizer: /usr/lib/x86_64-linux-gnu/libGLU.so
 ../bin/mol_visualizer: ../lib/libpmols.a
+../bin/mol_visualizer: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+../bin/mol_visualizer: /usr/lib/x86_64-linux-gnu/libboost_system.so
+../bin/mol_visualizer: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 ../bin/mol_visualizer: mol_visualizer/CMakeFiles/mol_visualizer.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../../bin/mol_visualizer"
 	cd /home/alex/dev/src/cpp/CourseWork/build/mol_visualizer && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mol_visualizer.dir/link.txt --verbose=$(VERBOSE)

@@ -42,7 +42,7 @@ namespace pmols {
     private:
         void calcBoundingBox();
         bool molInsideBox(Molecule& mol);
-        void repMol(Molecule &old_mol, Molecule &new_mol);
+        void repMol(int molIdx, Molecule &mol);
         std::tuple<int, int, int> getCellIndex(Atom &atom);
 
         int atoms_count_x, atoms_count_y, atoms_count_z;
@@ -58,7 +58,7 @@ namespace pmols {
 
         std::vector<Molecule> mols;
         std::list<Atom> ***atom_grid;
-        std::shared_ptr<std::tuple<Molecule, int>> last_mol;
+        std::shared_ptr<std::tuple<int, Molecule>> last_mol;
     };
 
 
@@ -75,6 +75,5 @@ namespace pmols {
 
         int trans_code;
         int i0, j0, k0;
-        int atoms_count_x, atoms_count_y, atoms_count_z;
     };
 }

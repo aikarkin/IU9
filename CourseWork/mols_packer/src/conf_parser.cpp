@@ -250,7 +250,6 @@ void CommandLineParser::Parse() {
     gen_dec.add_options()
             ("help,h", "Show help")
             ("config,c", boost::program_options::value<std::string>(), "Set JSON configuration file.")
-
             ("length,L", boost::program_options::value<float>(), "Set lattice length.")
             ("width,W", boost::program_options::value<float>(), "Set lattice width.")
             ("height,H", boost::program_options::value<float>(), "Set lattice height.")
@@ -260,7 +259,7 @@ void CommandLineParser::Parse() {
             ("substance,S", boost::program_options::value<std::string>(), "Set substance naming of initial molecule")
             ("expansivity,E", boost::program_options::value<float>(), "Set expansivity coefficient of packing box")
             ("cell_length,C", boost::program_options::value<float>(), "Set unit cell length of Cell Linked Lists")
-            
+            ("log_dir", boost::program_options::value<std::string>(), "Set directory where logs will be putted")
             ("trans_x", boost::program_options::value<float>(), "Set initial shift in Hooke Jeeves algorithm in X axis")
             ("trans_y", boost::program_options::value<float>(), "Set initial shift in Hooke Jeeves algorithm in Y axis")
             ("trans_z", boost::program_options::value<float>(), "Set initial shift in Hooke Jeeves algorithm in Z axis")
@@ -284,7 +283,10 @@ void CommandLineParser::Parse() {
             std::cout << "Molecules' packer" << std::endl << std::endl;
             std::cout << gen_dec << std::endl;
             std::exit(0);
-        }
+    }
+    if(vm.count("log_dir")) {
+            params.log_dir = vm.at("log_dir").as<std::string>();
+    }
     if(vm.count("input")) {
         params.mol_file = vm.at("input").as<std::string>();
         params.val_setted[18] = true;

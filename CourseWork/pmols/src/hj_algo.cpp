@@ -7,7 +7,15 @@
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/writer.h>
 #include <GL/glew.h>
+#include <ctime>
+#include <boost/filesystem.hpp>
 
+std::string dateTimeNow() {
+    time_t _tm =time(NULL );
+
+    struct tm * curtime = localtime ( &_tm );
+    return std::string(asctime(curtime));
+}
 
 pmols::HJPacker::HJPacker(HJParams params) {
     this->params = params;
@@ -89,7 +97,8 @@ void pmols::HJPacker::init() {
         }
     }
     std::cout << "init success!" << std::endl;
-    this->totalDist = objectiveFunc();
+    totalDist = objectiveFunc();
+    prevTotalDist = totalDist;
     std::cout << "objective function value: " << totalDist << std::endl;
     cellLinkedLists->SaveToCSV("../resources/cll0.csv");
 }
@@ -101,8 +110,17 @@ void pmols::HJPacker::Pack() {
     ublas::vector<float> x2_ = x1_, x3_, x4_;
     int it_num = 1;
 
+    std::string root="../logs/";
+    std::string dt_now = dateTimeNow();
+
+    if(params.log_dir != "")
+        root = params.log_dir;
+    else if(boost::filesystem::create_directories("../logs/" + dt_now))
+        root = "../logs/" + dt_now + "/";
+
+
     std::cout << "STEP #" << it_num << std::endl;
-    int search_res = exploringSearch(x2_, true); // make research without decreasing of step
+    int search_res = exploringSearch(x2_, true); 
     std::cout << "——————————————————————————————————————————————" << std::endl;
 
     do {
@@ -116,14 +134,23 @@ void pmols::HJPacker::Pack() {
         }
 
         std::cout << "——————————————————————————————————————————————" << std::endl;
-        std::string root="../resources/";
         if(it_num % 50 == 0) {
-            Save(root + "lattice_"
-                 + std::to_string((int)params.box_length) + "x"
-                 + std::to_string((int)params.box_width) + "x"
-                 + std::to_string((int)params.box_height) + "_"
-                 + std::to_string(it_num) + "." + params.out_format);
-            cellLinkedLists->SaveToCSV(root + "cll_" + std::to_string(it_num) + ".csv");
+            std::string dt = dateTimeNow();
+            std::string lattice_name = "lattice_"
+                    + std::to_string((int)params.box_length) + "x"
+                    + std::to_string((int)params.box_width) + "x"
+                    + std::to_string((int)params.box_height) + "_"
+                    + std::to_string(it_num) + "__" 
+                    + dt + "." + params.out_format;
+
+            Save(root + lattice_name);
+            cellLinkedLists->SaveToCSV(root + "csv_cll_" + std::to_string(it_num) + "__" + dt + + ".csv");
+        
+        }
+        if(it_num == 800) {
+            std::cerr << "ERROR: To much iterations" << std::endl;
+            this->~HJPacker();
+            std::exit(EXIT_FAILURE);
         }
     } while(search_res >= 0);
 
@@ -153,10 +180,12 @@ float pmols::HJPacker::objectiveFunc() {
 int pmols::HJPacker::exploringSearch(ublas::vector<float> &x_, bool change_step) {
     std::cout << "EXPLORING SEARCH (with " << (change_step ? "step change" : "no step change") << ")" << std::endl;
     std::cout << " —— objective func before iteration: " << totalDist << std::endl;
-    float sum0 = totalDist;
+    std::cout << "  prevTotalDist: " << prevTotalDist << std::endl;
+    std::cout << "  totalDist: " << totalDist << std::endl;
+
     float sum1, sum2;
     int mol_idx, op_num;
-    float dist0;
+    float dist0, dist;
     bool changed = false;
     bool terminate = true;
     bool mol_moved;
@@ -164,6 +193,7 @@ int pmols::HJPacker::exploringSearch(ublas::vector<float> &x_, bool change_step)
     float min_step_rot = params.step_alpha, min_step_trans = params.step_x;
 
     for (int i = 0; i < x_.size(); ++i) {
+        // debug statistics
         if(i % 6 < 3) {
             if(step[i] > max_step_trans)
                 max_step_trans = step[i];
@@ -177,6 +207,8 @@ int pmols::HJPacker::exploringSearch(ublas::vector<float> &x_, bool change_step)
                 min_step_rot = step[i];
         }
 
+
+        // One coordinate iteration
         if(step[i] < eps(i))
             continue;
 
@@ -187,29 +219,30 @@ int pmols::HJPacker::exploringSearch(ublas::vector<float> &x_, bool change_step)
         op_num = i % 6;
         dist0 = cellLinkedLists->MolDist(mol_idx);
 
-
         mol_moved = cellLinkedLists->MoveMol(mol_idx, (MOVE_OP)op_num, step[i]);
-        sum1 = mol_moved ? ( sum0 - dist0 + cellLinkedLists->MolDist(mol_idx) ) : sum0;
-        if(mol_moved)
+        dist = cellLinkedLists->MolDist(mol_idx);
+        sum1 = mol_moved ? ( totalDist - dist0 + dist ) : totalDist;
+        if(mol_moved) {
             cellLinkedLists->CancelMove();
-
+        }
 
         mol_moved = cellLinkedLists->MoveMol(mol_idx, (MOVE_OP)op_num, -step[i]);
-        sum2 = mol_moved ? ( sum0 - dist0 + cellLinkedLists->MolDist(mol_idx) ) : sum0;
-        if(mol_moved)
+        dist = cellLinkedLists->MolDist(mol_idx);
+        sum2 = mol_moved ? ( totalDist - dist0 + dist ) : totalDist;
+        if(mol_moved) {
             cellLinkedLists->CancelMove();
+        }
 
-
-        if (sum0 <= std::min(sum1, sum2) && change_step)
+        if (totalDist <= std::min(sum1, sum2) && change_step)
             step[i] *= params.step_coefficient;
         else {
-            if(sum1 < std::min(sum0, sum2)) {
+            if(sum1 < std::min(totalDist, sum2)) {
                 x_[i] += step[i];
                 cellLinkedLists->MoveMol(mol_idx, (MOVE_OP)op_num, step[i]);
                 totalDist = sum1;
                 changed = true;
             }
-            else if(sum2 < std::min(sum0, sum1)) {
+            else if(sum2 < std::min(totalDist, sum1)) {
                 x_[i] -= step[i];
                 cellLinkedLists->MoveMol(mol_idx, (MOVE_OP)op_num, -step[i]);
                 totalDist = sum2;
@@ -217,45 +250,60 @@ int pmols::HJPacker::exploringSearch(ublas::vector<float> &x_, bool change_step)
             }
         }
     }
+
+    // Print statistics after exploring search phase
     std::cout << "\tmax rotation step: " << max_step_rot << std::endl;
     std::cout << "\tmax translation step: " << max_step_trans << std::endl << std::endl;
-
     std::cout << "\tmin rotation step: " << min_step_rot << std::endl;
     std::cout << "\tmin translation step: " << min_step_trans << std::endl;
-
     std::cout << " —— objective func after iteration: " << totalDist << std::endl;
+
+
     if (terminate)
         return -1;
+
+    if(!change_step) {
+        if (totalDist < prevTotalDist) {
+            prevTotalDist = totalDist;
+            return 1;
+        } else
+            return 0;
+    }
 
     return (int)changed;
 }
 
+void applyVecToCll(pmols::CellLinkedLists &cellLinkedLists, ublas::vector<float> &vec) {
+    int mol_idx;
+    pmols::MOVE_OP move_op;
+    float val;
+
+    for (int i = 0; i < vec.size(); ++i) {
+        mol_idx = i / 6;
+        move_op = static_cast<pmols::MOVE_OP>(i % 6);
+        val = vec[i];
+        cellLinkedLists.MoveMol(mol_idx, move_op, val);
+    }
+}
+
 int pmols::HJPacker::patternSearch(ublas::vector<float> &x1_, ublas::vector<float> &x2_) {
     std::cout << "PATTERN SEARCH" << std::endl;
-//    std::cout << " —— objective func before pattern search: " << totalDist << std::endl;
     ublas::vector<float> x3_ = x1_ + params.lambda * (x2_ - x1_);
-//    ublas::vector<float> dx_ = x3_ - x2_;
-//    float dist;
-//    int mol_idx;
-
-    //change molecules in dx_ direction:
-//    for (int i = 0; i < dx_.size(); ++i) {
-//        mol_idx = i / 6;
-//        dist = cellLinkedLists->MolDist(mol_idx);
-//        cellLinkedLists->MoveMol(mol_idx, static_cast<MOVE_OP>(i % 6), dx_[i]);
-//        totalDist += -dist + cellLinkedLists->MolDist(mol_idx);
-//    }
-//    std::cout << " —— objective func after pattern search: " << totalDist << std::endl;
-
     ublas::vector<float> x4_ = x3_;
+    ublas::vector<float> dx_ = x3_ - x2_;
+
+    applyVecToCll(*cellLinkedLists, dx_);
+    totalDist = objectiveFunc();
 
     int exploring_res = exploringSearch(x4_, false);
 
     if(exploring_res == 1) {
+        std::cout << "no step change" << std::endl;
         x1_ = x2_;
         x2_ = x4_;
     }
     else if(exploring_res == 0) {
+        std::cout << "step change_extension" << std::endl;
         x1_ = x2_;
     }
 
@@ -377,5 +425,5 @@ void pmols::HJPacker::Save(std::string out_file) {
     obConversion.Write(mol_lattice.get());
     fb.close();
 
-    std::cout << "Result: success\nMolecules packed: " << cellLinkedLists->MolsCount() << std::endl;
+//    std::cout << "Result: success\nMolecules packed: " << cellLinkedLists->MolsCount() << std::endl;
 }

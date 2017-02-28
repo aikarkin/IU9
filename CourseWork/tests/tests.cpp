@@ -4,12 +4,17 @@
 
 #include<iostream>
 #include<cell_linked_lists.h>
+#include<ctime>
 #include<boost/any.hpp>
 #include<functional>
 
 const float EXP = 1.0;
 
 void printMolsBarycenter();
+
+float randomFloat(float a, float b) {
+    return a + (float)rand()/(float)(RAND_MAX) * b;
+}
 
 void testCellLinkedLists(std::string mol_file, float box_length, float box_width, float box_height) {
     // init CellLinkedLists
@@ -45,8 +50,16 @@ void testCellLinkedLists(std::string mol_file, float box_length, float box_width
     std::cout << "max atom radius: " << max_radius << std::endl;
 
     pmols::CellLinkedLists cellLinkedLists(2 * max_radius, [](pmols::Atom *a, pmols::Atom *b) -> float {
-        (a == NULL || b == NULL) ?
-        6.0f : std::fabs(glm::distance(a->coord, b->coord) - a->vdw_radius - b->vdw_radius);
+//        if(a == NULL || b == NULL) {
+////            std::cout << "\t\t — one of atoms is null, returning value: " << 6.0 << std::endl;
+//            return 6.0f;
+//        }
+//        else {
+//            return std::fabs(glm::distance(a->coord, b->coord) - a->vdw_radius - b->vdw_radius);
+//        }
+        return (a == NULL || b == NULL) ?
+            6.0f :
+            std::fabs(glm::distance(a->coord, b->coord) - a->vdw_radius - b->vdw_radius);
     });
 
     float shift_x, shift_y, shift_z;
@@ -65,65 +78,136 @@ void testCellLinkedLists(std::string mol_file, float box_length, float box_width
     }
 
     cellLinkedLists.FormCellLinkedLists();
-
-
     float sum = 0;
     float dist;
-    //int mol_num = 15;
-    int mol_num = 22;
+    int mol_num;
     bool move_res;
+    float rot_a = 5.0f, rot_b = 45.f;
+    float trans_a = 0.1f, trans_b = 3.f;
+    float rot_x, rot_y, rot_z;
+    float trans_x, trans_y, trans_z;
 
-    // 1. Try change mol through GetMol(int)
-    std::cout << "changing mol through GetMol" << std::endl;
-    dist = cellLinkedLists.MolDist(mol_num);
-
-    // translation
-    std::cout << "dist before trans: " << dist << std::endl;
-    cellLinkedLists.GetMol(mol_num).Translate(2.f * glm::vec3(1, 0, 0));
-    dist = cellLinkedLists.MolDist(mol_num);
-    std::cout << "dist after trans: " << dist << std::endl;
-    cellLinkedLists.GetMol(mol_num).Translate(-2.f * glm::vec3(1, 0, 0));
-
-    // rotation
-    dist = cellLinkedLists.MolDist(mol_num);
-    std::cout << "dist before rotation: " << dist << std::endl;
-    cellLinkedLists.GetMol(mol_num).RotateX(80.f);
-    dist = cellLinkedLists.MolDist(mol_num);
-    std::cout << "dist atfter rotation: " << dist << std::endl;
-    cellLinkedLists.GetMol(mol_num).RotateX(-80.f);
-
-    // 2. Calc Total Sum of all molecules (mol distance test)
+    // calc sum distance between atoms
     for (int i = 0; i < cellLinkedLists.MolsCount(); ++i) {
         sum += cellLinkedLists.MolDist(i);
     }
-    std::cout << std::endl;
-    std::cout << "Total sum of distances between all neighbour molecules: " << sum << std::endl;
+    std::cout << "initial sum: " << sum << std::endl;
 
-//    std::cout << "current mol id: " << cellLinkedLists.GetMol(mol_num).GetAtom(0).parent_mol_id << std::endl;
-    std::cout << std::endl;
-    dist = cellLinkedLists.MolDist(mol_num);
-    std::cout << "initial distance: " << dist << std::endl;
-    cellLinkedLists.SaveToCSV("../resources/cell0.csv");
-    for (int i = 0; i < cellLinkedLists.GetMol(mol_num).AtomsCount(); ++i) {
-        std::cout << cellLinkedLists.GetMol(mol_num).GetAtom(i).toString() << "; ";
+    srand((unsigned int)time(NULL));
+    // make 100 random movement operation with cancellation of each operation
+    for (int i = 0; i < 100; ++i) {
+//        std::cout << "ITERATION #" << i << std::endl;
+        // choose random mol
+        mol_num = rand() % (unsigned int)cellLinkedLists.MolsCount();
+//        std::cout << "\tmoving mol number " << mol_num << std::endl;
+        // choose random move steps
+        trans_x = randomFloat(trans_a, trans_b);
+        trans_y = randomFloat(trans_a, trans_b);
+        trans_z = randomFloat(trans_a, trans_b);
+
+        rot_x = randomFloat(rot_a, rot_b);
+        rot_y = randomFloat(rot_a, rot_b);
+        rot_z = randomFloat(rot_a, rot_b);
+
+        // translations:
+        move_res = cellLinkedLists.MoveMol(mol_num, pmols::TRANS_X, trans_x);
+        if(move_res) {
+//            std::cout << "\tmol translated in X direction" << std::endl;
+            cellLinkedLists.CancelMove();
+        }
+
+        move_res = cellLinkedLists.MoveMol(mol_num, pmols::TRANS_Y, trans_y);
+        if(move_res) {
+//            std::cout << "\tmol translated in Y direction" << std::endl;
+            cellLinkedLists.CancelMove();
+        }
+
+        move_res = cellLinkedLists.MoveMol(mol_num, pmols::TRANS_Z, trans_z);
+        if(move_res) {
+//            std::cout << "\tmol translated in Z direction" << std::endl;
+            cellLinkedLists.CancelMove();
+        }
+
+
+        // rotations:
+        move_res = cellLinkedLists.MoveMol(mol_num, pmols::ROT_X, rot_x);
+        if(move_res) {
+//            std::cout << "\tmol rotated around X axis" << std::endl;
+            cellLinkedLists.CancelMove();
+        }
+
+        move_res = cellLinkedLists.MoveMol(mol_num, pmols::ROT_Y, rot_y);
+        if(move_res) {
+//            std::cout << "\tmol rotated around Y axis"  << std::endl;
+            cellLinkedLists.CancelMove();
+        }
+
+        move_res = cellLinkedLists.MoveMol(mol_num, pmols::ROT_Z, rot_z);
+        if(move_res) {
+//            std::cout << "\tmol rotated around Z axis"  << std::endl;
+            cellLinkedLists.CancelMove();
+        }
+//        std::cout << std::endl;
     }
-    std::cout << std::endl;
 
-    move_res = cellLinkedLists.MoveMol(mol_num, pmols::TRANS_Y, -1.2f);
-    dist = cellLinkedLists.MolDist(mol_num);
-    std::cout << "after move: move_res=" << move_res << "; dist=" << dist << std::endl;
-
-    cellLinkedLists.CancelMove();
-    //move_res = cellLinkedLists.MoveMol(mol_num, pmols::TRANS_Y, 1.2f);
-    dist = cellLinkedLists.MolDist(mol_num);
-    std::cout << "distance after cancellation: " << dist << std::endl;
-    std::cout << "final atoms coordinates: " << std::endl;
-    for (int i = 0; i < cellLinkedLists.GetMol(mol_num).AtomsCount(); ++i) {
-        std::cout << cellLinkedLists.GetMol(mol_num).GetAtom(i).toString() << "; ";
+    // re-calc total sum of distances between mols
+    sum = 0;
+    for (int i = 0; i < cellLinkedLists.MolsCount(); ++i) {
+        sum += cellLinkedLists.MolDist(i);
     }
-    cellLinkedLists.SaveToCSV("../resources/cell1.csv");
+    std::cout << "sum after move operations: " << sum << std::endl;
 
-    std::cout << std::endl;
+    // 1. Try change mol through GetMol(int)
+//    std::cout << "changing mol through GetMol" << std::endl;
+//    dist = cellLinkedLists.MolDist(mol_num);
+//
+//    // translation
+//    std::cout << "dist before trans: " << dist << std::endl;
+//    cellLinkedLists.GetMol(mol_num).Translate(2.f * glm::vec3(1, 0, 0));
+//    dist = cellLinkedLists.MolDist(mol_num);
+//    std::cout << "dist after trans: " << dist << std::endl;
+//    cellLinkedLists.GetMol(mol_num).Translate(-2.f * glm::vec3(1, 0, 0));
+//
+//    // rotation
+//    dist = cellLinkedLists.MolDist(mol_num);
+//    std::cout << "dist before rotation: " << dist << std::endl;
+//    cellLinkedLists.GetMol(mol_num).RotateX(80.f);
+//    dist = cellLinkedLists.MolDist(mol_num);
+//    std::cout << "dist atfter rotation: " << dist << std::endl;
+//    cellLinkedLists.GetMol(mol_num).RotateX(-80.f);
+//
+//    // 2. Calc Total Sum of all molecules (mol distance test)
+//    for (int i = 0; i < cellLinkedLists.MolsCount(); ++i) {
+//        sum += cellLinkedLists.MolDist(i);
+//    }
+//    std::cout << std::endl;
+//    std::cout << "Total sum of distances between all neighbour molecules: " << sum << std::endl;
+//
+////    std::cout << "current mol id: " << cellLinkedLists.GetMol(mol_num).GetAtom(0).parent_mol_id << std::endl;
+//    std::cout << std::endl;
+//    dist = cellLinkedLists.MolDist(mol_num);
+//    std::cout << "initial distance: " << dist << std::endl;
+//    cellLinkedLists.SaveToCSV("../resources/cell0.csv");
+//    for (int i = 0; i < cellLinkedLists.GetMol(mol_num).AtomsCount(); ++i) {
+//        std::cout << cellLinkedLists.GetMol(mol_num).GetAtom(i).toString() << "; ";
+//    }
+//    std::cout << std::endl;
+//
+//    move_res = cellLinkedLists.MoveMol(mol_num, pmols::TRANS_Y, -1.2f);
+//    dist = cellLinkedLists.MolDist(mol_num);
+//    std::cout << "after move: move_res=" << move_res << "; dist=" << dist << std::endl;
+//
+//    cellLinkedLists.CancelMove();
+//    //move_res = cellLinkedLists.MoveMol(mol_num, pmols::TRANS_Y, 1.2f);
+//    dist = cellLinkedLists.MolDist(mol_num);
+//    std::cout << "distance after cancellation: " << dist << std::endl;
+//    std::cout << "final atoms coordinates: " << std::endl;
+//    for (int i = 0; i < cellLinkedLists.GetMol(mol_num).AtomsCount(); ++i) {
+//        std::cout << cellLinkedLists.GetMol(mol_num).GetAtom(i).toString() << "; ";
+//    }
+//    cellLinkedLists.SaveToCSV("../resources/cell1.csv");
+
+//    std::cout << std::endl;
 }
 
 

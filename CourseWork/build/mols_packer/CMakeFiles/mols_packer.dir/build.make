@@ -119,6 +119,9 @@ mols_packer_EXTERNAL_OBJECTS =
 ../bin/mols_packer: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
 ../bin/mols_packer: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
 ../bin/mols_packer: ../lib/libpmols.a
+../bin/mols_packer: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+../bin/mols_packer: /usr/lib/x86_64-linux-gnu/libboost_system.so
+../bin/mols_packer: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 ../bin/mols_packer: mols_packer/CMakeFiles/mols_packer.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../../bin/mols_packer"
 	cd /home/alex/dev/src/cpp/CourseWork/build/mols_packer && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mols_packer.dir/link.txt --verbose=$(VERBOSE)

@@ -106,43 +106,39 @@ void pmols::CellLinkedLists::calcBoundingBox() {
 }
 
 bool pmols::CellLinkedLists::MoveMol(int molIdx, pmols::MOVE_OP moveOp, float val) {
-    Molecule old_mol = mols[molIdx];
-    Molecule new_mol = old_mol;
-
-    glm::vec3 vec_i(1, 0, 0);
-    glm::vec3 vec_j(0, 1, 0);
-    glm::vec3 vec_k(0, 0, 1);
+    Molecule mol = mols[molIdx];
+    last_mol = std::make_shared<std::tuple<int, Molecule>>(std::make_tuple(molIdx, mol));
 
     switch(moveOp) {
         case ROT_X:
-            new_mol.RotateX(val);
+            mol.RotateX(val);
             break;
         case ROT_Y:
-            new_mol.RotateY(val);
+            mol.RotateY(val);
             break;
         case ROT_Z:
-            new_mol.RotateZ(val);
+            mol.RotateZ(val);
             break;
         case TRANS_X:
-            new_mol.Translate(val * vec_i);
+            mol.Translate(val * glm::vec3(1, 0, 0));
             break;
         case TRANS_Y:
-            new_mol.Translate(val * vec_j);
+            mol.Translate(val * glm::vec3(0, 1, 0));
             break;
         case TRANS_Z:
-            new_mol.Translate(val * vec_k);
+            mol.Translate(val * glm::vec3(0, 0, 1));
             break;
         default:
             break;
     }
 
-    if(!molInsideBox(new_mol))
+    if(!molInsideBox(mol)) {
+        last_mol.reset();
         return false;
+    }
 
-    last_mol = std::make_shared<std::tuple<Molecule, int>>(std::make_tuple(old_mol, molIdx));
     mol_moved = true;
-    
-    repMol(old_mol, new_mol);
+    repMol(molIdx, mol);
 
     return true;
 }
@@ -194,13 +190,13 @@ float pmols::CellLinkedLists::MolDist(int molIdx) {
         while(neighbourCells.hasNext()) {
             std::list<Atom> cell_list = neighbourCells.next();
             if(cell_list.empty()) {
-                dist = 6.0;
+                dist = dist_func(atom, NULL);
                 sum += dist;
             }
             else {
-                for (auto neighbour_atom : cell_list) {
-                    if (mol.GetAtom(i).parent_mol_id != neighbour_atom.parent_mol_id) {
-                        dist = dist_func(atom, &neighbour_atom);
+                for (auto na : cell_list) {
+                    if (mol.GetAtom(i).parent_mol_id != na.parent_mol_id) {
+                        dist = dist_func(atom, &na);
                         sum += dist;
                     }
                 }
@@ -242,44 +238,14 @@ pmols::CellLinkedLists::~CellLinkedLists() {
     delete []atom_grid;
 }
 
-void pmols::CellLinkedLists::repMol(pmols::Molecule &old_mol, pmols::Molecule &new_mol) {
-    int idx_x, idx_y, idx_z;
-    int mol_idx = old_mol.GetAtom(0).parent_mol_id;
-    
-    Atom atom;
-    int removed_atoms = 0;
-    for (int j = 0; j < old_mol.AtomsCount(); ++j) {
-        atom = old_mol.GetAtom(j);
-        std::tie(idx_x, idx_y, idx_z) = getCellIndex(atom);
-
-        for(auto it = atom_grid[idx_x][idx_y][idx_z].begin(); it != atom_grid[idx_x][idx_y][idx_z].end(); it++) {
-            if(it->parent_mol_id == atom.parent_mol_id) {
-                removed_atoms++;
-                atom_grid[idx_x][idx_y][idx_z].erase(it);
-                it--;
-            }
-        }
-    }
-
-    // add atoms of new mol to grid
-    for (int j = 0; j < new_mol.AtomsCount(); ++j) {
-        std::tie(idx_x, idx_y, idx_z) = getCellIndex(atom);
-        atom_grid[idx_x][idx_y][idx_z].emplace_back(new_mol.GetAtom(j));
-    }
-    
-    mols[mol_idx] = new_mol;
-}
-
 void pmols::CellLinkedLists::CancelMove() {
     if(!mol_moved) {
         std::cout << "WARNING: Unable to cancel move operation. No one molecule wasn't move." << std::endl;
         return;
     }
-    int mol_idx = std::get<1>(*last_mol);
 
-    repMol(mols[mol_idx], std::get<0>(*last_mol));
+    repMol(std::get<0>(*last_mol), std::get<1>(*last_mol));
     mol_moved = false;
-
 }
 
 void pmols::CellLinkedLists::SaveToCSV(std::string file_path) {
@@ -317,13 +283,39 @@ void pmols::CellLinkedLists::SaveToCSV(std::string file_path) {
     outf_stream.close();
 }
 
+void pmols::CellLinkedLists::repMol(int molIdx, pmols::Molecule &mol) {
+    int idx_x, idx_y, idx_z;
+    Atom atom;
+
+    // remove from grid atoms of mol with molIdx
+    for (int i = 0; i < mols[molIdx].AtomsCount(); ++i) {
+        atom = mols[molIdx].GetAtom(i);
+        std::tie(idx_x, idx_y, idx_z) = getCellIndex(atom);
+
+        for(auto na = atom_grid[idx_x][idx_y][idx_z].begin(); na != atom_grid[idx_x][idx_y][idx_z].end(); na++) {
+            if(na->parent_mol_id == atom.parent_mol_id) {
+                atom_grid[idx_x][idx_y][idx_z].erase(na);
+                na--;
+            }
+        }
+    }
+
+    // add mol atoms to grid
+    for (int i = 0; i < mol.AtomsCount(); ++i) {
+        atom = mol.GetAtom(i);
+        atom.parent_mol_id = molIdx;
+
+        std::tie(idx_x, idx_y, idx_z) = getCellIndex(atom);
+        atom_grid[idx_x][idx_y][idx_z].push_back(atom);
+    }
+
+    // replace mol with molIdx in mols vector
+    mols[molIdx] = mol;
+}
+
 pmols::CLLNeighbourCells::CLLNeighbourCells(CellLinkedLists *cellLinkedLists, Atom &atom) {
     this->clLists = cellLinkedLists;
     this->initial_atom = atom;
-
-    atoms_count_x = (int)ceilf(cellLinkedLists->box_length/cellLinkedLists->cell_len);
-    atoms_count_y = (int)ceilf(cellLinkedLists->box_width/cellLinkedLists->cell_len);
-    atoms_count_z = (int)ceilf(cellLinkedLists->box_height/cellLinkedLists->cell_len);
 
     reset();
 }
@@ -339,9 +331,6 @@ std::list<pmols::Atom> pmols::CLLNeighbourCells::next() {
     char trans_code_bits[6] = {0};
     char left, right, up, down, far, near;
     int i, j, k;
-    int trans_code_step;
-
-    int old_trans_code = trans_code;
 
     do {
         x = trans_code;
@@ -367,17 +356,17 @@ std::list<pmols::Atom> pmols::CLLNeighbourCells::next() {
         k = k0 + near - far;
 
         if(trans_code == 11 || trans_code == 27)
-            trans_code_step = 5;
+            trans_code += 5;
         else if(trans_code % 4 == 3)
-            trans_code_step = 2;
+            trans_code += 2;
         else
-            trans_code_step = 1;
-        trans_code += trans_code_step;
-    } while (i < 0 || i >= atoms_count_x ||
-             j < 0 || j >= atoms_count_y ||
-             k < 0 || k >= atoms_count_z);
+            trans_code += 1;
+    } while (i < 0 || i >= clLists->atoms_count_x ||
+             j < 0 || j >= clLists->atoms_count_y ||
+             k < 0 || k >= clLists->atoms_count_z);
 
     std::list<Atom> cell_list = clLists->atom_grid[i][j][k];
+
     return cell_list;
 }
 

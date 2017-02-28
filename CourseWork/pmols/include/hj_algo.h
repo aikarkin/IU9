@@ -48,6 +48,7 @@ namespace pmols {
         std::string out_file = "";    // (19) !!!
         std::string out_format = "";  // (20) !!!
         DistFunc distanceFunc;        // (21)
+        std::string log_dir = "";          // (22)
 
         std::string to_string() {
             std::stringstream ss;
@@ -86,6 +87,7 @@ namespace pmols {
         void Pack();
         void Save(std::string out_file);
         void Save();
+        ~HJPacker() { delete cellLinkedLists.get(); };
     private:
         int exploringSearch(ublas::vector<float> &x_, bool change_step);
         int patternSearch(ublas::vector<float> &x1_, ublas::vector<float> &x2_);
@@ -93,6 +95,7 @@ namespace pmols {
         float eps(int coord_number);
         float objectiveFunc();
         float totalDist;
+        float prevTotalDist;
 
         std::shared_ptr<CellLinkedLists> cellLinkedLists;
         HJParams params;
