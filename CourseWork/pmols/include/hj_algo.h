@@ -83,7 +83,7 @@ namespace pmols {
 
     class HJStatistics {
     public:
-        HJStatistics(CellLinkedLists *cellLinkedLists, int expSearchIt, int ptrSearchIt, int ptrSearchFpIt);
+        HJStatistics(CellLinkedLists *cellLinkedLists, int expSearchIt, int ptrSearchIt, int ptrSearchFpIt, std::tuple<float, float, float> boxSize);
         int ESIterationsNumber() { return es_it; }
         int PSIterationsNumber() {return ps_it; }
         int PSFalsePositiveIterationsNumber() { return ps_fp_it; }
@@ -125,6 +125,8 @@ namespace pmols {
         float avg_inter;
         float min_inter;
         float max_inter;
+
+        std::tuple<float, float, float> box_size;
     };
 
     class HJPacker {

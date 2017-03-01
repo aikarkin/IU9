@@ -435,15 +435,19 @@ void pmols::HJPacker::Save(std::string out_file) {
 }
 
 pmols::HJStatistics pmols::HJPacker::GetStatistics() {
-    return pmols::HJStatistics(cellLinkedLists.get(), expSearchItCount, ptrSearchItCount, ptrSearchFpItCount);
+    return pmols::HJStatistics(cellLinkedLists.get(),
+         expSearchItCount, ptrSearchItCount, ptrSearchFpItCount, 
+         std::tuple<float, float, float>(params.box_length, params.box_width, params.box_height));
 }
 
 pmols::HJStatistics::HJStatistics(pmols::CellLinkedLists *cellLinkedLists,
-                                  int expSearchIt, int ptrSearchIt, int ptrSearchFpIt) {
+                                  int expSearchIt, int ptrSearchIt, 
+                                  int ptrSearchFpIt, std::tuple<float, float, float> boxSize) {
     es_it = expSearchIt + 1;
     ps_it = ptrSearchIt;
     ps_fp_it = ptrSearchFpIt;
     it = ps_it + es_it;
+    box_size = boxSize;
 
 
     calcMolStatistics(cellLinkedLists);
@@ -465,7 +469,6 @@ void pmols::HJStatistics::calcMolStatistics(pmols::CellLinkedLists *cll) {
     max_inter = 0;
     inter_sum = 0;
     int mol_sum_added = 0;
-    std::tuple<float, float, float> box_size(cll->box_length, cll->box_width, cll->box_height);
     
 
     for (int i = 0; i < cll->MolsCount(); ++i) {

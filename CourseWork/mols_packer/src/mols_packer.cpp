@@ -67,8 +67,6 @@ int main(int argc, const char *argv[]) {
     // initialize Hooke-Jeeves packer
     pmols::HJPacker packer(params);
     // pack and save result to file
-    pmols::HJStatistics before_pack = packer.GetStatistics();
-    printStatistics(before_pack, std::cout);
     packer.Pack();
     packer.Save();
     pmols::HJStatistics pack_stat = packer.GetStatistics();
