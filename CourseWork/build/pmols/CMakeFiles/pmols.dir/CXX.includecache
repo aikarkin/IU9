@@ -48,7 +48,7 @@ glm/gtx/vector_angle.hpp
 boost/tuple/tuple.hpp
 -
 
-/home/alex/dev/src/cpp/CourseWork/pmols/src/cell_linked_lists.cpp
+/home/alex/dev/src/cpp/IU9/CourseWork/pmols/src/cell_linked_lists.cpp
 mol.h
 -
 cell_linked_lists.h
@@ -56,11 +56,11 @@ cell_linked_lists.h
 memory
 -
 
-/home/alex/dev/src/cpp/CourseWork/pmols/src/hj_algo.cpp
+/home/alex/dev/src/cpp/IU9/CourseWork/pmols/src/hj_algo.cpp
 hj_algo.h
 -
 rapidjson/document.h
-/home/alex/dev/src/cpp/CourseWork/pmols/src/rapidjson/document.h
+/home/alex/dev/src/cpp/IU9/CourseWork/pmols/src/rapidjson/document.h
 rapidjson/ostreamwrapper.h
 -
 rapidjson/writer.h
@@ -72,7 +72,7 @@ ctime
 boost/filesystem.hpp
 -
 
-/home/alex/dev/src/cpp/CourseWork/pmols/src/mol.cpp
+/home/alex/dev/src/cpp/IU9/CourseWork/pmols/src/mol.cpp
 mol.h
 -
 

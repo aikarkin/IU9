@@ -7,7 +7,7 @@ var path = require('path');
 var HashSet = require('hashset');
 
 var LATTICES_ROOT = '../lattices/';
-var PACK_SCRIPT = './mols_packer';
+var PACK_SCRIPT = '../../bin/./mols_packer';
 var CACHE = new HashSet();
 var MOLECULES = {
     1: path.parse('../molecules/Structure3D_CID_962.sdf'),

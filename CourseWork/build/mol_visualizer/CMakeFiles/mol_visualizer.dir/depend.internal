@@ -3,7 +3,7 @@
 
 mol_visualizer/CMakeFiles/mol_visualizer.dir/mol_visualizer.cpp.o
  ../mol_visualizer/../pmols/include/mol.h
- /home/alex/dev/src/cpp/CourseWork/mol_visualizer/mol_visualizer.cpp
+ /home/alex/dev/src/cpp/IU9/CourseWork/mol_visualizer/mol_visualizer.cpp
  /usr/local/include/GL/glew.h
  /usr/local/include/GLFW/glfw3.h
  /usr/local/include/glm/common.hpp

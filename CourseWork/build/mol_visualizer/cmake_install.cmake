@@ -1,4 +1,4 @@
-# Install script for directory: /home/alex/dev/src/cpp/CourseWork/mol_visualizer
+# Install script for directory: /home/alex/dev/src/cpp/IU9/CourseWork/mol_visualizer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

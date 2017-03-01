@@ -62,13 +62,13 @@ iostream
 iomanip
 -
 
-/home/alex/dev/src/cpp/CourseWork/mols_packer/src/conf_parser.cpp
+/home/alex/dev/src/cpp/IU9/CourseWork/mols_packer/src/conf_parser.cpp
 fstream
 -
 conf_parser.h
 -
 
-/home/alex/dev/src/cpp/CourseWork/mols_packer/src/mols_packer.cpp
+/home/alex/dev/src/cpp/IU9/CourseWork/mols_packer/src/mols_packer.cpp
 fstream
 -
 iostream

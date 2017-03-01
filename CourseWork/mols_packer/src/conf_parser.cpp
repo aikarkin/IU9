@@ -89,7 +89,7 @@ bool prepareHJParams(pmols::HJParams &params) {
                     max_radius = mol.GetAtom(i).vdw_radius;
             }
             params.cell_length = 2 * max_radius;
-            std::cout << params.cell_length << std::endl;
+            std::cout << "cell_length: " << params.cell_length << std::endl;
         }
         else {
             std::cerr
@@ -156,22 +156,22 @@ void JSONConfigParser::parseLattice() {
 
     if(doc["lattice"].HasMember("substance")) {
         assert(doc["lattice"]["substance"].IsString());
-        if(!params.val_setted[17])
+        if(!params.val_setted[16])
             params.substance = doc["lattice"]["substance"].GetString();
     }
     if(doc["lattice"].HasMember("mol_file")) {
         assert(doc["lattice"]["mol_file"].IsString());
-        if(!params.val_setted[18])
+        if(!params.val_setted[17])
             params.mol_file = doc["lattice"]["mol_file"].GetString();
     }
     if(doc["lattice"].HasMember("out_file")) {
         assert(doc["lattice"]["out_file"].IsString());
-        if(!params.val_setted[19])
+        if(!params.val_setted[18])
             params.out_file = doc["lattice"]["out_file"].GetString();
     }
     if(doc["lattice"].HasMember("out_format")) {
         assert(doc["lattice"]["out_format"].IsString());
-        if(!params.val_setted[20])
+        if(!params.val_setted[19])
             params.out_format = doc["lattice"]["out_format"].GetString();
     }
 }
@@ -186,12 +186,11 @@ void JSONConfigParser::parsePackingParams() {
             {"rot_x", 7},
             {"rot_y", 8},
             {"rot_z", 9},
+            {"lambda", 10},
             {"dec_coefficient", 11},
             {"trans_eps", 12},
             {"rot_eps", 13},
-            {"lambda", 10},
-            {"epsilon", 14},
-            {"sigma", 15}
+            {"lj_epsilon", 14}
     };
     parseFloats(doc["packing_params"], fkey_fieldIdx);
 
@@ -201,18 +200,12 @@ void JSONConfigParser::parsePackingParams() {
     if(doc["packing_params"].HasMember("precision")) {
         parseFloats(doc["packing_params"]["precision"], fkey_fieldIdx);
     }
-    if(doc["packing_params"].HasMember("lennard_jones_potential")) {
-        assert(doc["packing_params"]["lennard_jones_potential"].IsObject());
-
-        if(params.substance != "" && doc["packing_params"]["lennard_jones_potential"].HasMember(params.substance.c_str()))
-            parseFloats(doc["packing_params"]["lennard_jones_potential"][params.substance.c_str()], fkey_fieldIdx);
-    }
 }
 
 void JSONConfigParser::parseCellLinkedLists() {
     assert(doc["cell_linked_lists"].IsObject());
 
-    std::map<std::string, int> fkey_fieldIdx = {{"cell_length", 16}};
+    std::map<std::string, int> fkey_fieldIdx = {{"cell_length", 15}};
     parseFloats(doc["cell_linked_lists"], fkey_fieldIdx);
 }
 
@@ -270,7 +263,6 @@ void CommandLineParser::Parse() {
             ("rot_eps", boost::program_options::value<float>(), "Set precision of angle step in Hooke Jeeves algorithm")
             ("trans_eps", boost::program_options::value<float>(), "Set precision of shift step in Hooke Jeeves algorithm")
             ("lambda", boost::program_options::value<float>(), "Set coefficient in pattern search of Hooke Jeeves algorithm")
-            ("lj_sigma", boost::program_options::value<float>(), "Set coefficient in Lennard Jones energy equation")
             ("lj_epsilon", boost::program_options::value<float>(), "Set coefficient in Lennard Jones energy equation");
 
     boost::program_options::variables_map vm;
@@ -287,21 +279,21 @@ void CommandLineParser::Parse() {
     if(vm.count("log_dir")) {
             params.log_dir = vm.at("log_dir").as<std::string>();
     }
+    if(vm.count("substance")) {
+        params.substance = vm.at("substance").as<std::string>();
+        params.val_setted[16] = true;
+    }
     if(vm.count("input")) {
         params.mol_file = vm.at("input").as<std::string>();
-        params.val_setted[18] = true;
+        params.val_setted[17] = true;
     }
     if(vm.count("output")) {
         params.out_file = vm.at("output").as<std::string>();
-        params.val_setted[19] = true;
+        params.val_setted[18] = true;
     }
     if(vm.count("format")) {
         params.out_format = vm.at("format").as<std::string>();
-        params.val_setted[20] = true;
-    }
-    if(vm.count("substance")) {
-        params.substance = vm.at("substance").as<std::string>();
-        params.val_setted[17] = true;
+        params.val_setted[19] = true;
     }
     if(vm.count("config")) {
         conf_file = vm.at("config").as<std::string>();
@@ -315,8 +307,7 @@ void CommandLineParser::Parse() {
             {"rot_y", 8},           {"rot_z", 9},
             {"lambda", 10},         {"step_coefficient", 11},
             {"trans_eps", 12},      {"rot_eps", 13},
-            {"lj_epsilon", 14},     {"lj_sigma", 15},
-            {"cell_length", 16}
+            {"lj_epsilon", 14},     {"cell_length", 15}
     };
 
     parseFloat(vm, paramToFloatFields);

@@ -4,7 +4,7 @@
         "box_width": 15.0,
         "box_height": 15.0,
         "expansivity": 1.5,
-        "mol_file": "../resources/Structure3D_CID_11.sdf",
+        "mol_file": "../resources/Structure3D_CID_962.sdf",
         "out_format": "mol2",
         "substance": "H2O"
     },
@@ -16,13 +16,16 @@
             "rot_x": 90,
             "rot_y": 90,
             "rot_z": 90,
-            "dec_coefficient": 0.16
+            "dec_coefficient": 0.5
         },
         "precision": {
-            "trans_eps": 0.001,
-            "rot_eps": 0.01
+            "trans_eps": 0.0001,
+            "rot_eps": 0.001
         },
         "lambda": 2,
         "lj_epsilon": 0.6368
+    },
+    "cell_linked_lists": {
+        "cell_length": 3.5
     }
 }

@@ -9,19 +9,19 @@ namespace po = boost::program_options;
 void printStatistics(pmols::HJStatistics &stat, std::ostream &outs) {
     outs << "Number of packed molecules: " << stat.PackedMolsNumber() << std::endl;
     outs << "Total sum of distances between molecules: " << stat.TotalAtomDistance() << std::endl;
-
+    outs << std::endl;
     outs << "Average distance between atoms: " << stat.AvgAtomDistance() << std::endl;
     outs << "Minimum distance between atoms: " << stat.MinAtomDistance() << std::endl;
     outs << "Maximum distance between atoms: " << stat.MaxAtomDistance() << std::endl;
-
+    outs << std::endl;
     outs << "Total intersection between atoms: " << stat.TotalIntersection() << std::endl;
     outs << "Number of intersections between atoms: " << stat.IntersectionsNumber() << std::endl;
     outs << "Average intersection between atoms: " << stat.AvgIntersection() << std::endl;
     outs << "Maximum intersection between atoms: " << stat.MaxIntersection() << std::endl;
     outs << "Minimum intersection between atoms: " << stat.MinIntersection() << std::endl;
-
+    outs << std::endl;
     outs << "Number of empty cells: " << stat.EmptyCellsNumber() << std::endl;
-
+    outs << std::endl;
     outs << "Total number of iterations: " << stat.TotalIterationsNumber() << std::endl;
     outs << "Number of exploring search iterations (with step change): " << stat.ESIterationsNumber() << std::endl;
     outs << "Number of pattern search iterations: " << stat.PSIterationsNumber() << std::endl;
@@ -43,34 +43,30 @@ int main(int argc, const char *argv[]) {
 
     prepareHJParams(params);
 
-    // define Lennard-Jones potential as distance function
-    // LJ coefficients
-    float lj_a1 = 4 * params.lj_epsilon * std::pow(params.lj_sigma, 12.f);
-    float lj_a2 = 4 * params.lj_epsilon * std::pow(params.lj_sigma, 6.f);
+    float lj_eps_4 = 4.0f * params.lj_epsilon;
+    params.distanceFunc = [lj_eps_4] (pmols::Atom *a, pmols::Atom *b) -> float {
+        float dist_6, dist_12;
 
-    params.distanceFunc = [lj_a1, lj_a2] (pmols::Atom *a, pmols::Atom *b) -> float {
-            float dist_6, dist_12;
-
-            // if one of cells is empty, consider actual distance equals 2.0
-            if (a == NULL || b == NULL) {
-                dist_6 = 64.0f;
-                dist_12 = 4096.f;
-            }
-            else {
-                dist_6 = std::pow((float)std::fabs(glm::distance(a->coord, b->coord)), 6.0f);
-                dist_12 = std::pow(dist_6, 2.0f);
-            }
-            return lj_a1/dist_12 - lj_a2/dist_6;
+        if (a == NULL || b == NULL) {
+            dist_6 = 0.015625f;
+            dist_12 = 0.000244141f;
+            
+        }
+        else {
+            dist_6 = std::pow((a->vdw_radius + b->vdw_radius)/(float)glm::distance(a->coord, b->coord), 6.f);
+            dist_12 = std::pow(dist_6, 2.f);
+        }
+        
+        return lj_eps_4 * (dist_12 - dist_6);
     };
-    std::cout << params.to_string() << std::endl;
 
-    // initialize Hooke-Jeeves packer
+    // std::cout << params.toString() << std::endl;
     pmols::HJPacker packer(params);
-    // pack and save result to file
     packer.Pack();
     packer.Save();
     pmols::HJStatistics pack_stat = packer.GetStatistics();
-//    std::ofstream stat_file("../logs/ttt/statistics.txt");
+    std::cout << "Molecules have succesfully packed" << std::endl;
+    std::cout << "_________________________________" << std::endl;
     printStatistics(pack_stat, std::cout);
 
     return 0;

@@ -1,4 +1,4 @@
-# Install script for directory: /home/alex/dev/src/cpp/CourseWork/pmols
+# Install script for directory: /home/alex/dev/src/cpp/IU9/CourseWork/pmols
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

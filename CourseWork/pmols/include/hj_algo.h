@@ -39,18 +39,17 @@ namespace pmols {
         float trans_eps = 0.1f;     // (12)
         float rot_eps = 0.1f;       // (13)
         float lj_epsilon = 0.648f;  // (14)
-        float lj_sigma = 3.153f;    // (15)
-        float cell_length = 0.0f;   // (16) !!!
+        float cell_length = 0.0f;   // (15) !!!
 
         // input/output file paths and output file format
-        std::string substance = "";   // (17) !!
-        std::string mol_file = "";    // (18) !!!
-        std::string out_file = "";    // (19) !!!
-        std::string out_format = "";  // (20) !!!
-        DistFunc distanceFunc;        // (21)
-        std::string log_dir = "";          // (22)
+        std::string substance = "";   // (16) !!
+        std::string mol_file = "";    // (17) !!!
+        std::string out_file = "";    // (18) !!!
+        std::string out_format = "";  // (19) !!!
+        DistFunc distanceFunc;        // (20)
+        std::string log_dir = "";     // (21)
 
-        std::string to_string() {
+        std::string toString() {
             std::stringstream ss;
             ss        << "HJParams{\n"
                       << "\tbox_length:" << box_length << "; \n"
@@ -72,13 +71,12 @@ namespace pmols {
                       << "\tout_format:" << out_format.c_str() << "; \n"
                       << "\tsubstance: " << substance.c_str() << "; \n"
                       << "\tlj_epsilon: " << lj_epsilon << "; \n"
-                      << "\tlj_sigma: " << lj_sigma << "; \n"
                       << "\tcell_length: " << cell_length << "; \n"
                       << "\n}";
             return ss.str();
         }
         
-        bool val_setted[22] = {0};
+        bool val_setted[21] = {0};
     };
 
     class HJStatistics {
@@ -152,7 +150,6 @@ namespace pmols {
         ublas::vector<float> coordVec;
         ublas::vector<float> step;
 
-        //statistics info
         int expSearchItCount;
         int ptrSearchItCount;
         int ptrSearchFpItCount;

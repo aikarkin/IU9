@@ -1,4 +1,4 @@
-# Install script for directory: /home/alex/dev/src/cpp/CourseWork
+# Install script for directory: /home/alex/dev/src/cpp/IU9/CourseWork
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,10 +34,10 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/alex/dev/src/cpp/CourseWork/build/pmols/cmake_install.cmake")
-  include("/home/alex/dev/src/cpp/CourseWork/build/mols_packer/cmake_install.cmake")
-  include("/home/alex/dev/src/cpp/CourseWork/build/mol_visualizer/cmake_install.cmake")
-  include("/home/alex/dev/src/cpp/CourseWork/build/tests/cmake_install.cmake")
+  include("/home/alex/dev/src/cpp/IU9/CourseWork/build/pmols/cmake_install.cmake")
+  include("/home/alex/dev/src/cpp/IU9/CourseWork/build/mols_packer/cmake_install.cmake")
+  include("/home/alex/dev/src/cpp/IU9/CourseWork/build/mol_visualizer/cmake_install.cmake")
+  include("/home/alex/dev/src/cpp/IU9/CourseWork/build/tests/cmake_install.cmake")
 
 endif()
 
@@ -49,5 +49,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/alex/dev/src/cpp/CourseWork/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/alex/dev/src/cpp/IU9/CourseWork/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

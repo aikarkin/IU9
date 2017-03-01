@@ -48,10 +48,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alex/dev/src/cpp/CourseWork
+CMAKE_SOURCE_DIR = /home/alex/dev/src/cpp/IU9/CourseWork
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alex/dev/src/cpp/CourseWork/build
+CMAKE_BINARY_DIR = /home/alex/dev/src/cpp/IU9/CourseWork/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles /home/alex/dev/src/cpp/CourseWork/build/mols_packer/CMakeFiles/progress.marks
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles 0
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/IU9/CourseWork/build/CMakeFiles /home/alex/dev/src/cpp/IU9/CourseWork/build/mols_packer/CMakeFiles/progress.marks
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/IU9/CourseWork/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/clean
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/preinstall
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/preinstall
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 mols_packer/CMakeFiles/mols_packer.dir/rule:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/CMakeFiles/mols_packer.dir/rule
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mols_packer/CMakeFiles/mols_packer.dir/rule
 .PHONY : mols_packer/CMakeFiles/mols_packer.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ mols_packer: mols_packer/CMakeFiles/mols_packer.dir/rule
 
 # fast build rule for target.
 mols_packer/fast:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/build
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/build
 .PHONY : mols_packer/fast
 
 src/conf_parser.o: src/conf_parser.cpp.o
@@ -131,7 +131,7 @@ src/conf_parser.o: src/conf_parser.cpp.o
 
 # target to build an object file
 src/conf_parser.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.o
 .PHONY : src/conf_parser.cpp.o
 
 src/conf_parser.i: src/conf_parser.cpp.i
@@ -140,7 +140,7 @@ src/conf_parser.i: src/conf_parser.cpp.i
 
 # target to preprocess a source file
 src/conf_parser.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.i
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.i
 .PHONY : src/conf_parser.cpp.i
 
 src/conf_parser.s: src/conf_parser.cpp.s
@@ -149,7 +149,7 @@ src/conf_parser.s: src/conf_parser.cpp.s
 
 # target to generate assembly for a file
 src/conf_parser.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.s
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/conf_parser.cpp.s
 .PHONY : src/conf_parser.cpp.s
 
 src/mols_packer.o: src/mols_packer.cpp.o
@@ -158,7 +158,7 @@ src/mols_packer.o: src/mols_packer.cpp.o
 
 # target to build an object file
 src/mols_packer.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.o
 .PHONY : src/mols_packer.cpp.o
 
 src/mols_packer.i: src/mols_packer.cpp.i
@@ -167,7 +167,7 @@ src/mols_packer.i: src/mols_packer.cpp.i
 
 # target to preprocess a source file
 src/mols_packer.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.i
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.i
 .PHONY : src/mols_packer.cpp.i
 
 src/mols_packer.s: src/mols_packer.cpp.s
@@ -176,7 +176,7 @@ src/mols_packer.s: src/mols_packer.cpp.s
 
 # target to generate assembly for a file
 src/mols_packer.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.s
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mols_packer/CMakeFiles/mols_packer.dir/build.make mols_packer/CMakeFiles/mols_packer.dir/src/mols_packer.cpp.s
 .PHONY : src/mols_packer.cpp.s
 
 # Help Target
@@ -205,6 +205,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

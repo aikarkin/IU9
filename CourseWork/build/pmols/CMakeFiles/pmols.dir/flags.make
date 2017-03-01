@@ -6,5 +6,5 @@ CXX_FLAGS =  -std=c++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/alex/dev/src/cpp/CourseWork/pmols/include -I/home/alex/dev/src/cpp/CourseWork/pmols/src -I/usr/local/include/openbabel-2.0 
+CXX_INCLUDES = -I/home/alex/dev/src/cpp/IU9/CourseWork/pmols/include -I/home/alex/dev/src/cpp/IU9/CourseWork/pmols/src -I/usr/local/include/openbabel-2.0 
 

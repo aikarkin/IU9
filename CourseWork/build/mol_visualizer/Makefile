@@ -48,10 +48,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alex/dev/src/cpp/CourseWork
+CMAKE_SOURCE_DIR = /home/alex/dev/src/cpp/IU9/CourseWork
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alex/dev/src/cpp/CourseWork/build
+CMAKE_BINARY_DIR = /home/alex/dev/src/cpp/IU9/CourseWork/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles /home/alex/dev/src/cpp/CourseWork/build/mol_visualizer/CMakeFiles/progress.marks
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles 0
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/IU9/CourseWork/build/CMakeFiles /home/alex/dev/src/cpp/IU9/CourseWork/build/mol_visualizer/CMakeFiles/progress.marks
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/IU9/CourseWork/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/clean
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/preinstall
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/preinstall
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 mol_visualizer/CMakeFiles/mol_visualizer.dir/rule:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/CMakeFiles/mol_visualizer.dir/rule
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 mol_visualizer/CMakeFiles/mol_visualizer.dir/rule
 .PHONY : mol_visualizer/CMakeFiles/mol_visualizer.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ mol_visualizer: mol_visualizer/CMakeFiles/mol_visualizer.dir/rule
 
 # fast build rule for target.
 mol_visualizer/fast:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mol_visualizer/CMakeFiles/mol_visualizer.dir/build.make mol_visualizer/CMakeFiles/mol_visualizer.dir/build
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mol_visualizer/CMakeFiles/mol_visualizer.dir/build.make mol_visualizer/CMakeFiles/mol_visualizer.dir/build
 .PHONY : mol_visualizer/fast
 
 mol_visualizer.o: mol_visualizer.cpp.o
@@ -131,7 +131,7 @@ mol_visualizer.o: mol_visualizer.cpp.o
 
 # target to build an object file
 mol_visualizer.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mol_visualizer/CMakeFiles/mol_visualizer.dir/build.make mol_visualizer/CMakeFiles/mol_visualizer.dir/mol_visualizer.cpp.o
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mol_visualizer/CMakeFiles/mol_visualizer.dir/build.make mol_visualizer/CMakeFiles/mol_visualizer.dir/mol_visualizer.cpp.o
 .PHONY : mol_visualizer.cpp.o
 
 mol_visualizer.i: mol_visualizer.cpp.i
@@ -140,7 +140,7 @@ mol_visualizer.i: mol_visualizer.cpp.i
 
 # target to preprocess a source file
 mol_visualizer.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mol_visualizer/CMakeFiles/mol_visualizer.dir/build.make mol_visualizer/CMakeFiles/mol_visualizer.dir/mol_visualizer.cpp.i
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mol_visualizer/CMakeFiles/mol_visualizer.dir/build.make mol_visualizer/CMakeFiles/mol_visualizer.dir/mol_visualizer.cpp.i
 .PHONY : mol_visualizer.cpp.i
 
 mol_visualizer.s: mol_visualizer.cpp.s
@@ -149,7 +149,7 @@ mol_visualizer.s: mol_visualizer.cpp.s
 
 # target to generate assembly for a file
 mol_visualizer.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f mol_visualizer/CMakeFiles/mol_visualizer.dir/build.make mol_visualizer/CMakeFiles/mol_visualizer.dir/mol_visualizer.cpp.s
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f mol_visualizer/CMakeFiles/mol_visualizer.dir/build.make mol_visualizer/CMakeFiles/mol_visualizer.dir/mol_visualizer.cpp.s
 .PHONY : mol_visualizer.cpp.s
 
 # Help Target
@@ -175,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

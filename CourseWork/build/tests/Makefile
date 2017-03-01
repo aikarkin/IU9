@@ -48,10 +48,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/alex/dev/src/cpp/CourseWork
+CMAKE_SOURCE_DIR = /home/alex/dev/src/cpp/IU9/CourseWork
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/alex/dev/src/cpp/CourseWork/build
+CMAKE_BINARY_DIR = /home/alex/dev/src/cpp/IU9/CourseWork/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles /home/alex/dev/src/cpp/CourseWork/build/tests/CMakeFiles/progress.marks
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/CourseWork/build/CMakeFiles 0
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/IU9/CourseWork/build/CMakeFiles /home/alex/dev/src/cpp/IU9/CourseWork/build/tests/CMakeFiles/progress.marks
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/dev/src/cpp/IU9/CourseWork/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 tests/CMakeFiles/tests.dir/rule:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/CMakeFiles/tests.dir/rule
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f CMakeFiles/Makefile2 tests/CMakeFiles/tests.dir/rule
 .PHONY : tests/CMakeFiles/tests.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ tests: tests/CMakeFiles/tests.dir/rule
 
 # fast build rule for target.
 tests/fast:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/build
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/build
 .PHONY : tests/fast
 
 tests.o: tests.cpp.o
@@ -131,7 +131,7 @@ tests.o: tests.cpp.o
 
 # target to build an object file
 tests.cpp.o:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/tests.cpp.o
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/tests.cpp.o
 .PHONY : tests.cpp.o
 
 tests.i: tests.cpp.i
@@ -140,7 +140,7 @@ tests.i: tests.cpp.i
 
 # target to preprocess a source file
 tests.cpp.i:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/tests.cpp.i
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/tests.cpp.i
 .PHONY : tests.cpp.i
 
 tests.s: tests.cpp.s
@@ -149,7 +149,7 @@ tests.s: tests.cpp.s
 
 # target to generate assembly for a file
 tests.cpp.s:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/tests.cpp.s
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(MAKE) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/tests.cpp.s
 .PHONY : tests.cpp.s
 
 # Help Target
@@ -175,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/alex/dev/src/cpp/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/alex/dev/src/cpp/IU9/CourseWork/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

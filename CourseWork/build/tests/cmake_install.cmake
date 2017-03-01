@@ -1,4 +1,4 @@
-# Install script for directory: /home/alex/dev/src/cpp/CourseWork/tests
+# Install script for directory: /home/alex/dev/src/cpp/IU9/CourseWork/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -36,7 +36,7 @@ glm/gtx/vector_angle.hpp
 boost/tuple/tuple.hpp
 -
 
-/home/alex/dev/src/cpp/CourseWork/tests/tests.cpp
+/home/alex/dev/src/cpp/IU9/CourseWork/tests/tests.cpp
 iostream
 -
 cell_linked_lists.h

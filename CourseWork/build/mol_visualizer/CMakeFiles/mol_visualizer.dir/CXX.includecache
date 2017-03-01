@@ -26,7 +26,7 @@ glm/gtx/vector_angle.hpp
 boost/tuple/tuple.hpp
 -
 
-/home/alex/dev/src/cpp/CourseWork/mol_visualizer/mol_visualizer.cpp
+/home/alex/dev/src/cpp/IU9/CourseWork/mol_visualizer/mol_visualizer.cpp
 iostream
 -
 fstream

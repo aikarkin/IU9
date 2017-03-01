@@ -1,4 +1,4 @@
-# Install script for directory: /home/alex/dev/src/cpp/CourseWork/mols_packer
+# Install script for directory: /home/alex/dev/src/cpp/IU9/CourseWork/mols_packer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
