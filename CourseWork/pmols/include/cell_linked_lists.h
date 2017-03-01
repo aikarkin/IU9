@@ -1,6 +1,7 @@
 #include <mol.h>
 #include <functional>
 #include <memory>
+#include <unordered_set>
 
 #ifndef COURSEWORK_CELLLINKEDLISTS_H
 #define COURSEWORK_CELLLINKEDLISTS_H
@@ -23,6 +24,7 @@ namespace pmols {
 
     class CellLinkedLists {
         friend class CLLNeighbourCells;
+        friend class HJStatistics;
     public:
         CellLinkedLists() {};
         CellLinkedLists(std::vector<Molecule> &mols, float cellLen, DistFunc distFunc);
@@ -41,11 +43,10 @@ namespace pmols {
         ~CellLinkedLists();
     private:
         void calcBoundingBox();
-        bool molInsideBox(Molecule& mol);
         void repMol(int molIdx, Molecule &mol);
         std::tuple<int, int, int> getCellIndex(Atom &atom);
 
-        int atoms_count_x, atoms_count_y, atoms_count_z;
+        int cells_count_x, cells_count_y, cells_count_z;
 
         glm::vec3 appos_point;
         float box_length, box_width, box_height;

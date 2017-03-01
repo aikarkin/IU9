@@ -18,7 +18,6 @@
 std::string vec_to_string(glm::vec3 vec);
 
 namespace pmols {
-
     class Molecule;
 
     struct Colorf {
@@ -127,6 +126,9 @@ namespace pmols {
         Atom *atoms;
         Bond *bonds;
     };
+
+    bool AtomInsideBox(Atom atom, glm::vec3 apposPoint, std::tuple<float, float, float> boxSize);
+    bool MolInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<float, float, float> boxSize);
 
 }
 #endif //COURSEWORK_MOLECULE_H

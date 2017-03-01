@@ -26,16 +26,16 @@ void pmols::CellLinkedLists::FormCellLinkedLists() {
 
     calcBoundingBox();
 
-    atoms_count_x = (int)ceilf(box_length/cell_len);
-    atoms_count_y = (int)ceilf(box_width/cell_len);
-    atoms_count_z = (int)ceilf(box_height/cell_len);
+    cells_count_x = (int)ceilf(box_length/cell_len);
+    cells_count_y = (int)ceilf(box_width/cell_len);
+    cells_count_z = (int)ceilf(box_height/cell_len);
 
     // allocate atom_grid
-    atom_grid = new std::list<Atom>**[atoms_count_x];
-    for (int i = 0; i < atoms_count_x; ++i) {
-        atom_grid[i] = new std::list<Atom>*[atoms_count_y];
-        for (int j = 0; j < atoms_count_y; ++j) {
-            atom_grid[i][j] = new std::list<Atom>[atoms_count_z];
+    atom_grid = new std::list<Atom>**[cells_count_x];
+    for (int i = 0; i < cells_count_x; ++i) {
+        atom_grid[i] = new std::list<Atom>*[cells_count_y];
+        for (int j = 0; j < cells_count_y; ++j) {
+            atom_grid[i][j] = new std::list<Atom>[cells_count_z];
         }
     }
 
@@ -131,8 +131,8 @@ bool pmols::CellLinkedLists::MoveMol(int molIdx, pmols::MOVE_OP moveOp, float va
         default:
             break;
     }
-
-    if(!molInsideBox(mol)) {
+    std::tuple<float, float, float> box_size(box_length, box_width, box_height);
+    if(!MolInsideBox(mol, appos_point, box_size)) {
         last_mol.reset();
         return false;
     }
@@ -145,26 +145,6 @@ bool pmols::CellLinkedLists::MoveMol(int molIdx, pmols::MOVE_OP moveOp, float va
 
 size_t pmols::CellLinkedLists::MolsCount() {
     return mols.size();
-}
-
-bool pmols::CellLinkedLists::molInsideBox(pmols::Molecule &mol) {
-    glm::vec3 coord;
-    float vdw_radius;
-
-    for (int i = 0; i < mol.AtomsCount(); ++i) {
-        coord = mol.GetAtom(i).coord;
-        vdw_radius = mol.GetAtom(i).vdw_radius;
-
-        if (    coord.x - vdw_radius < appos_point.x ||
-                coord.x + vdw_radius > appos_point.x + box_length ||
-                coord.y - vdw_radius < appos_point.y ||
-                coord.y + vdw_radius > appos_point.y + box_width ||
-                coord.z - vdw_radius < appos_point.z ||
-                coord.z + vdw_radius > appos_point.z + box_height   )
-            return false;
-    }
-
-    return true;
 }
 
 std::tuple<int, int, int> pmols::CellLinkedLists::getCellIndex(pmols::Atom &atom) {
@@ -195,7 +175,7 @@ float pmols::CellLinkedLists::MolDist(int molIdx) {
             }
             else {
                 for (auto na : cell_list) {
-                    if (mol.GetAtom(i).parent_mol_id != na.parent_mol_id) {
+                    if (atom->parent_mol_id != na.parent_mol_id) {
                         dist = dist_func(atom, &na);
                         sum += dist;
                     }
@@ -219,23 +199,18 @@ pmols::Molecule &pmols::CellLinkedLists::GetMol(int molIdx) {
 }
 
 pmols::CellLinkedLists::~CellLinkedLists() {
-    for(int i = 0; i < atoms_count_x; i++) {
-        for (int j = 0; j < atoms_count_y; ++j) {
-            for (int k = 0; k < atoms_count_z; ++k) {
-                if(!atom_grid[i][j][k].empty())
+    for (int i = 0; i < cells_count_x; i++) {
+        for (int j = 0; j < cells_count_y; ++j) {
+            for (int k = 0; k < cells_count_z; ++k) {
+                if (!atom_grid[i][j][k].empty())
                     atom_grid[i][j][k].clear();
             }
-        }
-    }
-
-    for (int i = 0; i < atoms_count_y; ++i) {
-        for (int j = 0; j < atoms_count_z; ++j) {
             delete []atom_grid[i][j];
         }
         delete []atom_grid[i];
     }
 
-    delete []atom_grid;
+    delete[]atom_grid;
 }
 
 void pmols::CellLinkedLists::CancelMove() {
@@ -256,10 +231,10 @@ void pmols::CellLinkedLists::SaveToCSV(std::string file_path) {
         std::cerr << "Error: unable to save Cell Linked Lists to CSV. File could not be open." << std::endl;
         return;
     }
-    for (int k = 0; k < atoms_count_z; ++k) {
+    for (int k = 0; k < cells_count_z; ++k) {
         outf_stream << "\"Layer #" << k + 1 << "\"" << std::endl;
-        for (int j = 0; j < atoms_count_y; ++j) {
-            for (int i = 0; i < atoms_count_x; ++i) {
+        for (int j = 0; j < cells_count_y; ++j) {
+            for (int i = 0; i < cells_count_x; ++i) {
                 std::list<Atom> cell_list = atom_grid[i][j][k];
                 outf_stream << "\"";
 
@@ -279,7 +254,6 @@ void pmols::CellLinkedLists::SaveToCSV(std::string file_path) {
         }
         outf_stream << std::endl;
     }
-
     outf_stream.close();
 }
 
@@ -361,9 +335,9 @@ std::list<pmols::Atom> pmols::CLLNeighbourCells::next() {
             trans_code += 2;
         else
             trans_code += 1;
-    } while (i < 0 || i >= clLists->atoms_count_x ||
-             j < 0 || j >= clLists->atoms_count_y ||
-             k < 0 || k >= clLists->atoms_count_z);
+    } while (i < 0 || i >= clLists->cells_count_x ||
+             j < 0 || j >= clLists->cells_count_y ||
+             k < 0 || k >= clLists->cells_count_z);
 
     std::list<Atom> cell_list = clLists->atom_grid[i][j][k];
 

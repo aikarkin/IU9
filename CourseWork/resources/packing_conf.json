@@ -19,14 +19,14 @@
             "dec_coefficient": 0.125
         },
         "precision": {
-            "trans_eps": 0.00001,
-            "rot_eps": 0.0001
+            "trans_eps": 0.001,
+            "rot_eps": 0.01
         },
         "lambda": 2,
         "lennard_jones_potential": {
             "H2O": {
                 "epsilon": 0.6368,
-                "sigma": 2.0
+                "sigma": 2.9
             }
         }
     },

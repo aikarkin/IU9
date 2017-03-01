@@ -81,13 +81,59 @@ namespace pmols {
         bool val_setted[22] = {0};
     };
 
+    class HJStatistics {
+    public:
+        HJStatistics(CellLinkedLists *cellLinkedLists, int expSearchIt, int ptrSearchIt, int ptrSearchFpIt);
+        int ESIterationsNumber() { return es_it; }
+        int PSIterationsNumber() {return ps_it; }
+        int PSFalsePositiveIterationsNumber() { return ps_fp_it; }
+        int TotalIterationsNumber() { return it; }
+
+        int EmptyCellsNumber() { return empty_cells; }
+        int IntersectionsNumber() {return inters; }
+        int PackedMolsNumber() { return mols_count; }
+
+        float TotalAtomDistance() { return atoms_sum; }
+        float AvgAtomDistance() { return avg_atoms_sum; }
+        float MinAtomDistance() { return min_atoms_dist; }
+        float MaxAtomDistance() { return max_atoms_dist; }
+
+        float TotalIntersection() { return inter_sum; }
+        float AvgIntersection() { return avg_inter; }
+        float MinIntersection() { return min_inter; }
+        float MaxIntersection() { return max_inter; }
+    private:
+        void calcMolStatistics(CellLinkedLists *cll);
+        float atomsEDist(Atom &a, Atom &b);
+
+        int es_it;
+        int ps_it;
+        int ps_fp_it;
+        int it;
+
+        int empty_cells;
+        int inters;
+        int mols_count;
+
+
+        float atoms_sum;
+        float avg_atoms_sum;
+        float max_atoms_dist;
+        float min_atoms_dist;
+
+        float inter_sum;
+        float avg_inter;
+        float min_inter;
+        float max_inter;
+    };
+
     class HJPacker {
     public:
         HJPacker(HJParams params);
         void Pack();
         void Save(std::string out_file);
         void Save();
-        ~HJPacker() { delete cellLinkedLists.get(); };
+        HJStatistics GetStatistics();
     private:
         int exploringSearch(ublas::vector<float> &x_, bool change_step);
         int patternSearch(ublas::vector<float> &x1_, ublas::vector<float> &x2_);
@@ -98,10 +144,16 @@ namespace pmols {
         float prevTotalDist;
 
         std::shared_ptr<CellLinkedLists> cellLinkedLists;
+        glm::vec3 appos_point;
         HJParams params;
 
         ublas::vector<float> coordVec;
         ublas::vector<float> step;
+
+        //statistics info
+        int expSearchItCount;
+        int ptrSearchItCount;
+        int ptrSearchFpItCount;
     };
 
 }

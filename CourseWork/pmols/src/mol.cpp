@@ -270,3 +270,24 @@ bool pmols::Atom::operator==(const Atom& other) {
             this->vdw_radius == other.vdw_radius;
     return res;
 }
+
+bool pmols::AtomInsideBox(Atom atom, glm::vec3 apposPoint, std::tuple<float, float, float> boxSize) {
+    glm::vec3 atom_coord = atom.coord;
+    float a, b, c;
+    std::tie(a, b, c) = boxSize;
+    float da = a + apposPoint.x;
+    float db = b + apposPoint.y;
+    float dc = c + apposPoint.z;
+
+    return (atom_coord.x >= apposPoint.x && atom_coord.x < da
+            && atom_coord.y >= apposPoint.y && atom_coord.y < db
+            && atom_coord.z >= apposPoint.z && atom_coord.z < dc);
+}
+
+bool pmols::MolInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<float, float, float> boxSize) {
+    for (int i = 0; i < mol.AtomsCount(); ++i)
+        if(!AtomInsideBox(mol.GetAtom(i), apposPoint, boxSize))
+            return false;
+
+    return true;
+}

@@ -13,6 +13,8 @@ functional
 -
 memory
 -
+unordered_set
+-
 
 ../tests/../pmols/include/mol.h
 string

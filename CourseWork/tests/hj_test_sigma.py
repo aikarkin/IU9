@@ -9,14 +9,14 @@ root = '../resources/'
 
 sigma0 = 2.0
 sigma_ = [];
-for i in range(21):
-	sigma_.append(sigma0 + 0.1*i)
+for i in range(201):
+	sigma_.append(sigma0 + 0.01*i)
 	
-sigma_.extend([3.150, 3.14, 3.12, 3.11, 3.09, 3.05, 3.0, 2.95, 2.9413, 2.8, 2.7, 2.6,
-         2.5, 2.3, 2.0, 1.2, 0.31506, 0.31566, 0.031506, 3.15061, 3.1589, 3.166, 3.1668])
+#sigma_.extend([3.150, 3.14, 3.12, 3.11, 3.09, 3.05, 3.0, 2.95, 2.9413, 2.8, 2.7, 2.6,
+#         2.5, 2.3, 2.0, 1.2, 0.31506, 0.31566, 0.031506, 3.15061, 3.1589, 3.166, 3.1668])
 
 
-dx = 1.2
+dx = 1.5
 da = 90
 
 
@@ -57,38 +57,38 @@ def lst_to_str(lst):
     return str
 
 
-print("preparing commands...")
+print("Preparing commands...")
 for i in range(len(sigma_)):
     cmd = generate_cmd(sigma_[i])
     cmds.append(cmd)
-print("commands prepared")
+print("Commands prepared")
 
-
-print("runing commands...")
+print("Runing commands...")
 log_root = "../logs/"
 
 for i in range(len(cmds)):
     dt_now = str(datetime.now())
     log_dir = log_root + dt_now + "/"
-    os.makedirs(log_dir)
     log_file = log_dir + dt_now + ".log"
     err_file = log_dir + "err__" + dt_now + ".log"
+
+    os.makedirs(log_dir)
+    lf = open(log_file, 'w')
+    ef = open(err_file, 'w')
     
     cmds[i].extend(['--log_dir=' + log_dir])
     cmds[i].extend(['--output=' + log_dir + 'Structure3D_CID_962_10x10x10__' + dt_now + '.mol2'])
     
-    lf = open(log_file, 'w')
-    ef = open(err_file, 'w')
-    
     print(dt_now + ":")
-    print("\tloging to {0}".format(log_file))
-    print("\texec \"{0}\"".format(lst_to_str(cmds[i])))
+    print("\tLogging to {0}".format(log_file))
+    print("\tExec \"{0}\"".format(lst_to_str(cmds[i])[:-1]))
     try:
         check_call(cmds[i], stdout=lf, stderr=ef, timeout=120)
     except CalledProcessError as cpe:
-        print("Process error. See logs at" + err_file)
-        lf.write(cpe.message);
+        print("\tProcess error occurred. See logs at " + err_file)
+
     lf.close()
     ef.close()
     print('————————————————————————————————————————————————————————————————————')
 
+print("{0} commands successfully executed.".format(len(cmds)));
