@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++11 -O3   CMakeFiles/mols_packer.dir/mols_packer.cpp.o  -o ../../bin/mols_packer -lopenbabel ../../mols_packer/../lib/libpmols.so -Wl,-rpath,/home/alex/dev/src/cpp/CourseWork/mols_packer/../lib 

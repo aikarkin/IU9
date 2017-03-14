@@ -10,40 +10,54 @@
 
 #include <GLFW/glfw3.h>
 
-#include <MolShell.h>
+#include <boost/tuple/tuple.hpp>
+#include <glm/vec3.hpp>
+#include <mol.h>
 
 using namespace std;
 
 #define MAX_SCALE 3.275
 bool draw_cube = false;
+bool vdw_radius = false;
 float user_scale = 2.5f, rotate_x = 0, rotate_y = 0;
 vector<glm::vec3> cubePoints;
 string WORK_DIR = "/home/alex/dev/src/cpp/CourseWork/";
-Molecule mol(WORK_DIR + "resources/Structure3D_CID_962.sdf");
-MolCubeShell packer(&mol);
+pmols::Molecule mol(WORK_DIR + "resources/Structure3D_CID_6212.sdf");
+glm::vec3 appos_point;
+
 
 void packMoleculeToCube() {
-    packer.pack();
-    /*glm::vec3 shell_appos = packer.getAppositionPoint();
-    packer.translate(glm::vec3(0, 0, 0) - shell_appos);*/
-    cubePoints = packer.getShellPoints();
+    //boost::tuple<glm::vec3, boost::tuple<float, float, float>> rect_shell = mol.GetRectangularShell();
+    std::tuple<float, float, float> size;
+    std::tie(appos_point, size) = mol.GetRectangularShell();
+    float a, b, c;
+    std::tie(a, b, c) = size;
+    std::cout << "shell sizes: " << a << "x" << b << "x" << c << std::endl;
+
+    cubePoints.emplace_back(appos_point);
+    cubePoints.emplace_back(appos_point.x, appos_point.y + b, appos_point.z);
+    cubePoints.emplace_back(appos_point.x + a, appos_point.y + b, appos_point.z);
+    cubePoints.emplace_back(appos_point.x + a, appos_point.y, appos_point.z);
+
+    cubePoints.emplace_back(appos_point.x + a, appos_point.y, appos_point.z + c);
+    cubePoints.emplace_back(appos_point.x + a, appos_point.y + b, appos_point.z + c);
+    cubePoints.emplace_back(appos_point.x, appos_point.y + b, appos_point.z + c);
+    cubePoints.emplace_back(appos_point.x, appos_point.y, appos_point.z + c);
+
+    std::cout << "cube coordinates: " << std::endl;
+    for(int i = 0; i < cubePoints.size(); i++) {
+        std::cout << "\t" << i <<": " << vec_to_string(cubePoints[i]) << std::endl;
+    }
 }
 
-void setMaterial(Colorf ambient, Colorf diffuse = Colorf(1.0f, 1.0f, 1.0f), Colorf specular = Colorf(1.0f, 1.0f, 1.0f), float shininess=70.0f) {
+void setMaterial(pmols::Colorf ambient,
+                 pmols::Colorf diffuse = pmols::Colorf(1.0f, 1.0f, 1.0f),
+                 pmols::Colorf specular = pmols::Colorf(1.0f, 1.0f, 1.0f),
+                 float shininess=70.0f) {
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, &ambient.red);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, &diffuse.red);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, &specular.red);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &shininess);
-}
-
-void printMolAtoms() {
-    std::cout << "Molecule " << mol.GetFormula() << std::endl;
-    std::cout << "Atoms: " << std::endl;
-    for (int i = 0; i < mol.AtomsCount(); ++i) {
-        std::cout << std::endl;
-        mol.GetAtom(i).print();
-    }
-    std::cout << "-----------" << std::endl;
 }
 
 // draws cube by points stored in shellPoints vector
@@ -53,7 +67,7 @@ void drawCube() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    Colorf cube_color(0.4, 0.4, 0.6, 0.4);
+    pmols::Colorf cube_color(0.4, 0.4, 0.6, 0.4);
 
     glm::vec3 N_back(glm::cross(cubePoints[1] - cubePoints[0], cubePoints[2] - cubePoints[0]));
     glm::vec3 N_left(glm::cross(cubePoints[1] - cubePoints[0], cubePoints[6] - cubePoints[0]));
@@ -120,7 +134,7 @@ void drawCube() {
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void drawSphere(glm::vec3 center, float radius, int numStacks, int numSides, Colorf color)
+void drawSphere(glm::vec3 center, float radius, int numStacks, int numSides, pmols::Colorf color)
 {
     float x0 = center.x, y0 = center.y, z0 = center.z;
     GLfloat curRadius, curTheta, curRho, deltaTheta, deltaRho, curX,curY,curZ;
@@ -205,7 +219,7 @@ void drawSphere(glm::vec3 center, float radius, int numStacks, int numSides, Col
     glEnd();
 }
 
-void drawTube(glm::vec3 basePoint, glm::vec3 cupPoint, float radius, int partition, Colorf color) {
+void drawTube(glm::vec3 basePoint, glm::vec3 cupPoint, float radius, int partition, pmols::Colorf color) {
     float dphi = 2 * (float)M_PI / partition;
     float phi;
 
@@ -248,19 +262,19 @@ void drawTube(glm::vec3 basePoint, glm::vec3 cupPoint, float radius, int partiti
     glEnd();
 }
 
-void drawMolecule(Molecule &mol, bool vdw_radii) {
+void drawMolecule(pmols::Molecule &mol, bool vdw_radii) {
     if (!vdw_radii) {
         for (int i = 0; i < mol.BondsCount(); i++) {
-            Atom *begin_atom = mol.GetBond(i).begin;
-            Atom *end_atom = mol.GetBond(i).end;
+            pmols::Atom *begin_atom = mol.GetBond(i).begin;
+            pmols::Atom *end_atom = mol.GetBond(i).end;
 
             glm::vec3 begin_coord = begin_atom->coord;
             glm::vec3 end_coord = end_atom->coord;
             glm::vec3 middle_coord((begin_coord.x + end_coord.x) / 2, (begin_coord.y + end_coord.y) / 2,
                                    (begin_coord.z + end_coord.z) / 2);
 
-            Colorf begin_color = begin_atom->color;
-            Colorf end_color = end_atom->color;
+            pmols::Colorf begin_color = begin_atom->color;
+            pmols::Colorf end_color = end_atom->color;
 
 
             drawTube(begin_coord, middle_coord, 0.1, 30, begin_color);
@@ -271,7 +285,7 @@ void drawMolecule(Molecule &mol, bool vdw_radii) {
     float radius = 0;
 
     for(int i=0; i < mol.AtomsCount(); i++) {
-        Atom &atom = mol.GetAtom(i);
+        pmols::Atom &atom = mol.GetAtom(i);
         if(vdw_radii)
             radius = atom.vdw_radius;
         else
@@ -283,7 +297,7 @@ void drawMolecule(Molecule &mol, bool vdw_radii) {
 
 #define RADPERDEG 0.0174533
 
-void Arrow(GLdouble x1,GLdouble y1,GLdouble z1,GLdouble x2,GLdouble y2,GLdouble z2,GLdouble D)
+void drawArrow(GLdouble x1, GLdouble y1, GLdouble z1, GLdouble x2, GLdouble y2, GLdouble z2, GLdouble D)
 {
     double x=x2-x1;
     double y=y2-y1;
@@ -337,26 +351,26 @@ void Arrow(GLdouble x1,GLdouble y1,GLdouble z1,GLdouble x2,GLdouble y2,GLdouble 
 
 void drawAxes(GLdouble length)
 {
-    Colorf red(1.0, 0.0, 0.0);
-    Colorf green(0.0, 1.0, 0.0);
-    Colorf blue(0.0, 0.0, 1.0);
+    pmols::Colorf red(1.0, 0.0, 0.0);
+    pmols::Colorf green(0.0, 1.0, 0.0);
+    pmols::Colorf blue(0.0, 0.0, 1.0);
 
     glPushMatrix();
     glTranslatef(-length,-length,-length);
     setMaterial(red, red);
-    Arrow(0,0,0, 2*length,0,0, 0.05);
+    drawArrow(0, 0, 0, 2 * length, 0, 0, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-length,-length,-length);
     setMaterial(blue, blue);
-    Arrow(0,0,0, 0,2*length,0, 0.05);
+    drawArrow(0, 0, 0, 0, 2 * length, 0, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-length,-length,-length);
     setMaterial(green, green);
-    Arrow(0,0,0, 0,0,2*length, 0.05);
+    drawArrow(0, 0, 0, 0, 0, 2 * length, 0.05);
     glPopMatrix();
 }
 
@@ -389,11 +403,11 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     switch (key) {
         case GLFW_KEY_UP:
             rotate_x += 10;
-            //mol.rotateX(0.2f);
+            //mol.RotateX(0.2f);
             break;
         case GLFW_KEY_DOWN:
             rotate_x -= 10;
-            //mol.rotateX(-0.2f);
+            //mol.RotateX(-0.2f);
             break;
         case GLFW_KEY_LEFT:
             //mol.rotateY(-0.2f);
@@ -411,38 +425,41 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
                 user_scale *= 1.1f;
             break;
         case GLFW_KEY_X:
-            mol.rotateX(0.2f);
+            mol.RotateX(0.2f);
             break;
         case GLFW_KEY_Y:
-            mol.rotateY(0.2f);
+            mol.RotateY(0.2f);
             break;
         case GLFW_KEY_Z:
-            mol.rotateZ(0.2f);
+            mol.RotateZ(0.2f);
             break;
         case GLFW_KEY_M:
             user_scale /= 1.1f;
             break;
         case GLFW_KEY_W:
-            mol.translate(glm::vec3(0, 0.2f, 0));
+            mol.Translate(glm::vec3(0, 0.2f, 0));
             break;
         case GLFW_KEY_S:
-            mol.translate(glm::vec3(0, -0.2f, 0));
+            mol.Translate(glm::vec3(0, -0.2f, 0));
             break;
         case GLFW_KEY_A:
-            mol.translate(glm::vec3(-0.2f, 0, 0));
+            mol.Translate(glm::vec3(-0.2f, 0, 0));
             break;
         case GLFW_KEY_D:
-            mol.translate(glm::vec3(0.2f, 0, 0));
+            mol.Translate(glm::vec3(0.2f, 0, 0));
             break;
         case GLFW_KEY_PAGE_UP:
-            mol.translate(glm::vec3(0, 0, 0.2f));
+            mol.Translate(glm::vec3(0, 0, 0.2f));
             break;
         case GLFW_KEY_PAGE_DOWN:
-            mol.translate(glm::vec3(0, 0, -0.2f));
+            mol.Translate(glm::vec3(0, 0, -0.2f));
             break;
         case GLFW_KEY_C:
             packMoleculeToCube();
             draw_cube = !draw_cube;
+            break;
+        case GLFW_KEY_V:
+            vdw_radius = !vdw_radius;
             break;
         default:
             break;
@@ -478,6 +495,7 @@ int main(void) {
     init(window, 640, 480);
 
 
+
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
@@ -487,9 +505,9 @@ int main(void) {
         glRotatef(rotate_x, 1.0, 0.0, 0.0);
         glRotatef(rotate_y, 0.0, 1.0, 0.0);
 
+        drawMolecule(mol, vdw_radius);
 
-        drawMolecule(mol, true);
-        drawSphere(packer.getAppositionPoint(), 0.05, 20, 20, Colorf(0.0, 1.0, 0.0));
+        drawSphere(appos_point, 0.05, 20, 20, pmols::Colorf(0.0, 1.0, 0.0));
 
         if (draw_cube) {
             drawCube();

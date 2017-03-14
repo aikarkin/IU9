@@ -1,0 +1,19 @@
+Number of packed molecules: 40
+Total sum of distances between molecules: 832.06
+
+Average distance between atoms: 0.0676747
+Minimum distance between atoms: 0.00109255
+Maximum distance between atoms: 5.36119
+
+Total intersection between atoms: 4480.39
+Number of intersections between atoms: 6244
+Average intersection between atoms: 0.717551
+Maximum intersection between atoms: 2.74372
+Minimum intersection between atoms: 0.000311971
+
+Number of empty cells: 45
+
+Total number of iterations: 612
+Number of exploring search iterations (with step change): 286
+Number of pattern search iterations: 326
+Number of false alarm of pattern search: 284

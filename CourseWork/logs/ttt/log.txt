@@ -1,0 +1,113 @@
+HJParams{
+	box_length:10; 
+	box_width:10; 
+	box_height:10; 
+	step_x:1; 
+	step_y:1; 
+	step_z:1; 
+	step_alpha:90; 
+	step_betta:90; 
+	step_gamma:90; 
+	lambda:2; 
+	expansivity:1.5; 
+	step_coefficient:0.125; 
+	trans_eps:0.001; 
+	rot_eps:0.01; 
+	mol_file:../resources/Structure3D_CID_962.sdf; 
+	out_file:../logs/ttt/Structure3D_CID_962_10x10x10.mol2; 
+	out_format:mol2; 
+	substance: H2O; 
+	lj_epsilon: 0.6368; 
+	lj_sigma: 2.9; 
+	cell_length: 3.5; 
+
+}
+mol red: 3
+mols_count: 125
+init success!
+objective function value: 89133.2
+Number of packed molecules: 125
+Total sum of distances between molecules: 41512.7
+Average distance between atoms: 2.06562
+Minimum distance between atoms: 0.0268971
+Maximum distance between atoms: 5.06463
+Total intersection between atoms: 0
+Number of intersections between atoms: 0
+Average intersection between atoms: -nan
+Maximum intersection between atoms: 0
+Minimum intersection between atoms: 3.40282e+38
+Number of empty cells: 25
+Total number of iterations: 1
+Number of exploring search iterations (with step change): 1
+Number of pattern search iterations: 0
+Number of false alarm of pattern search: 0
+STEP #1
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: 89133.2
+  prevTotalDist: 89133.2
+  totalDist: 89133.2
+	max rotation step: 90
+	max translation step: 1
+
+	min rotation step: 90
+	min translation step: 1
+ —— objective func after iteration: 89133.2
+——————————————————————————————————————————————
+STEP #2
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: 89133.2
+  prevTotalDist: 89133.2
+  totalDist: 89133.2
+	max rotation step: 11.25
+	max translation step: 0.125
+
+	min rotation step: 11.25
+	min translation step: 0.125
+ —— objective func after iteration: 89089.8
+——————————————————————————————————————————————
+STEP #3
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: 89241
+  prevTotalDist: 89133.2
+  totalDist: 89241
+	max rotation step: 1.40625
+	max translation step: 0.125
+
+	min rotation step: 1.40625
+	min translation step: 0.015625
+ —— objective func after iteration: 89213.6
+step change_extension
+——————————————————————————————————————————————
+STEP #4
+EXPLORING SEARCH (with step change)
+ —— objective func before iteration: 89213.6
+  prevTotalDist: 89133.2
+  totalDist: 89213.6
+	max rotation step: 1.40625
+	max translation step: 0.125
+
+	min rotation step: 1.40625
+	min translation step: 0.015625
+ —— objective func after iteration: 89194.2
+——————————————————————————————————————————————
+STEP #5
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: 89155.1
+  prevTotalDist: 89133.2
+  totalDist: 89155.1
+	max rotation step: 0.175781
+	max translation step: 0.015625
+
+	min rotation step: 0.175781
+	min translation step: 0.00195312
+ —— objective func after iteration: 89082.1
+no step change
+——————————————————————————————————————————————
+STEP #6
+PATTERN SEARCH
+EXPLORING SEARCH (with no step change)
+ —— objective func before iteration: 89044.4
+  prevTotalDist: 89082.1
+  totalDist: 89044.4
