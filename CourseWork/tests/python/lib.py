@@ -104,6 +104,7 @@ def lst_to_line(lst):
 
 def test_commands(commands, csv_headers, csv_out_file):
     results = []
+    i = 0
 
     for cmd in commands:
         print('running command {}'.format(lst_to_line(cmd)))
@@ -115,6 +116,9 @@ def test_commands(commands, csv_headers, csv_out_file):
             print('command has executed successfuly')
             results.append(cmd_res.decode('utf-8').rstrip().split(','))
         print()
+        if i % 10 == 0:
+            save_to_csv(csv_out_file, csv_headers, results)
+        i = i + 1
 
     save_to_csv(csv_out_file, csv_headers, results)
 

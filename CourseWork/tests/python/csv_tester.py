@@ -31,7 +31,7 @@ csv_file = args.csv_file
 
 if not args.output_file:
     csv_fn_split = csv_file.split('.')
-    res_file = ''.join(csv_fn_split[:-1]) + '_res.' + csv_fn_split[-1]
+    output_file = ''.join(csv_fn_split[:-1]) + '_res.' + csv_fn_split[-1]
 else:
     output_file = args.output_file
 
@@ -55,6 +55,9 @@ TESTS_HEADERS = [
 
 mol_files = get_mol_files(mols_root)
 mols_dic = get_mol_dict(mol_files)
+for mn in mols_dic:
+    print(mn)
+
 (csv_headers, csv_records) = parse_csv(csv_file)
 
 commands = get_commands(mols_dic, packing_script, lattices_root, csv_headers, csv_records)

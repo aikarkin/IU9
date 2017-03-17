@@ -13,6 +13,7 @@ var touchDist;
 var deltaTouchDist;
 
 var vdw_rad_enabled = false;
+var bounding_box_enabled = false;
 var rad_c0;
 
 var MAX_SCALE = 15;
@@ -225,8 +226,12 @@ function addBoundingBox(position, length, width, height) {
     var material = new THREE.MeshPhongMaterial( { color: color, transparent: true, opacity: 0.5 } );
     var boxMesh = new THREE.Mesh(boxGeometry, material);
 
+    boxMesh.visible = bounding_box_enabled;
+    boxMesh.name = 'bounding_box';
     boxMesh.position.copy(position);
 	boxMesh.scale.multiplyScalar( 20 );
+    
+
 
     root.add(boxMesh);
 }
@@ -291,6 +296,15 @@ function onMouseDown(evt) {
     mouseDown = false;
 }
 
+function redrawBoundingBox() {
+    for(var child_key in root.children) {
+        var child = root.children[child_key];
+        if(child.name == 'bounding_box') {
+            root.children[child_key].visible = bounding_box_enabled;
+        }
+    }
+}
+
 function redrawAtomRadii() {
     var cur_rad;
 
@@ -316,16 +330,22 @@ function redrawAtomRadii() {
 }
 
 function onKeyDown(evt) {
-    //alert('key pressed!');
     evt.preventDefault();
     var code = evt.keyCode;
-    if (code != 86)
+
+    if (code == 86) {
+        vdw_rad_enabled = !vdw_rad_enabled;
+        redrawAtomRadii();
+    }
+    if (code == 66) {
+        bounding_box_enabled = !bounding_box_enabled;
+        redrawBoundingBox();
+    }
+    else {
         return;
-
-    // console.log('V pressed!');
-    vdw_rad_enabled = !vdw_rad_enabled;
-
-    redrawAtomRadii();
+    }
+    
+    
 }
 
 function onMouseWheel(e) {
@@ -417,7 +437,7 @@ function visualize_mols(lattice_conf) {
     bb_pos.z += bb_height/2.0;
 
     bb_pos.multiplyScalar(20);
-
+    
     addBoundingBox(bb_pos, bb_length, bb_width, bb_height);
 
     render();

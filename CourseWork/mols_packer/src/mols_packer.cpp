@@ -7,6 +7,8 @@
 
 namespace po = boost::program_options;
 
+const float EC_DIST_6 = 0.015625f;
+const float EC_DIST_12 = 0.000244141f;
 
 std::string dateTimeNow() {
     time_t _tm = time(NULL );
@@ -63,20 +65,19 @@ int main(int argc, const char *argv[]) {
     prepareHJParams(params);
 
     float lj_eps_4 = 4.0f * params.lj_epsilon;
-    params.distanceFunc = [lj_eps_4] (pmols::Atom *a, pmols::Atom *b) -> float {
+    params.distanceFunc = [lj_eps_4, EC_DIST_6, EC_DIST_12] (pmols::Atom *a, pmols::Atom *b) -> float {
         float dist_6, dist_12;
 
         if (a == NULL || b == NULL) {
-            dist_6 = 0.015625f;
-            dist_12 = 0.000244141f;
-            
+            dist_6 = EC_DIST_6;
+            dist_12 = EC_DIST_12;
         }
         else {
             dist_6 = std::pow((a->vdw_radius + b->vdw_radius)/(float)glm::distance(a->coord, b->coord), 6.f);
             dist_12 = std::pow(dist_6, 2.f);
         }
         
-        return lj_eps_4 * (dist_12 - dist_6);
+        return lj_eps_4 * std::abs(dist_12 - dist_6);
     };
 
     pmols::HJPacker packer(params);    

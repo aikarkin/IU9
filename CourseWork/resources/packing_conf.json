@@ -1,11 +1,11 @@
 {
     "lattice": {
-        "box_length": 8.0,
-        "box_width": 8.0,
-        "box_height": 8.0,
-        "expansivity": 1.2,
-        "compression": 0.75,
-        "mol_file": "../resources/Structure3D_CID_962.sdf",
+        "box_length": 13.0,
+        "box_width": 15.0,
+        "box_height": 23.0,
+        "expansivity": 1.0,
+        "compression": 0.7,
+        "mol_file": "../resources/C2H5Cl.sdf",
         "out_format": "mol2"
     },
     "packing_params": {
@@ -16,16 +16,13 @@
             "rot_x": 90,
             "rot_y": 90,
             "rot_z": 90,
-            "dec_coefficient": 0.11
+            "dec_coefficient": 0.1
         },
         "precision": {
-            "trans_eps": 0.01,
-            "rot_eps": 0.01
+            "trans_eps": 0.001,
+            "rot_eps": 0.1
         },
         "lambda": 2,
-        "lj_epsilon": 1.0
-    },
-    "cell_linked_lists": {
-        "cell_length": 3.5
+        "lj_epsilon": 10000.0
     }
 }

@@ -1,0 +1,15 @@
+/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/pmols/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/pmols/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/pmols/CMakeFiles/pmols.dir
+/home/alex/dev/src/cpp/CourseWork/build/mols_packer/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/mols_packer/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/mols_packer/CMakeFiles/mols_packer.dir
+/home/alex/dev/src/cpp/CourseWork/build/mol_visualizer/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/mol_visualizer/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/mol_visualizer/CMakeFiles/mol_visualizer.dir
+/home/alex/dev/src/cpp/CourseWork/build/tests/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/tests/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/CourseWork/build/tests/CMakeFiles/pack_stat.dir
+/home/alex/dev/src/cpp/CourseWork/build/tests/CMakeFiles/cll.dir

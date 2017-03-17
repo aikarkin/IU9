@@ -15,7 +15,7 @@ void printStatisticsVector(pmols::HJStatistics &stat, std::ostream &outs) {
     outs << "\"" << stat.PackedMolsNumber() << "\"" << ", "         // number of packed mols (0)
          << "\"" << vec_to_string(appos_point) << "\"" << ", "      // apposition point of bounding box (1)
 
-         << "\"" << std::get<0>(box_size) << "x" << std::get<1>(box_size) << "x" << std::get<0>(box_size) << "\"" << ", "
+         << "\"" << std::get<0>(box_size) << "x" << std::get<1>(box_size) << "x" << std::get<2>(box_size) << "\"" << ", "
                                                                     // size of bounding box (2)
 
          << "\"" << stat.TotalAtomDistance() << "\"" << ", "        // total distance between atoms (3)

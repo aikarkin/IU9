@@ -1,0 +1,102 @@
+2017-02-27 22:26:15.068699:
+	loging to ../logs/2017-02-27 22:26:15.068699/2017-02-27 22:26:15.068699.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.0 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:26:15.068699/ --output=../logs/2017-02-27 22:26:15.068699/Structure3D_CID_962_10x10x10__2017-02-27 22:26:15.068699.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:28:14.364970:
+	loging to ../logs/2017-02-27 22:28:14.364970/2017-02-27 22:28:14.364970.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.1 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:28:14.364970/ --output=../logs/2017-02-27 22:28:14.364970/Structure3D_CID_962_10x10x10__2017-02-27 22:28:14.364970.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:29:58.440656:
+	loging to ../logs/2017-02-27 22:29:58.440656/2017-02-27 22:29:58.440656.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.2 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:29:58.440656/ --output=../logs/2017-02-27 22:29:58.440656/Structure3D_CID_962_10x10x10__2017-02-27 22:29:58.440656.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:31:34.525671:
+	loging to ../logs/2017-02-27 22:31:34.525671/2017-02-27 22:31:34.525671.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.3 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:31:34.525671/ --output=../logs/2017-02-27 22:31:34.525671/Structure3D_CID_962_10x10x10__2017-02-27 22:31:34.525671.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:33:01.666486:
+	loging to ../logs/2017-02-27 22:33:01.666486/2017-02-27 22:33:01.666486.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.4 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:33:01.666486/ --output=../logs/2017-02-27 22:33:01.666486/Structure3D_CID_962_10x10x10__2017-02-27 22:33:01.666486.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:34:26.583244:
+	loging to ../logs/2017-02-27 22:34:26.583244/2017-02-27 22:34:26.583244.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.5 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:34:26.583244/ --output=../logs/2017-02-27 22:34:26.583244/Structure3D_CID_962_10x10x10__2017-02-27 22:34:26.583244.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:35:44.656283:
+	loging to ../logs/2017-02-27 22:35:44.656283/2017-02-27 22:35:44.656283.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.6 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:35:44.656283/ --output=../logs/2017-02-27 22:35:44.656283/Structure3D_CID_962_10x10x10__2017-02-27 22:35:44.656283.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:36:20.682807:
+	loging to ../logs/2017-02-27 22:36:20.682807/2017-02-27 22:36:20.682807.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.7 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:36:20.682807/ --output=../logs/2017-02-27 22:36:20.682807/Structure3D_CID_962_10x10x10__2017-02-27 22:36:20.682807.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:37:28.394742:
+	loging to ../logs/2017-02-27 22:37:28.394742/2017-02-27 22:37:28.394742.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.8 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:37:28.394742/ --output=../logs/2017-02-27 22:37:28.394742/Structure3D_CID_962_10x10x10__2017-02-27 22:37:28.394742.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:38:35.920325:
+	loging to ../logs/2017-02-27 22:38:35.920325/2017-02-27 22:38:35.920325.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=2.9 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:38:35.920325/ --output=../logs/2017-02-27 22:38:35.920325/Structure3D_CID_962_10x10x10__2017-02-27 22:38:35.920325.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:39:05.644188:
+	loging to ../logs/2017-02-27 22:39:05.644188/2017-02-27 22:39:05.644188.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.0 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:39:05.644188/ --output=../logs/2017-02-27 22:39:05.644188/Structure3D_CID_962_10x10x10__2017-02-27 22:39:05.644188.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:40:22.537117:
+	loging to ../logs/2017-02-27 22:40:22.537117/2017-02-27 22:40:22.537117.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.1 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:40:22.537117/ --output=../logs/2017-02-27 22:40:22.537117/Structure3D_CID_962_10x10x10__2017-02-27 22:40:22.537117.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:41:50.535110:
+	loging to ../logs/2017-02-27 22:41:50.535110/2017-02-27 22:41:50.535110.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.2 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:41:50.535110/ --output=../logs/2017-02-27 22:41:50.535110/Structure3D_CID_962_10x10x10__2017-02-27 22:41:50.535110.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:43:02.337976:
+	loging to ../logs/2017-02-27 22:43:02.337976/2017-02-27 22:43:02.337976.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.3 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:43:02.337976/ --output=../logs/2017-02-27 22:43:02.337976/Structure3D_CID_962_10x10x10__2017-02-27 22:43:02.337976.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:44:20.426756:
+	loging to ../logs/2017-02-27 22:44:20.426756/2017-02-27 22:44:20.426756.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.4000000000000004 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:44:20.426756/ --output=../logs/2017-02-27 22:44:20.426756/Structure3D_CID_962_10x10x10__2017-02-27 22:44:20.426756.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:45:32.060431:
+	loging to ../logs/2017-02-27 22:45:32.060431/2017-02-27 22:45:32.060431.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.5 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:45:32.060431/ --output=../logs/2017-02-27 22:45:32.060431/Structure3D_CID_962_10x10x10__2017-02-27 22:45:32.060431.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:46:40.274953:
+	loging to ../logs/2017-02-27 22:46:40.274953/2017-02-27 22:46:40.274953.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.6 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:46:40.274953/ --output=../logs/2017-02-27 22:46:40.274953/Structure3D_CID_962_10x10x10__2017-02-27 22:46:40.274953.mol2 "
+ERROR: To much iterations
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:47:50.768654:
+	loging to ../logs/2017-02-27 22:47:50.768654/2017-02-27 22:47:50.768654.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.7 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:47:50.768654/ --output=../logs/2017-02-27 22:47:50.768654/Structure3D_CID_962_10x10x10__2017-02-27 22:47:50.768654.mol2 "
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:47:54.470616:
+	loging to ../logs/2017-02-27 22:47:54.470616/2017-02-27 22:47:54.470616.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.8 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:47:54.470616/ --output=../logs/2017-02-27 22:47:54.470616/Structure3D_CID_962_10x10x10__2017-02-27 22:47:54.470616.mol2 "
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:47:58.470304:
+	loging to ../logs/2017-02-27 22:47:58.470304/2017-02-27 22:47:58.470304.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=3.9000000000000004 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:47:58.470304/ --output=../logs/2017-02-27 22:47:58.470304/Structure3D_CID_962_10x10x10__2017-02-27 22:47:58.470304.mol2 "
+————————————————————————————————————————————————————————————————————
+2017-02-27 22:48:02.253498:
+	loging to ../logs/2017-02-27 22:48:02.253498/2017-02-27 22:48:02.253498.log
+	exec "./mols_packer --rot_x=90 --trans_y=1.2 --rot_z=90 --lj_sigma=4.0 --lj_epsilon=1.0 --trans_z=1.2 --cell_length=3.0 --trans_x=1.2 --rot_y=90 --config=../resources/default.json --log_dir=../logs/2017-02-27 22:48:02.253498/ --output=../logs/2017-02-27 22:48:02.253498/Structure3D_CID_962_10x10x10__2017-02-27 22:48:02.253498.mol2 "
+————————————————————————————————————————————————————————————————————
+
