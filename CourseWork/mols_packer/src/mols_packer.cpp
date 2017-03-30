@@ -65,7 +65,7 @@ int main(int argc, const char *argv[]) {
     prepareHJParams(params);
 
     float lj_eps_4 = 4.0f * params.lj_epsilon;
-    params.distanceFunc = [lj_eps_4, EC_DIST_6, EC_DIST_12] (pmols::Atom *a, pmols::Atom *b) -> float {
+    params.distanceFunc = [lj_eps_4] (pmols::Atom *a, pmols::Atom *b) -> float {
         float dist_6, dist_12;
 
         if (a == NULL || b == NULL) {

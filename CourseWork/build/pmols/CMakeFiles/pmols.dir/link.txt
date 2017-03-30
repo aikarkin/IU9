@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libpmols.a  CMakeFiles/pmols.dir/src/cell_linked_lists.cpp.o CMakeFiles/pmols.dir/src/mol.cpp.o CMakeFiles/pmols.dir/src/hj_algo.cpp.o
-/usr/bin/ranlib ../../lib/libpmols.a

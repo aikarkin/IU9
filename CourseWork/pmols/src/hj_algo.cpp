@@ -6,7 +6,6 @@
 #include "rapidjson/document.h"
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/writer.h>
-#include <GL/glew.h>
 #include <ctime>
 #include <boost/filesystem.hpp>
 
@@ -381,7 +380,7 @@ void pmols::HJPacker::Save(std::string out_file) {
 
     OpenBabel::OBConversion obConversion;
     obConversion.SetOutStream(&out_stream);
-    obConversion.SetOutFormat(params.out_format.c_str(), false);
+    obConversion.SetOutFormat(params.out_format.c_str());
 
     std::shared_ptr<OpenBabel::OBMol> mol_lattice = std::make_shared<OpenBabel::OBMol>();
     int atom_b_id;
