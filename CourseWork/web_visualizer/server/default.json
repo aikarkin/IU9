@@ -3,10 +3,10 @@
         "box_length": 15.0,
         "box_width": 15.0,
         "box_height": 15.0,
-        "expansivity": 1.2,
-        "compression": 0.6,
-        "mol_file": "../resources/Structure3D_CID_962.sdf",
-        "out_format": "json"
+        "expansivity": 1.5,
+        "mol_file": "../resources/Structure3D_CID_11.sdf",
+        "out_format": "mol2",
+        "substance": "H2O"
     },
     "packing_params": {
         "steps": {
@@ -16,13 +16,13 @@
             "rot_x": 90,
             "rot_y": 90,
             "rot_z": 90,
-            "dec_coefficient": 0.11
+            "dec_coefficient": 0.16
         },
         "precision": {
-            "trans_eps": 0.01,
-            "rot_eps": 0.1
+            "trans_eps": 0.001,
+            "rot_eps": 0.01
         },
         "lambda": 2,
-        "lj_epsilon": 1.0
+        "lj_epsilon": 0.6368
     }
 }

@@ -2,33 +2,12 @@
 #include <iostream>
 #include <memory>
 #include <boost/program_options.hpp>
-#include <ctime>
 #include <conf_parser.h>
 
 namespace po = boost::program_options;
 
-const float EC_DIST_6 = 0.015625f;
-const float EC_DIST_12 = 0.000244141f;
-
-std::string dateTimeNow() {
-    time_t _tm = time(NULL );
-
-    struct tm * curtime = localtime ( &_tm );
-    return std::string(asctime(curtime));
-}
-
-
 void printStatistics(pmols::HJStatistics &stat, std::ostream &outs) {
-    glm::vec3 appos_point;
-    std::tuple<float, float, float> box_size;
-
     outs << "Number of packed molecules: " << stat.PackedMolsNumber() << std::endl;
-    std::tie(appos_point, box_size) = stat.GetBoundingBox();
-    outs << "Result bounding box: apposition point - " << vec_to_string(appos_point)
-         << ", length - " << std::get<0>(box_size)
-         << ", width - " << std::get<1>(box_size)
-         << ", height - " << std::get<2>(box_size) << std::endl;
-
     outs << "Total sum of distances between molecules: " << stat.TotalAtomDistance() << std::endl;
     outs << std::endl;
     outs << "Average distance between atoms: " << stat.AvgAtomDistance() << std::endl;
@@ -46,7 +25,7 @@ void printStatistics(pmols::HJStatistics &stat, std::ostream &outs) {
     outs << "Total number of iterations: " << stat.TotalIterationsNumber() << std::endl;
     outs << "Number of exploring search iterations (with step change): " << stat.ESIterationsNumber() << std::endl;
     outs << "Number of pattern search iterations: " << stat.PSIterationsNumber() << std::endl;
-    outs << "Number of false alarm pattern search iterations: " << stat.PSFalsePositiveIterationsNumber() << std::endl;
+    outs << "Number of false alarm of pattern search: " << stat.PSFalsePositiveIterationsNumber() << std::endl;
 }
 
 int main(int argc, const char *argv[]) {
@@ -69,24 +48,26 @@ int main(int argc, const char *argv[]) {
         float dist_6, dist_12;
 
         if (a == NULL || b == NULL) {
-            dist_6 = EC_DIST_6;
-            dist_12 = EC_DIST_12;
+            dist_6 = 0.015625f;
+            dist_12 = 0.000244141f;
+            
         }
         else {
             dist_6 = std::pow((a->vdw_radius + b->vdw_radius)/(float)glm::distance(a->coord, b->coord), 6.f);
             dist_12 = std::pow(dist_6, 2.f);
         }
         
-        return lj_eps_4 * std::abs(dist_12 - dist_6);
+        return lj_eps_4 * (dist_12 - dist_6);
     };
 
-    pmols::HJPacker packer(params);    
+    // std::cout << params.toString() << std::endl;
+    pmols::HJPacker packer(params);
     packer.Pack();
     packer.Save();
     pmols::HJStatistics pack_stat = packer.GetStatistics();
-    //std::ofstream logs("../logs/stat__" + dateTimeNow() + ".log");
+    std::cout << "Molecules have succesfully packed" << std::endl;
+    std::cout << "_________________________________" << std::endl;
     printStatistics(pack_stat, std::cout);
 
-    //logs.close();
     return 0;
 }

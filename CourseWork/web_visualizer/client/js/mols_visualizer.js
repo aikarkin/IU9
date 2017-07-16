@@ -13,7 +13,6 @@ var touchDist;
 var deltaTouchDist;
 
 var vdw_rad_enabled = false;
-var bounding_box_enabled = false;
 var rad_c0;
 
 var MAX_SCALE = 15;
@@ -42,6 +41,9 @@ function addStick(start, end, color) {
     var boxGeometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
     var s = new THREE.Vector3(start.x, start.y, start.z);
     var e = new THREE.Vector3(end.x, end.y, end.z);
+
+    // console.log(s);
+    // console.log(e);
 
     var b_color = new THREE.Color();
     b_color.r = color[0];
@@ -129,44 +131,43 @@ function init() {
     window.addEventListener( 'resize', onWindowResize, false );
 }
 
-/*  coord: THREE.Vector3
-    color: THREE.Color
-    radius: number  */
-function addAtom(position, color, radius) {
-    var sphereGeometry = new THREE.IcosahedronBufferGeometry(radius, 2);
-    sphereGeometry.dynamic = true;
-
-    var material = new THREE.MeshPhongMaterial( { color: color } );
-    var atomMesh = new THREE.Mesh( sphereGeometry, material );
-
-    atomMesh.name = 'atom';
-    atomMesh.position.copy(position);
-    atomMesh.position.multiplyScalar( 20 );
-	atomMesh.scale.multiplyScalar( 20);
-
-    root.add(atomMesh);
-}
-
-// mol deserialized from json
-function addMol(mol, rad_c=0.3) {
-    // console.log(mol);
+function add_mol(mol, rad_c=0.3) {
     var atoms = mol["atoms"];
     rad_c0 = rad_c;
 
     for(var a_key in atoms) {
-        var atom = atoms[a_key];
+        var a = atoms[a_key];
 
-        var color = new THREE.Color(atom['color'][0], atom['color'][1], atom['color'][2])
-        var pos = new THREE.Vector3(atom['position'][0], atom['position'][1], atom['position'][2])
-        var rad = atom['vdw_radius']*rad_c;
+        var sphereGeometry = new THREE.IcosahedronBufferGeometry( a['vdw_radius']*rad_c, 2 );
+        var color = new THREE.Color();
 
-        addAtom(pos, color, rad);
+        color.r = a['color'][0];
+        color.g = a['color'][1];
+        color.b = a['color'][2];
+
+        var position = new THREE.Vector3();
+        position.x = a['position'][0];
+        position.y = a['position'][1];
+        position.z = a['position'][2];
+
+        sphereGeometry.dynamic = true;
+
+        var material = new THREE.MeshPhongMaterial( { color: color } );
+        var atom_obj = new THREE.Mesh( sphereGeometry, material );
+
+        atom_obj.name = 'atom';
+        atom_obj.position.copy(position);
+        atom_obj.position.multiplyScalar( 20 );
+		atom_obj.scale.multiplyScalar( 20);
+
+        root.add(atom_obj);
     }
 
     if(rad_c != 1.0) {
         var bonds = mol["bonds"];
 
         for(var b of bonds) {
+            //console.log(b);
             var b_idx, e_idx;
             var keys = Object.keys(b);
             b_idx = keys[0];
@@ -214,28 +215,6 @@ function addMol(mol, rad_c=0.3) {
     root.scale = cur_scale;
 }
 
-/*  position: THREE.Vector3,
-    length: number,
-    width: number,
-    height: number */
-function addBoundingBox(position, length, width, height) {
-    var boxGeometry = new THREE.BoxGeometry(length, width, height);
-    boxGeometry.dynamic = true;
-    var color = new THREE.Color(0xff0000);
-
-    var material = new THREE.MeshPhongMaterial( { color: color, transparent: true, opacity: 0.5 } );
-    var boxMesh = new THREE.Mesh(boxGeometry, material);
-
-    boxMesh.visible = bounding_box_enabled;
-    boxMesh.name = 'bounding_box';
-    boxMesh.position.copy(position);
-	boxMesh.scale.multiplyScalar( 20 );
-    
-
-
-    root.add(boxMesh);
-}
-
 function onWindowResize() {
     windowHalfX = window.innerWidth / 2;
     windowHalfY = window.innerHeight / 2;
@@ -263,10 +242,10 @@ function onMouseMove(evt) {
     var rot_dy = -deltaX / 100;
     var rot_dx = deltaY / 100;
 
-    // console.log('mouse move');
-    // console.log(rot_dx);
-    // console.log(rot_dy);
-    // console.log('------------');
+    console.log('mouse move');
+    console.log(rot_dx);
+    console.log(rot_dy);
+    console.log('------------');
 
     root.rotation.y += rot_dy;
     root.rotation.x += rot_dx;
@@ -296,15 +275,6 @@ function onMouseDown(evt) {
     mouseDown = false;
 }
 
-function redrawBoundingBox() {
-    for(var child_key in root.children) {
-        var child = root.children[child_key];
-        if(child.name == 'bounding_box') {
-            root.children[child_key].visible = bounding_box_enabled;
-        }
-    }
-}
-
 function redrawAtomRadii() {
     var cur_rad;
 
@@ -330,30 +300,24 @@ function redrawAtomRadii() {
 }
 
 function onKeyDown(evt) {
+    //alert('key pressed!');
     evt.preventDefault();
     var code = evt.keyCode;
-
-    if (code == 86) {
-        vdw_rad_enabled = !vdw_rad_enabled;
-        redrawAtomRadii();
-    }
-    if (code == 66) {
-        bounding_box_enabled = !bounding_box_enabled;
-        redrawBoundingBox();
-    }
-    else {
+    if (code != 86)
         return;
-    }
-    
-    
+
+    console.log('V pressed!');
+    vdw_rad_enabled = !vdw_rad_enabled;
+
+    redrawAtomRadii();
 }
 
 function onMouseWheel(e) {
-    // console.log('scroling');
+    console.log('scroling');
     var delta = e.deltaY || e.detail || e.wheelDelta;
-    // console.log(`delta ${delta}`);
+    console.log(`delta ${delta}`);
     var scale = cur_scale + delta/100;
-    // console.log(`cur_scale ${scale}`)
+    console.log(`cur_scale ${scale}`)
 
     if(scale > MAX_SCALE || scale < MIN_SCALE)
         return;
@@ -405,7 +369,7 @@ function loadMol(mol_id) {
 				console.log(data['data']);
                 var mol = JSON.parse(data['data']);
                 console.log(mol);
-                addMol(mol);
+                add_mol(mol);
                 render();
             }
         }
@@ -418,27 +382,15 @@ function visualize_mols(lattice_conf) {
     var mols = lattice_conf['mols'];
     
     for(var mol of mols) {
-        addMol(mol);
+        add_mol(mol);
     }
 
-    var bb_pos = new THREE.Vector3(lattice_conf["bounding_box"]['position'][0], lattice_conf["bounding_box"]['position'][1], lattice_conf["bounding_box"]['position'][2]);
-    console.log(lattice_conf['bounding_box']['position']);
-    console.log(bb_pos);
+    var root_c = getBoundingBoxCenter();
 
-    var bb_length = lattice_conf['bounding_box']['length'];
-    var bb_width = lattice_conf['bounding_box']['width'];
-    var bb_height = lattice_conf['bounding_box']['height'];
-    console.log(bb_length);
-    console.log(bb_width);
-    console.log(bb_height);
+    root.position.x -= root_c.x;
+    root.position.y -= root_c.y;
+    root.position.z -= root_c.z;
 
-    bb_pos.x += bb_length/2.0;
-    bb_pos.y += bb_width/2.0;
-    bb_pos.z += bb_height/2.0;
-
-    bb_pos.multiplyScalar(20);
-    
-    addBoundingBox(bb_pos, bb_length, bb_width, bb_height);
 
     render();
 
@@ -454,7 +406,7 @@ function calcDistBtnFingers(touches) {
 // touch events
 function onTouchMove(evt) {
     if ( evt.touches.length === 1 ) {
-        // console.log('touch moved');
+        console.log('touch moved');
 
         evt.preventDefault();
 
@@ -467,9 +419,9 @@ function onTouchMove(evt) {
         var rot_dy = -deltaTouchX / 100;
         var rot_dx = deltaTouchY / 100;
 
-        // console.log(rot_dy);
-        // console.log(rot_dx);
-        // console.log('----------');
+        console.log(rot_dy);
+        console.log(rot_dx);
+        console.log('----------');
 
         root.rotation.y += rot_dy;
         root.rotation.x += rot_dx;

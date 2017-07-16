@@ -1,0 +1,42 @@
+form {
+    max-width: 220px;
+    margin-top: 20px;
+    margin-left: 45px;
+}
+
+input, select {
+    float: right;
+    margin-right: 10px;
+}
+
+input {
+    max-width: 123;
+}
+
+button {
+    margin-left: 0px;
+}
+
+#controls a {
+    float: right;
+    vertical-align: center;
+}
+
+#controls button {
+    float: left;
+}
+
+.btn-group {
+    text-align: left;
+    width: 100px;
+}
+
+#preloader {
+    float: left;
+    margin-left: 15px;
+}
+
+#btn_pack {
+    float: left;
+}
+

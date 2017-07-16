@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <link rel='stylesheet' href='css/bootstrap.min.css'>
+        <link rel='stylesheet' href='css/gui.css'>
+        <link rel='stylesheet' href='css/bootstrap.min.css'>
+        <link rel='stylesheet' href='css/preloader.css'>
+        <title>
+            PMOLS - Graphical interface for passing params
+        </title>
+    </head>
+    <body>
+        <h1>
+            Input lattice parameters
+        </h1>
+        <form>
+            <p> Length: <input type="text" id='txt_length'> </p>
+            <p> Width:  <input type="text" id='txt_width'> </p>
+            <p> Hieght: <input type="text" id='txt_height'> </p>
+            <p> 
+                Molecule: 
+                <select id='sel_mol'>
+                    <option> Water </option>
+                    <option> Ethylene chloride </option>
+                    <option> Chloroform </option>
+                    <option> Caffeine </option>
+                </select>
+            </p>
+            <span>
+                <button id='btn_pack'> Pack! </button>
+                <div id='preloader'> </div>
+            </span>
+            <br/>
+            <br/>
+            <span id='controls'></span>
+        </form>
+    </body>
+    <script src='js/jquery.min.js'></script>
+    <script src='js/bootstrap.min.js'></script>
+    <script src='js/application.js'></script>
+</html>

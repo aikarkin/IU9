@@ -24,8 +24,6 @@ pmols::Molecule::Molecule(std::string file_path) {
 
     conversion.ReadFile(&mol, file_path);
 
-
-    formula = mol.GetFormula();
     atoms_count = mol.NumAtoms();
     bonds_count = mol.NumBonds();
 
@@ -90,7 +88,7 @@ pmols::Molecule::~Molecule() {
 }
 
 std::string pmols::Molecule::GetFormula() {
-    return formula;
+    return mol.GetFormula();
 }
 
 glm::vec3 pmols::Molecule::GetBarycenter() {
@@ -148,7 +146,7 @@ pmols::Molecule::Molecule(const Molecule &other) {
     bonds_count = other.bonds_count;
 
     bar_vec = other.bar_vec;
-    formula = other.formula;
+    mol = other.mol;
 
     atoms = new Atom[atoms_count];
     bonds = new Bond[bonds_count];
@@ -237,7 +235,7 @@ pmols::Molecule &pmols::Molecule::operator=(const pmols::Molecule &other) {
         bonds_count = other.bonds_count;
 
         bar_vec = other.bar_vec;
-        formula = other.formula;
+        mol = other.mol;
 
         atoms = new Atom[atoms_count];
         bonds = new Bond[bonds_count];
@@ -277,13 +275,13 @@ bool pmols::AtomInsideBox(Atom atom, glm::vec3 apposPoint, std::tuple<float, flo
     glm::vec3 atom_coord = atom.coord;
     float a, b, c;
     std::tie(a, b, c) = boxSize;
-    float da = apposPoint.x + a;
-    float db = apposPoint.y + b;
-    float dc = apposPoint.z + c;
+    float da = a + apposPoint.x;
+    float db = b + apposPoint.y;
+    float dc = c + apposPoint.z;
 
-    return (atom_coord.x > apposPoint.x && atom_coord.x < da
-            && atom_coord.y > apposPoint.y && atom_coord.y < db
-            && atom_coord.z > apposPoint.z && atom_coord.z < dc);
+    return (atom_coord.x >= apposPoint.x && atom_coord.x < da
+            && atom_coord.y >= apposPoint.y && atom_coord.y < db
+            && atom_coord.z >= apposPoint.z && atom_coord.z < dc);
 }
 
 bool pmols::MolInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<float, float, float> boxSize) {
@@ -292,18 +290,4 @@ bool pmols::MolInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<float, f
             return false;
 
     return true;
-}
-
-bool pmols::MolPartlyInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<float, float, float> boxSize) {
-    float a, b, c;
-    std::tie(a, b, c) = boxSize;
-    float da = a + apposPoint.x;
-    float db = b + apposPoint.y;
-    float dc = c + apposPoint.z;
-    glm::vec3 barycenter = mol.GetBarycenter();
-
-    return (barycenter.x >= apposPoint.x && barycenter.x < da
-            && barycenter.y >= barycenter.y && barycenter.y < db
-            && barycenter.z >= barycenter.z && barycenter.z < dc);
-
 }

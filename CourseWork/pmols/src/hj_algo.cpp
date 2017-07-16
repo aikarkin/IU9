@@ -6,6 +6,7 @@
 #include "rapidjson/document.h"
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/writer.h>
+#include <GL/glew.h>
 #include <ctime>
 #include <boost/filesystem.hpp>
 
@@ -15,42 +16,36 @@ pmols::HJPacker::HJPacker(HJParams params) {
 }
     
 void pmols::HJPacker::init() {
-    int mols_count_x, mols_count_y, mols_count_z;
-    float shell_length, shell_width, shell_height;
-    float shift_x, shift_y, shift_z;
-    std::tuple<float, float, float> shellSize;
-
     Molecule mol(params.mol_file);
+    std::tuple<float, float, float> shellSize;
+    
+    float shell_length, shell_width, shell_height;
+    int atoms_count_x, atoms_count_y, atoms_count_z;
+    
     std::tie(appos_point, shellSize) = mol.GetRectangularShell();
     std::tie(shell_length, shell_width, shell_height) = shellSize;
-
-    shell_length *= params.compression;
-    shell_width *= params.compression;
-    shell_height *= params.compression;
-
-    mols_count_x = (int)ceilf(params.box_length / shell_length);
-    mols_count_y = (int)ceilf(params.box_width / shell_width);
-    mols_count_z = (int)ceilf(params.box_height / shell_height);
 
     float exp_length = params.box_length * params.expansivity;
     float exp_width = params.box_width * params.expansivity;
     float exp_height = params.box_height * params.expansivity;
-
-    float dx = (exp_length - params.box_length) / 2.f;
-    float dy = (exp_width - params.box_width) / 2.f;
-    float dz = (exp_height - params.box_height) / 2.f;
+    
+    atoms_count_x = (int)ceilf(exp_length / shell_length);
+    atoms_count_y = (int)ceilf(exp_width / shell_width);
+    atoms_count_z = (int)ceilf(exp_height / shell_height);
+    
+    shell_length *= 0.75;
+    shell_width *= 0.75;    
+    shell_height *= 0.75;
 
     cellLinkedLists = std::make_shared<CellLinkedLists>(params.cell_length, params.distanceFunc);
-    cellLinkedLists->SetBoundingBox(
-            std::make_tuple(appos_point - glm::vec3(dx, dy, dz), std::make_tuple(exp_length, exp_width, exp_height))
-    );
 
+    float shift_x, shift_y, shift_z;
 
-    for (int i = 0; i < mols_count_x; ++i) {
+    for (int i = 0; i < atoms_count_x; ++i) {
         shift_x  = i * shell_length;
-        for (int j = 0; j < mols_count_y; ++j) {
+        for (int j = 0; j < atoms_count_y; ++j) {
             shift_y = j * shell_width;
-            for (int k = 0; k < mols_count_z; ++k) {
+            for (int k = 0; k < atoms_count_z; ++k) {
                 shift_z = k * shell_height;
                 mol.Translate(glm::vec3(shift_x, shift_y, shift_z));
                 cellLinkedLists->AddMol(mol);
@@ -58,29 +53,24 @@ void pmols::HJPacker::init() {
             }
         }
     }
-    cellLinkedLists->Update();
+    cellLinkedLists->FormCellLinkedLists();
     coordVec.resize(6 * cellLinkedLists->MolsCount());
     step.resize(coordVec.size());
 
     for (int i = 0; i < coordVec.size(); ++i) {
         int mol_idx = i / 6;
-        Molecule *mol = cellLinkedLists->GetMol(mol_idx);
-        if(mol == NULL) {
-            std::cerr << "ERROR: Molecule with current index is not exists. HJPacker initialization failed." << std::endl;
-            return;
-        }
 
         switch (i % 6) {
             case 0:
-                coordVec[i] = mol->GetBarycenter().x;
+                coordVec[i] = cellLinkedLists->GetMol(mol_idx).GetBarycenter().x;
                 step[i] = params.step_x;
                 break;
             case 1:
-                coordVec[i] = mol->GetBarycenter().y;
+                coordVec[i] = cellLinkedLists->GetMol(mol_idx).GetBarycenter().y;
                 step[i] = params.step_y;
                 break;
             case 2:
-                coordVec[i] = mol->GetBarycenter().z;
+                coordVec[i] = cellLinkedLists->GetMol(mol_idx).GetBarycenter().z;
                 step[i] = params.step_z;
                 break;
             case 3:
@@ -113,10 +103,10 @@ void pmols::HJPacker::Pack() {
     int it_num = 1;
 
 
-    int search_res = exploringSearch(x2_, true);
+    int search_res = exploringSearch(x2_, true); 
 
     do {
-//         std::cout << "STEP #" << ++it_num << std::endl;
+        // std::cout << "STEP #" << ++it_num << std::endl;
         if(search_res == 1) {
             ptrSearchItCount++;
             search_res = patternSearch(x1_, x2_);
@@ -125,11 +115,8 @@ void pmols::HJPacker::Pack() {
             expSearchItCount++;
             search_res = exploringSearch(x2_, true);
         }
-//         std::cout << "——————————————————————————————————————————————" << std::endl;
+        // std::cout << "——————————————————————————————————————————————" << std::endl;
     } while(search_res >= 0);
-
-    removeOutOfBoxMols();
-    cellLinkedLists->Update();
 }
 
 float pmols::HJPacker::eps(int coord_number) {
@@ -153,8 +140,8 @@ float pmols::HJPacker::objectiveFunc() {
 }
 
 int pmols::HJPacker::exploringSearch(ublas::vector<float> &x_, bool change_step) {
-//     std::cout << "EXPLORING SEARCH (with " << (change_step ? "step change" : "no step change") << ")" << std::endl;
-//     std::cout << " —— objective func before iteration: " << prevTotalDist << std::endl;
+    // std::cout << "EXPLORING SEARCH (with " << (change_step ? "step change" : "no step change") << ")" << std::endl;
+    // std::cout << " —— objective func before iteration: " << totalDist << std::endl;
     // std::cout << "  prevTotalDist: " << prevTotalDist << std::endl;
     // std::cout << "  totalDist: " << totalDist << std::endl;
 
@@ -168,7 +155,6 @@ int pmols::HJPacker::exploringSearch(ublas::vector<float> &x_, bool change_step)
     float min_step_rot = params.step_alpha, min_step_trans = params.step_x;
 
     for (int i = 0; i < x_.size(); ++i) {
-//        std::cout << "\tcoord number: " << i << std::endl;
         if(step[i] < eps(i))
             continue;
 
@@ -210,7 +196,6 @@ int pmols::HJPacker::exploringSearch(ublas::vector<float> &x_, bool change_step)
             }
         }
     }
-//    std::cout << " —— objective func after iteration: " << totalDist << std::endl;
 
     if (terminate)
         return -1;
@@ -242,7 +227,7 @@ void applyVecToCll(pmols::CellLinkedLists &cellLinkedLists, ublas::vector<float>
 }
 
 int pmols::HJPacker::patternSearch(ublas::vector<float> &x1_, ublas::vector<float> &x2_) {
-//     std::cout << "PATTERN SEARCH" << std::endl;
+    // std::cout << "PATTERN SEARCH" << std::endl;    
     ublas::vector<float> x3_ = x1_ + params.lambda * (x2_ - x1_);
     ublas::vector<float> x4_ = x3_;
     ublas::vector<float> dx_ = x3_ - x2_;
@@ -275,24 +260,22 @@ void pmols::HJPacker::Save(std::string out_file) {
         char b_str_buf[7];
 
         for (int i = 0; i < cellLinkedLists->MolsCount(); ++i) {
-            if(cellLinkedLists->GetMol(i) == NULL)
+            if(!MolInsideBox(cellLinkedLists->GetMol(i), appos_point, box_size))
                 continue;
-            Molecule mol(*cellLinkedLists->GetMol(i));
-
             rapidjson::Value mol_val(rapidjson::kObjectType);
 
             rapidjson::Value bonds(rapidjson::kArrayType);
 
-            for (int j = 0; j < mol.BondsCount(); ++j) {
+            for (int j = 0; j < cellLinkedLists->GetMol(i).BondsCount(); ++j) {
                 rapidjson::Value begin;
-                std::string b_str = std::to_string(mol.GetBond(j).begin->atom_idx);
+                std::string b_str = std::to_string(cellLinkedLists->GetMol(i).GetBond(j).begin->atom_idx);
 
                 int buf_len = sprintf(b_str_buf, "%s", b_str.c_str());
                 begin.SetString(b_str_buf, buf_len, allocator);
                 memset(b_str_buf, 0, 7);
 
                 rapidjson::Value end;
-                end.SetInt(mol.GetBond(j).end->atom_idx);
+                end.SetInt(cellLinkedLists->GetMol(i).GetBond(j).end->atom_idx);
 
                 rapidjson::Value bond(rapidjson::kObjectType);
                 bond.AddMember(begin, end, allocator);
@@ -301,12 +284,12 @@ void pmols::HJPacker::Save(std::string out_file) {
             }
 
             rapidjson::Value atoms(rapidjson::kObjectType);
-            for (int j = 0; j < mol.AtomsCount(); ++j) {
+            for (int j = 0; j < cellLinkedLists->GetMol(i).AtomsCount(); ++j) {
                 char buf[4];
-                int len = std::sprintf(buf, "%d", mol.GetAtom(j).atom_idx);
+                int len = std::sprintf(buf, "%d", cellLinkedLists->GetMol(i).GetAtom(j).atom_idx);
                 rapidjson::Value atom(rapidjson::kObjectType);
 
-                rapidjson::Value atomic_num(mol.GetAtom(j).atomic_number);
+                rapidjson::Value atomic_num(cellLinkedLists->GetMol(i).GetAtom(j).atomic_number);
                 atom.AddMember("atomic_num", atomic_num, allocator);
 
 //                rapidjson::Value symbol(rapidjson::kObjectType);
@@ -315,20 +298,20 @@ void pmols::HJPacker::Save(std::string out_file) {
                 rapidjson::Value position(rapidjson::kArrayType);
 
                 position.
-                        PushBack(mol.GetAtom(j).coord.x, allocator).
-                        PushBack(mol.GetAtom(j).coord.y, allocator).
-                        PushBack(mol.GetAtom(j).coord.z, allocator);
+                        PushBack(cellLinkedLists->GetMol(i).GetAtom(j).coord.x, allocator).
+                        PushBack(cellLinkedLists->GetMol(i).GetAtom(j).coord.y, allocator).
+                        PushBack(cellLinkedLists->GetMol(i).GetAtom(j).coord.z, allocator);
 
                 atom.AddMember("position", position, allocator);
 
-                rapidjson::Value vdw_radius(mol.GetAtom(j).vdw_radius);
+                rapidjson::Value vdw_radius(cellLinkedLists->GetMol(i).GetAtom(j).vdw_radius);
                 atom.AddMember("vdw_radius",vdw_radius, allocator);
 
                 rapidjson::Value color(rapidjson::kArrayType);
                 color.
-                        PushBack(mol.GetAtom(j).color.red, allocator).
-                        PushBack(mol.GetAtom(j).color.green, allocator).
-                        PushBack(mol.GetAtom(j).color.blue, allocator);
+                        PushBack(cellLinkedLists->GetMol(i).GetAtom(j).color.red, allocator).
+                        PushBack(cellLinkedLists->GetMol(i).GetAtom(j).color.green, allocator).
+                        PushBack(cellLinkedLists->GetMol(i).GetAtom(j).color.blue, allocator);
                 atom.AddMember("color", color, allocator);
 
                 rapidjson::Value atom_idx;
@@ -340,26 +323,7 @@ void pmols::HJPacker::Save(std::string out_file) {
             mols_arr.PushBack(mol_val, allocator);
         }
 
-        rapidjson::Value bounding_box(rapidjson::kObjectType);
-
-        rapidjson::Value box_length(params.box_length);
-        rapidjson::Value box_width(params.box_width);
-        rapidjson::Value box_height(params.box_height);
-
-        rapidjson::Value box_position(rapidjson::kArrayType);
-        box_position.
-                PushBack(appos_point.x, allocator).
-                PushBack(appos_point.y, allocator).
-                PushBack(appos_point.z, allocator);
-
-        bounding_box.AddMember("position", box_position, allocator);
-        bounding_box.AddMember("length", box_length, allocator);
-        bounding_box.AddMember("width", box_width, allocator);
-        bounding_box.AddMember("height", box_height, allocator);
-
-        jsonDoc.AddMember("bounding_box", bounding_box, allocator);
         jsonDoc.AddMember("mols", mols_arr, jsonDoc.GetAllocator());
-
         std::ofstream ofs(out_file);
         rapidjson::OStreamWrapper osw(ofs);
 
@@ -380,25 +344,23 @@ void pmols::HJPacker::Save(std::string out_file) {
 
     OpenBabel::OBConversion obConversion;
     obConversion.SetOutStream(&out_stream);
-    obConversion.SetOutFormat(params.out_format.c_str());
+    obConversion.SetOutFormat(params.out_format.c_str(), false);
 
     std::shared_ptr<OpenBabel::OBMol> mol_lattice = std::make_shared<OpenBabel::OBMol>();
     int atom_b_id;
     int atom_e_id;
 
     for (int i = 0; i < cellLinkedLists->MolsCount(); ++i) {
-        if(cellLinkedLists->GetMol(i) == NULL)
+        if(!MolInsideBox(cellLinkedLists->GetMol(i), appos_point, box_size))
             continue;
-        Molecule mol(*cellLinkedLists->GetMol(i));
-
-        for (int j = 0; j < mol.AtomsCount(); ++j) {
-            OpenBabel::OBAtom obAtom = mol.GetAtom(j).OBAtom();
+        for (int j = 0; j < cellLinkedLists->GetMol(i).AtomsCount(); ++j) {
+            OpenBabel::OBAtom obAtom = cellLinkedLists->GetMol(i).GetAtom(j).OBAtom();
             mol_lattice->AddAtom(obAtom);
         }
 
-        for (int j = 0; j < mol.BondsCount(); ++j) {
-            atom_b_id = mol.GetBond(j).begin->atom_id;
-            atom_e_id = mol.GetBond(j).end->atom_id;
+        for (int j = 0; j < cellLinkedLists->GetMol(i).BondsCount(); ++j) {
+            atom_b_id = cellLinkedLists->GetMol(i).GetBond(j).begin->atom_id;
+            atom_e_id = cellLinkedLists->GetMol(i).GetBond(j).end->atom_id;
             mol_lattice->AddBond(atom_b_id, atom_e_id, 1);
         }
     }
@@ -410,19 +372,7 @@ void pmols::HJPacker::Save(std::string out_file) {
 pmols::HJStatistics pmols::HJPacker::GetStatistics() {
     return pmols::HJStatistics(cellLinkedLists.get(),
          expSearchItCount, ptrSearchItCount, ptrSearchFpItCount, 
-         std::make_tuple(params.box_length, params.box_width, params.box_height));
-}
-
-void pmols::HJPacker::removeOutOfBoxMols() {
-    for (int i = 0; i < cellLinkedLists->MolsCount(); ++i) {
-        if(cellLinkedLists->GetMol(i) == NULL)
-            continue;
-        Molecule mol(*cellLinkedLists->GetMol(i));
-        std::tuple<float, float, float> boxSize(params.box_length, params.box_width, params.box_height);
-        if(!MolInsideBox(mol, appos_point, boxSize)) {
-            cellLinkedLists->RemoveMol(i);
-        }
-    }
+         std::tuple<float, float, float>(params.box_length, params.box_width, params.box_height));
 }
 
 pmols::HJStatistics::HJStatistics(pmols::CellLinkedLists *cellLinkedLists,
@@ -432,6 +382,7 @@ pmols::HJStatistics::HJStatistics(pmols::CellLinkedLists *cellLinkedLists,
     ps_it = ptrSearchIt;
     ps_fp_it = ptrSearchFpIt;
     it = ps_it + es_it;
+    box_size = boxSize;
 
 
     calcMolStatistics(cellLinkedLists);
@@ -452,11 +403,14 @@ void pmols::HJStatistics::calcMolStatistics(pmols::CellLinkedLists *cll) {
     min_inter = FLT_MAX;
     max_inter = 0;
     inter_sum = 0;
-    int mol_sum_added = 0;;
-    boundingBox = cll->GetBoundingBox();
+    int mol_sum_added = 0;
+    
 
     for (int i = 0; i < cll->MolsCount(); ++i) {
-        Molecule mol(*cll->mols[i]);
+        Molecule mol = cll->mols[i];
+        if(!MolInsideBox(mol, cll->appos_point, box_size))
+            continue;
+        mols_count++;
         for (int j = 0; j < mol.AtomsCount(); ++j) {
             atom = mol.GetAtom(j);
             CLLNeighbourCells neighbourCells = CLLNeighbourCells(cll, atom);
@@ -478,13 +432,12 @@ void pmols::HJStatistics::calcMolStatistics(pmols::CellLinkedLists *cll) {
                                     max_inter = std::fabs(dist);
 
                                 inters++;
+                            } else {
+                                if (dist < min_atoms_dist)
+                                    min_atoms_dist = dist;
+                                else if (dist > max_atoms_dist)
+                                    max_atoms_dist = dist;
                             }
-
-                            if (dist < min_atoms_dist)
-                                min_atoms_dist = dist;
-                            else if (dist > max_atoms_dist)
-                                max_atoms_dist = dist;
-
                         }
                     }
                 }
@@ -501,15 +454,10 @@ void pmols::HJStatistics::calcMolStatistics(pmols::CellLinkedLists *cll) {
         }
     }
 
-    mols_count = (int)cll->MolsCount();
-    avg_atoms_sum = atoms_sum / (float)mol_sum_added;
+    avg_atoms_sum = atoms_sum / mol_sum_added;
     avg_inter = inter_sum / (float)inters;
 }
 
 float pmols::HJStatistics::atomsEDist(Atom &a, Atom &b) {
     return (float)glm::distance(a.coord, b.coord) - a.vdw_radius - b.vdw_radius;
-}
-
-std::tuple<glm::vec3, std::tuple<float, float, float>> pmols::HJStatistics::GetBoundingBox() {
-    return boundingBox;
 }

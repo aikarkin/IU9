@@ -1,0 +1,14 @@
+/home/alex/dev/src/cpp/IU9/CourseWork/build/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/pmols/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/pmols/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/pmols/CMakeFiles/pmols.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/mols_packer/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/mols_packer/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/mols_packer/CMakeFiles/mols_packer.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/mol_visualizer/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/mol_visualizer/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/mol_visualizer/CMakeFiles/mol_visualizer.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/tests/CMakeFiles/rebuild_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/tests/CMakeFiles/edit_cache.dir
+/home/alex/dev/src/cpp/IU9/CourseWork/build/tests/CMakeFiles/tests.dir

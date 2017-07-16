@@ -7,79 +7,106 @@
 #include <memory>
 
 
-pmols::CellLinkedLists::CellLinkedLists(std::vector<pmols::Molecule*> &mols, float cellLen, pmols::DistFunc distFunc) {
+pmols::CellLinkedLists::CellLinkedLists(std::vector<pmols::Molecule> &mols, float cellLen, pmols::DistFunc distFunc) {
     this->mols = mols;
     this->cell_len = cellLen;
     this->dist_func = distFunc;
-    this->grid_box_setted = false;
-    Update();
+    FormCellLinkedLists();
 }
 
 pmols::CellLinkedLists::CellLinkedLists(float cellLen, pmols::DistFunc distFunc) {
     Set(cellLen, distFunc);
 }
 
-void pmols::CellLinkedLists::Update() {
-    std::vector<Molecule*> mols;
-
-    for (int i = 0; i < this->mols.size(); ++i) {
-        if(this->mols[i] != NULL) {
-            mols.emplace_back(new Molecule(*this->mols[i]));
-        }
+void pmols::CellLinkedLists::FormCellLinkedLists() {
+    if(formed) {
+        std::cout << "WARNING: CellLinkedLists already formed. Operation cancelled." << std::endl;
+        return;
     }
-    this->mols.clear();
-    this->mols = mols;
 
-    if(formed)
-        freeGrid();
-
-    if(!grid_box_setted)
-        SetBoundingBox(GetBoundingBox());
-
-    grid_box_setted = false;
+    calcBoundingBox();
 
     cells_count_x = (int)ceilf(box_length/cell_len);
     cells_count_y = (int)ceilf(box_width/cell_len);
     cells_count_z = (int)ceilf(box_height/cell_len);
 
-    allocateGrid();
-    formed = true;
+    // allocate atom_grid
+    atom_grid = new std::list<Atom>**[cells_count_x];
+    for (int i = 0; i < cells_count_x; ++i) {
+        atom_grid[i] = new std::list<Atom>*[cells_count_y];
+        for (int j = 0; j < cells_count_y; ++j) {
+            atom_grid[i][j] = new std::list<Atom>[cells_count_z];
+        }
+    }
 
     Atom cur_atom;
     int idx_x, idx_y, idx_z;
 
     // add each atom to grid
     for (int i = 0; i < mols.size(); ++i) {
-        for (int j = 0; j < mols[i]->AtomsCount(); ++j) {
-            cur_atom = mols[i]->GetAtom(j);
+        for (int j = 0; j < mols[i].AtomsCount(); ++j) {
+            cur_atom = mols[i].GetAtom(j);
             cur_atom.parent_mol_id = i;
-            mols[i]->GetAtom(j).parent_mol_id = i;
+            mols[i].GetAtom(j).parent_mol_id = i;
 
-            std::tie(idx_x, idx_y, idx_z) = getCellIndex(cur_atom);
+            idx_x = (int)floorf((cur_atom.coord.x - appos_point.x)/cell_len);
+            idx_y = (int)floorf((cur_atom.coord.y - appos_point.y)/cell_len);
+            idx_z = (int)floorf((cur_atom.coord.z - appos_point.z)/cell_len);
 
-            atom_grid[idx_x][idx_y][idx_z].push_back(cur_atom);
+            atom_grid[idx_x][idx_y][idx_z].emplace_back(cur_atom);
         }
     }
-
     formed = true;
 }
 
-bool pmols::CellLinkedLists::AddMol(Molecule &mol) {
-    if(formed || !MolInsideBox(mol, appos_point, std::make_tuple(box_length, box_width, box_height)))
+bool pmols::CellLinkedLists::AddMol(pmols::Molecule &mol) {
+    if(formed)
         return false;
 
-    mols.emplace_back(new Molecule(mol));
+    mols.push_back(mol);
     return true;
 }
 
-bool pmols::CellLinkedLists::MoveMol(int molIdx, pmols::MOVE_OP moveOp, float val) {
-    if(mols[molIdx] == NULL) {
-        std::cerr << "ERROR: Unable to move molecule. Molecule with index " << molIdx
-                  << " was removed from cell linked lists." << std::endl;
-        return false;
+void pmols::CellLinkedLists::calcBoundingBox() {
+    Atom atom = mols[0].GetAtom(0);
+    float   min_x =  atom.coord.x - atom.vdw_radius,
+            min_y = atom.coord.y - atom.vdw_radius,
+            min_z = atom.coord.z - atom.vdw_radius;
+
+    float   max_x =  atom.coord.x + atom.vdw_radius,
+            max_y = atom.coord.y + atom.vdw_radius,
+            max_z = atom.coord.z + atom.vdw_radius;
+
+    for (int i = 0; i < mols.size(); ++i) {
+        for (int j = 0; j < mols[i].AtomsCount(); ++j) {
+            atom = mols[i].GetAtom(j);
+
+            if(atom.coord.x - atom.vdw_radius < min_x)
+                min_x = atom.coord.x - atom.vdw_radius;
+            if(atom.coord.x + atom.vdw_radius > max_x)
+                max_x = atom.coord.x + atom.vdw_radius;
+
+            if(atom.coord.y - atom.vdw_radius < min_y)
+                min_y = atom.coord.y - atom.vdw_radius;
+            if(atom.coord.y + atom.vdw_radius > max_y)
+                max_y = atom.coord.y + atom.vdw_radius;
+
+            if(atom.coord.z - atom.vdw_radius < min_z)
+                min_z = atom.coord.z - atom.vdw_radius;
+            if(atom.coord.z + atom.vdw_radius > max_z)
+                max_z = atom.coord.z + atom.vdw_radius;
+        }
     }
 
-    Molecule mol = *mols[molIdx];
+    appos_point = glm::vec3(min_x, min_y, min_z);
+
+    box_length = max_x - min_x;
+    box_width = max_y - min_y;
+    box_height = max_z - min_z;
+}
+
+bool pmols::CellLinkedLists::MoveMol(int molIdx, pmols::MOVE_OP moveOp, float val) {
+    Molecule mol = mols[molIdx];
     last_mol = std::make_shared<std::tuple<int, Molecule>>(std::make_tuple(molIdx, mol));
 
     switch(moveOp) {
@@ -120,7 +147,7 @@ size_t pmols::CellLinkedLists::MolsCount() {
     return mols.size();
 }
 
-std::tuple<int, int, int> pmols::CellLinkedLists::getCellIndex(Atom atom) {
+std::tuple<int, int, int> pmols::CellLinkedLists::getCellIndex(pmols::Atom &atom) {
     int i, j, k;
 
     i = (int)floorf((atom.coord.x - appos_point.x)/cell_len);
@@ -131,9 +158,7 @@ std::tuple<int, int, int> pmols::CellLinkedLists::getCellIndex(Atom atom) {
 }
 
 float pmols::CellLinkedLists::MolDist(int molIdx) {
-    if(mols[molIdx] == NULL)
-        return 0.f;
-    Molecule mol(*mols[molIdx]);
+    Molecule mol = mols[molIdx];
     Atom *atom;
     float sum = 0;
     float dist;
@@ -165,17 +190,27 @@ float pmols::CellLinkedLists::MolDist(int molIdx) {
 void pmols::CellLinkedLists::Set(float cellLen, pmols::DistFunc distFunc) {
     this->cell_len = cellLen;
     this->dist_func = distFunc;
-    this->grid_box_setted = false;
     mol_moved = false;
     formed = false;
 }
 
-pmols::Molecule* pmols::CellLinkedLists::GetMol(int molIdx) {
+pmols::Molecule &pmols::CellLinkedLists::GetMol(int molIdx) {
     return mols[molIdx];
 }
 
 pmols::CellLinkedLists::~CellLinkedLists() {
-    freeGrid();
+    for (int i = 0; i < cells_count_x; i++) {
+        for (int j = 0; j < cells_count_y; ++j) {
+            for (int k = 0; k < cells_count_z; ++k) {
+                if (!atom_grid[i][j][k].empty())
+                    atom_grid[i][j][k].clear();
+            }
+            delete []atom_grid[i][j];
+        }
+        delete []atom_grid[i];
+    }
+
+    delete[]atom_grid;
 }
 
 void pmols::CellLinkedLists::CancelMove() {
@@ -183,14 +218,8 @@ void pmols::CellLinkedLists::CancelMove() {
         std::cout << "WARNING: Unable to cancel move operation. No one molecule wasn't move." << std::endl;
         return;
     }
-    int molIdx = std::get<0>(*last_mol);
 
-    if(mols[molIdx] == NULL) {
-        std::cout << "WARNING: Unable to cancel move operation. Molecule with current index was removed." << std::endl;
-        return;
-    }
-
-    repMol(molIdx, std::get<1>(*last_mol));
+    repMol(std::get<0>(*last_mol), std::get<1>(*last_mol));
     mol_moved = false;
 }
 
@@ -228,13 +257,13 @@ void pmols::CellLinkedLists::SaveToCSV(std::string file_path) {
     outf_stream.close();
 }
 
-void pmols::CellLinkedLists::repMol(int molIdx, Molecule mol) {
+void pmols::CellLinkedLists::repMol(int molIdx, pmols::Molecule &mol) {
     int idx_x, idx_y, idx_z;
     Atom atom;
 
     // remove from grid atoms of mol with molIdx
-    for (int i = 0; i < mols[molIdx]->AtomsCount(); ++i) {
-        atom = mols[molIdx]->GetAtom(i);
+    for (int i = 0; i < mols[molIdx].AtomsCount(); ++i) {
+        atom = mols[molIdx].GetAtom(i);
         std::tie(idx_x, idx_y, idx_z) = getCellIndex(atom);
 
         for(auto na = atom_grid[idx_x][idx_y][idx_z].begin(); na != atom_grid[idx_x][idx_y][idx_z].end(); na++) {
@@ -255,79 +284,7 @@ void pmols::CellLinkedLists::repMol(int molIdx, Molecule mol) {
     }
 
     // replace mol with molIdx in mols vector
-    delete mols[molIdx];
-    mols[molIdx] = new Molecule(mol);
-}
-
-void pmols::CellLinkedLists::allocateGrid() {
-    atom_grid = new std::list<Atom>**[cells_count_x];
-    for (int i = 0; i < cells_count_x; ++i) {
-        atom_grid[i] = new std::list<Atom>*[cells_count_y];
-        for (int j = 0; j < cells_count_y; ++j) {
-            atom_grid[i][j] = new std::list<Atom>[cells_count_z];
-        }
-    }
-}
-
-void pmols::CellLinkedLists::freeGrid() {
-    for (int i = 0; i < cells_count_x; i++) {
-        for (int j = 0; j < cells_count_y; ++j) {
-            for (int k = 0; k < cells_count_z; ++k) {
-                if (!atom_grid[i][j][k].empty())
-                    atom_grid[i][j][k].clear();
-            }
-            delete []atom_grid[i][j];
-        }
-        delete []atom_grid[i];
-    }
-
-    delete[]atom_grid;
-}
-
-void pmols::CellLinkedLists::RemoveMol(int molIdx) {
-    delete mols[molIdx];
-    mols[molIdx] = NULL;
-}
-
-void pmols::CellLinkedLists::SetBoundingBox(std::tuple<glm::vec3, std::tuple<float, float, float>> box) {
-    this->grid_box_setted = true;
-    appos_point = std::get<0>(box);
-    std::tie(box_length, box_width, box_height) = std::get<1>(box);
-}
-
-std::tuple<glm::vec3, std::tuple<float, float, float>> pmols::CellLinkedLists::GetBoundingBox() {
-    Atom atom = mols[0]->GetAtom(0);
-    float   min_x =  atom.coord.x - atom.vdw_radius,
-            min_y = atom.coord.y - atom.vdw_radius,
-            min_z = atom.coord.z - atom.vdw_radius;
-
-    float   max_x =  atom.coord.x + atom.vdw_radius,
-            max_y = atom.coord.y + atom.vdw_radius,
-            max_z = atom.coord.z + atom.vdw_radius;
-
-    for (int i = 0; i < mols.size(); ++i) {
-        for (int j = 0; j < mols[i]->AtomsCount(); ++j) {
-            atom = mols[i]->GetAtom(j);
-
-            if(atom.coord.x - atom.vdw_radius < min_x)
-                min_x = atom.coord.x - atom.vdw_radius;
-            if(atom.coord.x + atom.vdw_radius > max_x)
-                max_x = atom.coord.x + atom.vdw_radius;
-
-            if(atom.coord.y - atom.vdw_radius < min_y)
-                min_y = atom.coord.y - atom.vdw_radius;
-            if(atom.coord.y + atom.vdw_radius > max_y)
-                max_y = atom.coord.y + atom.vdw_radius;
-
-            if(atom.coord.z - atom.vdw_radius < min_z)
-                min_z = atom.coord.z - atom.vdw_radius;
-            if(atom.coord.z + atom.vdw_radius > max_z)
-                max_z = atom.coord.z + atom.vdw_radius;
-        }
-    }
-
-    return std::tuple<glm::vec3, std::tuple<float, float, float>>
-            (glm::vec3(min_x, min_y, min_z), std::tuple<float, float, float>(max_x - min_x, max_y - min_y, max_z - min_z));
+    mols[molIdx] = mol;
 }
 
 pmols::CLLNeighbourCells::CLLNeighbourCells(CellLinkedLists *cellLinkedLists, Atom &atom) {
@@ -342,7 +299,7 @@ void pmols::CLLNeighbourCells::reset() {
     std::tie(i0, j0, k0) = clLists->getCellIndex(initial_atom);
 }
 
-std::list<pmols::Atom> pmols::CLLNeighbourCells:: next() {
+std::list<pmols::Atom> pmols::CLLNeighbourCells::next() {
     int x;
     int bit_counter;
     char trans_code_bits[6] = {0};
