@@ -1,3 +1,5 @@
+#!/usr/bin/node
+
 var express = require('express')
     , app = express()
     , port = 3000;
@@ -5,45 +7,9 @@ var fs = require('fs');
 var pmols = require('./pmols_utils.js');
 var path = require('path');
 var HashSet = require('hashset');
+var sassMidleware = require('node-sass-middleware');
 
-var LATTICES_ROOT = '../lattices/';
-var PACK_SCRIPT = '../../bin/./mols_packer';
-var CACHE = new HashSet();
-var MOLECULES = {
-    1: path.parse('../molecules/Structure3D_CID_962.sdf'),
-    2: path.parse('../molecules/Structure3D_CID_11.sdf'),
-    3: path.parse('../molecules/Structure3D_CID_6212.sdf'),
-    4: path.parse('../molecules/Structure3D_CID_2519.sdf')
-};
-
-pmols.updateCache(CACHE, LATTICES_ROOT);
-
-
-/*  onSuccess(filePath, debugInfo)
-    onError(errType, errMessage)  */
-function getLattice(latticeParams, onSuccess, onError) {
-    var filePath = latticeParams.outDir + latticeParams.outFile;
-
-    if (CACHE.contains(latticeParams.outFile)) {
-        onSuccess(filePath, 'cache');
-        return;
-    }
-
-    pmols.exec(PACK_SCRIPT, latticeParams,
-        (debug, err) => {
-            if (typeof (err) === 'string' && err != '') {
-                onError('runtime error', err);
-                return;
-            }
-            CACHE.add(latticeParams.outFile);
-            onSuccess(filePath, debug);
-        },
-        (err) => {
-            onError('execution error', err);
-            return;
-        }
-    );
-}
+var VIEWS = __dirname + '/views/';
 
 
 app.use(function (req, res, next) {
@@ -54,75 +20,41 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(
+    sassMidleware({
+        src: __dirname + '/public/sass',
+        dest: __dirname + '/public/css',
+        outputStyle: 'compressed',
+        indentedSyntax: true,
+        prefix: "/css",
+        debug: true
+    })
+);
+
+app.use('/', express.static(__dirname + '/public'));
+
+
+app.get('/', function(req, res) {
+    res.sendfile(path.join(VIEWS, "index.html"));
+});
+
+app.get('/viewer', function(req, res) {
+    res.sendfile(path.join(VIEWS, "mols-viewer.html"));
+});
+
+
 
 app.get('/download/lattice/:id', function (req, res) {
-    latticeParams = pmols.latticeParamsFromRequest(req, MOLECULES, LATTICES_ROOT);
-    this.res = res;
-
-    getLattice(
-        latticeParams,
-        (filePath, debug) => {
-            if(debug == 'cache') {
-                console.log('Lattice configuration has taken from cache');
-            }
-            else {
-                console.log(`${PACK_SCRIPT} has successfully executed`);
-                console.log(`debug info: \n${debug}`);
-            }
-
-            res.download(path.resolve(filePath), latticeParams.outFile);
-        },
-        (errType, errMessage) => {
-            if(errType == 'execution error') {
-                console.log(console.log(`${PACK_SCRIPT} execution failed.\nError(s):${errMessage}`));
-            }
-            else if(errType == 'runtime error') {
-                console.log(console.log(`${PACK_SCRIPT} has executed with errors:\n${errMessage}`));
-            }
-
-            res.send(`Error: ${errType}.\n\t${errMessage}`);
-        }
-    );
+    setTimeout(function () {
+        res.send(JSON.stringify({res: 'download'}));
+    }, 5000);
 });
 
 
 app.get('/get/lattice/:id', function (req, res) {
-    latticeParams = pmols.latticeParamsFromRequest(req, MOLECULES, LATTICES_ROOT);
-    this.res = res;
-
-    getLattice(
-        latticeParams,
-        (filePath, debug) => {
-            if(debug == 'cache') {
-                console.log('Lattice configuration has taken from cache');
-            }
-            else {
-                console.log(`${PACK_SCRIPT} has successfully executed`);
-                console.log(`debug info: \n${debug}`);
-            }
-
-            data = fs.readFileSync(filePath, 'utf8');
-            res.send(JSON.stringify({
-                'result': 'success',
-                'debug': debug,
-                'data': data
-            }));
-        },
-        (errType, errMessage) => {
-            if(errType == 'execution error') {
-                console.log(console.log(`${PACK_SCRIPT} execution failed.\nError(s):${errMessage}`));
-            }
-            else if(errType == 'runtime error') {
-                console.log(console.log(`${PACK_SCRIPT} has executed with errors:\n${errMessage}`));
-            }
-
-            res.send(JSON.stringify({
-                'result': 'error',
-                'type': errType,
-                'discription': errMessage
-            }));
-        }
-    );
+    setTimeout(function () {
+        res.send(JSON.stringify({res: 'get'}));
+    }, 5000);
 });
 
 

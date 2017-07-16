@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>Molecular lattice visualization</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="/css/mols-viewer.css">
+	</head>
+	<body>
+		<div id="container">
+            <div class="controls">
+                <div class="controls__content">
+                    <ul>
+                        <li>
+                            <div>
+                                <div class="property-name">scale</div>
+                                <div class="property-controller">
+                                    <input type="text">
+                                    <div class="slider"><div class="slider-fg"></div></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="property-name">vdwRadius</div>
+                                <div class="property-controller">
+                                    <input type="checkbox">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="property-name">boundingBox</div>
+                                <div class="property-controller">
+                                    <input type="checkbox">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="property-name">showStatistics</div>
+                                <div class="property-controller">
+                                    <input type="checkbox">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="controls__hide">Hide controls</div>
+                </div>
+            </div>
+        </div>
+		<div id="menu"></div>
+    </body>
+
+	<script src="js/three.js"></script>
+	<script src="js/jquery.min.js"></script>
+    <script src="js/controls.js"></script>
+	<!--<script src="js/controls/TrackballControls.js"></script>-->
+	<!--<script src="js/loaders/PDBLoader.js"></script>-->
+	<!--<script src="js/renderers/CSS2DRenderer.js"></script>-->
+	<script src="js/mols_visualizer.js"></script>
+
+	<script>
+		if(typeof(Storage) !== 'undefined') {
+			var storage;
+
+			if(typeof(sessionStorage) !== 'undefined')
+				storage = sessionStorage;
+			else if(typeof(localStorage) !== 'undefined')
+				storage = localStorage;
+			else
+				alert('unsupported type of browser storage. Try to change browser');
+			
+			var lattice_data = storage.getItem('lattice_data');
+			if(typeof(lattice_data) === 'undefined') {
+				alert('Can\'t get lattice params')
+			}
+			else {
+				var lattice_conf = JSON.parse(lattice_data);
+				visualize_mols(lattice_conf);
+			}
+			
+		}
+		else {
+			alert('This browser don\'t support local storage. Please try another one');
+		}		
+		
+	</script>
+</html>

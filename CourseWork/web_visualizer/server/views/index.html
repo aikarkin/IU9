@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/material-icons.css">
+        <link rel="stylesheet" href="/css/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="/css/mdl-selectfield.min.css">
+        <link rel="stylesheet" href="/css/dialog-polyfill.min.css">
+        <link rel="stylesheet" href="/css/styles.css">
+        <title>Pack molecules</title>
+    </head>
+    <body>
+        <button id="btn_modal" class="mdl-button mdl-button--raised mdl-js-button dialog-button">Pack...</button>
+
+        <dialog id="dialog" class="mdl-dialog">
+            <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <h3 class="mdl-dialog__title">Pack options</h3>
+            <div class="mdl-dialog__content">
+                <form action="#">
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="length_input">
+                        <label class="mdl-textfield__label" for="length_input">Length...</label>
+                        <span class="mdl-textfield__error">Input is not a number!</span>
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="width_input">
+                        <label class="mdl-textfield__label" for="width_input">Width...</label>
+                        <span class="mdl-textfield__error">Input is not a number!</span>
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="height_input">
+                        <label class="mdl-textfield__label" for="height_input">Height...</label>
+                        <span class="mdl-textfield__error">Input is not a number!</span>
+                    </div>
+
+                    <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                        <select class="mdl-selectfield__select" id="molecules" name="molecule">
+                            <option value="option1">Water</option>
+                            <option value="option2">Ethylene chloride</option>
+                            <option value="option3">Chloroform</option>
+                            <option value="option4">Caffeine</option>
+                        </select>
+                        <label class="mdl-selectfield__label" for="molecules">Molecule</label>
+                    </div>
+
+                </form>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" class="mdl-button">Close</button>
+                <button id="btn_pack" type="button" class="mdl-button mdl-button--colored" disabled>Pack</button>
+            </div>
+        </dialog>
+    </body>
+
+    <script src='/js/jquery.min.js'></script>
+    <script src='/js/material.min.js'></script>
+    <script src='/js/mdl-selectfield.min.js'></script>
+    <script src='/js/application.js'></script>
+
+</html>

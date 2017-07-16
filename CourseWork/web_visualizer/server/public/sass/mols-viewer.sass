@@ -1,0 +1,106 @@
+.controls
+  position: fixed
+  top: 8px
+  left: 0
+  right: 0
+  height: 0
+  z-index: 0
+
+  color: #eee
+  font: 11px Lucida Grande,sans-serif
+  text-shadow: 0 -1px 0 #111
+
+
+  .controls__content
+
+    width: 245px
+    float: right
+    margin-right: 15px
+    overflow-x: hidden
+
+
+    .controls__hide
+      position: absolute
+      width: 241px
+      height: 20px
+      background-color: #000
+      border: 2px solid rgb(26, 26, 26) !important
+      line-height: 19px
+      cursor: pointer
+      text-align: center
+
+    ul
+      &.closed
+        height: 0
+        -webkit-transition: height .4s linear
+        transition: height .4s linear
+
+      height: auto
+      list-style: none
+      margin: 0
+      padding: 0
+      width: 100%
+      clear: both
+      opacity: 1
+
+      -webkit-transition: height .4s linear
+      transition: height .4s linear
+
+      li
+        border-left: 3px solid #2fa1d6
+        background: #1a1a1a
+        border-bottom: 1px solid #2c2c2c
+
+        -webkit-transition: height .4s linear
+        transition: height .4s linear
+
+
+        &:not(.folder)
+          cursor: auto
+          height: 27px
+          line-height: 27px
+          overflow: hidden
+          padding: 0 4px 0 5px
+
+        > div
+          .property-name
+            cursor: default
+            float: left
+            clear: left
+            width: 40%
+            overflow: hidden
+            text-overflow: ellipsis
+
+          .property-controller
+            float: left
+            width: 60%
+
+            input[type=checkbox]
+              margin-top: 9px
+
+            input[type=text]
+              color: #2fa1d6
+              background: #303030
+              outline: none
+
+              width: 30%
+              margin-left: 0
+              border: 0
+              margin-top: 4px
+              padding: 3px
+              float: right
+              
+
+            .slider
+              background: #303030
+              cursor: ew-resize
+              margin-left: -5px
+              margin-right: 0
+              height: 19px
+              margin-top: 4px
+              width: 66%
+
+              .slider-fg
+                background: #2fa1d6
+                max-width: 100%
+                height: 100%
