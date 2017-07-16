@@ -1,0 +1,30 @@
+{
+    "lattice": {
+        "box_length": 8.0,
+        "box_width": 8.0,
+        "box_height": 8.0,
+        "expansivity": 1.5,
+        "mol_file": "../resources/Structure3D_CID_962.sdf",
+        "out_format": "mol2"
+    },
+    "packing_params": {
+        "steps": {
+            "trans_x": 1.0,
+            "trans_y": 1.0,
+            "trans_z": 1.0,
+            "rot_x": 90,
+            "rot_y": 90,
+            "rot_z": 90,
+            "dec_coefficient": 0.11
+        },
+        "precision": {
+            "trans_eps": 0.01,
+            "rot_eps": 0.01
+        },
+        "lambda": 2,
+        "lj_epsilon": 1.0
+    },
+    "cell_linked_lists": {
+        "cell_length": 3.5
+    }
+}

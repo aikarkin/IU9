@@ -44,6 +44,7 @@ void initGloabalLight(GlobalLight params) {
 	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, params.local_viewer);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, params.two_side);
 	glEnable(GL_LIGHTING);
+	//glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
 }
 
@@ -72,7 +73,7 @@ void setMaterial(Material params) {
 	glMaterialfv(params.diffuse_side, GL_DIFFUSE, params.diffuse_color);
 	glMaterialfv(params.specular_side, GL_SPECULAR, params.specular_color);
 	glMaterialfv(params.emission_side, GL_EMISSION, params.emission_color);
-	glMaterialf(params.shiness_side, GL_SHININESS, params.shiness);
+	glMaterialf(params.shiness_side, GL_SHININESS, params.shininess);
 }
 
 void deserializeLightParams(std::string file, GlobalLight &global, vector<Light> &lights, vector<Material> &materials)
@@ -106,13 +107,19 @@ void deserializeLightParams(std::string file, GlobalLight &global, vector<Light>
 	// parse global light
 	if (jGlobal.HasMember("ambient_color")) {
 		for (int i = 0; i < 4; i++) {
-			global.global_ambient_color[i] = (float)jGlobal["ambient_color"][i].GetDouble();
+			global.global_ambient_color[i] = jGlobal["ambient_color"][i].GetFloat();
 		}
 	}
 	if (jGlobal.HasMember("local_viewer")) 
 		global.local_viewer = jGlobal["local_viewer"].GetBool();
 	if (jGlobal.HasMember("two_side"))
 		global.two_side = jGlobal["two_side"].GetBool();
+	if (jGlobal.HasMember("shade_mode")) {
+		if (jGlobal["shade_mode"].GetString() == "flat")
+			global.shade_mode = GL_FLAT;
+		else
+			global.shade_mode = GL_SMOOTH;
+	}
 
 	// parse materials
 	for (int j = 0; j < (int)jMaterial.Size(); j++)
@@ -121,26 +128,29 @@ void deserializeLightParams(std::string file, GlobalLight &global, vector<Light>
 		if (jMaterial[j].HasMember("ambient_color"))
 		{
 			for (int i = 0; i < 4; i++) {
-				curMaterial.ambient_color[i] = (float)jMaterial[j]["ambient_color"].GetArray()[i].GetDouble();
+				curMaterial.ambient_color[i] = jMaterial[j]["ambient_color"].GetArray()[i].GetFloat();
 			}
 		}
 
 		if (jMaterial[j].HasMember("diffuse_color")) {
 			for (int i = 0; i < 4; i++) {
-				curMaterial.diffuse_color[i] = (float)jMaterial[j]["diffuse_color"].GetArray()[i].GetDouble();
+				curMaterial.diffuse_color[i] = jMaterial[j]["diffuse_color"].GetArray()[i].GetFloat();
 			}
 		}
 		if (jMaterial[j].HasMember("specular_color")) {
 			for (int i = 0; i < 4; i++) {
-				curMaterial.specular_color[i] = (float)jMaterial[j]["specular_color"].GetArray()[i].GetDouble();
+				curMaterial.specular_color[i] = jMaterial[j]["specular_color"].GetArray()[i].GetFloat();
 			}
 		}
 
 		if (jMaterial[j].HasMember("emission_color")) {
 			for (int i = 0; i < 4; i++) {
-				curMaterial.emission_color[i] = (float)jMaterial[j]["emission_color"].GetArray()[i].GetDouble();
+				curMaterial.emission_color[i] = jMaterial[j]["emission_color"].GetArray()[i].GetFloat();
 			}
 		}
+
+		if (jMaterial[j].HasMember("shininess"))
+			curMaterial.shininess = jMaterial[j]["shininess"].GetFloat();
 		materials.push_back(curMaterial);
 	}
 
@@ -159,37 +169,38 @@ void deserializeLightParams(std::string file, GlobalLight &global, vector<Light>
 		}
 		if (jLocal[j].HasMember("diffuse_color")) {
 			for (int i = 0; i < 4; i++) {
-				curLight.diffuse_color[i] = (float)jLocal[j]["diffuse_color"][i].GetDouble();
+				curLight.diffuse_color[i] = jLocal[j]["diffuse_color"][i].GetFloat();
 			}
 		}
 
 		if (jLocal[j].HasMember("ambient_color")) {
 			for (int i = 0; i < 4; i++) {
-				curLight.ambient_color[i] = (float)jLocal[j]["ambient_color"][i].GetDouble();
+				curLight.ambient_color[i] = jLocal[j]["ambient_color"][i].GetFloat();
 			}
 		}
 
 		if (jLocal[j].HasMember("specular_color")) {
 			for (int i = 0; i < 4; i++) {
-				curLight.specular_color[i] = (float)jLocal[j]["specular_color"][i].GetDouble();
+				curLight.specular_color[i] = jLocal[j]["specular_color"][i].GetFloat();
 			}
 		}
 		
 		if (jLocal[j].HasMember("position")) {
 			for (int i = 0; i < 4; i++) {
-				curLight.position[i] = (float)jLocal[j]["position"][i].GetDouble();
+				curLight.position[i] = jLocal[j]["position"][i].GetFloat();
 			}
 		}
 		
 		if(jLocal[j].HasMember("spot_cutoff"))
-			curLight.spot_cutoff = (float)jLocal[j]["spot_cutoff"].GetDouble();
+			curLight.spot_cutoff = jLocal[j]["spot_cutoff"].GetFloat();
 		if (jLocal[j].HasMember("spot_exponent"))
-			curLight.spot_exponent = (float)jLocal[j]["spot_exponent"].GetDouble();
+			curLight.spot_exponent = jLocal[j]["spot_exponent"].GetFloat();
 		if (jLocal[j].HasMember("spot_direction")) {
 			for (int i = 0; i < 3; i++) {
-				curLight.spot_direction[i] = (float)jLocal[j]["spot_direction"][i].GetDouble();
+				curLight.spot_direction[i] = jLocal[j]["spot_direction"][i].GetFloat();
 			}
 		}
+
 
 		lights.push_back(curLight);
 	}

@@ -1,0 +1,88 @@
+MOVE_OPERATION {ROT_X, ROT_Y, ROT_Z, TRANS_X, TRANS_Y, TRANS_Z};
+
+CLLists
+----------------------
++CLLists(cell_len, length, width, height)
+
++getCellListByInd(i, j, k) => Atom
+
++addAtom(Atom&) => bool
++remAtom(Atom&) => bool
++repAtom(Atom& old_a, Atom& new_a) => bool
++getNeighbours(Atom&) => atom_iter
+
++addMol(Molecule&) => bool
++remMol(...) => bool
++repMol(...) => bool
++moveMol(Molecule, op_enum, val) => bool
++totalDistance(Molecule&) => float
+
+-atom_grid[n][m][p]:Atom
+______________________
+
+
+CLLists clLists;
+
+float CLLists::totalDistance(Molecule &Molecule) {
+	float res = 0;
+	
+	for(cur_atom in Molecule.atoms) {
+		for(n_atom in getNeighbours(cur_atom)) {
+			if(cur_atom.parent_mol != n_atom.parent_mol) { // ! parent_mol is pointer ???
+				res += dist(cur_atom.coord, n_atom.coord) - cur_atom->vdw_radius - n_atom->vdw_radius;
+			}
+		}
+	}
+	
+	return res;
+}
+
+bool CLLists::moveMol(Molecule& Molecule, MOVE_OPERATION op_enum, float val) => bool {
+  old_mol = Molecule; //copy
+  
+  switch(op_enum) {
+  	case ROT_X:
+  		Molecule.RotateX(val);
+  		break;
+  	...
+  }
+  
+  if(!Molecule.repMol(old_mol, Molecule))
+  	return false;
+  
+  return true;
+}
+
+
+dist_sum = 0;
+vector<Molecule> mols;
+
+// calc initial sum
+...
+
+
+opt_func = [dist_sum, &mols, &clLists](vec<float>& p, int c_idx) => float {
+	float old_mol_sum, cur_mol_sum;
+	float c_val = p[c_idx];
+	int mol_idx = c_idx / 6;
+	int op_num = c_idx % 6;
+	
+	MOVE_OPERATION m_op = (MOVE_OPERATION)op_num;
+	Molecule cur_mol = mols[mol_idx];
+	
+	old_mol_sum = cllLists.totalDistance(cur_mol);
+	if(clLists.moveMol(cur_mol, m_op, c_val))
+		return -1;	
+	
+	cur_mol_sum = cllLists.totalDistance(cur_mol);
+	clLists.moveMol(cur_mol, m_opm, -c_val);
+	
+	if(cur_mol_sum < 0)
+		return -1;
+	
+	return dist_sum - old_mol_sum + cur_mol_sum;
+}
+
+HJOptimize(... , opt_func);
+
+

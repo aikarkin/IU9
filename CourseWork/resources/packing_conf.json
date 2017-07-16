@@ -1,5 +1,6 @@
 {
     "lattice": {
+<<<<<<< HEAD
         "box_length": 13.0,
         "box_width": 15.0,
         "box_height": 23.0,
@@ -7,6 +8,15 @@
         "compression": 0.7,
         "mol_file": "../resources/C2H5Cl.sdf",
         "out_format": "mol2"
+=======
+        "box_length": 15.0,
+        "box_width": 15.0,
+        "box_height": 15.0,
+        "expansivity": 1.5,
+        "mol_file": "../resources/Structure3D_CID_11.sdf",
+        "out_format": "mol2",
+        "substance": "H2O"
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     },
     "packing_params": {
         "steps": {
@@ -16,6 +26,7 @@
             "rot_x": 90,
             "rot_y": 90,
             "rot_z": 90,
+<<<<<<< HEAD
             "dec_coefficient": 0.1
         },
         "precision": {
@@ -24,5 +35,15 @@
         },
         "lambda": 2,
         "lj_epsilon": 10000.0
+=======
+            "dec_coefficient": 0.16
+        },
+        "precision": {
+            "trans_eps": 0.001,
+            "rot_eps": 0.01
+        },
+        "lambda": 2,
+        "lj_epsilon": 0.6368
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     }
 }

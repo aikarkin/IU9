@@ -24,8 +24,11 @@ pmols::Molecule::Molecule(std::string file_path) {
 
     conversion.ReadFile(&mol, file_path);
 
+<<<<<<< HEAD
 
     formula = mol.GetFormula();
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     atoms_count = mol.NumAtoms();
     bonds_count = mol.NumBonds();
 
@@ -90,7 +93,11 @@ pmols::Molecule::~Molecule() {
 }
 
 std::string pmols::Molecule::GetFormula() {
+<<<<<<< HEAD
     return formula;
+=======
+    return mol.GetFormula();
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 }
 
 glm::vec3 pmols::Molecule::GetBarycenter() {
@@ -148,7 +155,11 @@ pmols::Molecule::Molecule(const Molecule &other) {
     bonds_count = other.bonds_count;
 
     bar_vec = other.bar_vec;
+<<<<<<< HEAD
     formula = other.formula;
+=======
+    mol = other.mol;
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
     atoms = new Atom[atoms_count];
     bonds = new Bond[bonds_count];
@@ -237,7 +248,11 @@ pmols::Molecule &pmols::Molecule::operator=(const pmols::Molecule &other) {
         bonds_count = other.bonds_count;
 
         bar_vec = other.bar_vec;
+<<<<<<< HEAD
         formula = other.formula;
+=======
+        mol = other.mol;
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
         atoms = new Atom[atoms_count];
         bonds = new Bond[bonds_count];
@@ -277,6 +292,7 @@ bool pmols::AtomInsideBox(Atom atom, glm::vec3 apposPoint, std::tuple<float, flo
     glm::vec3 atom_coord = atom.coord;
     float a, b, c;
     std::tie(a, b, c) = boxSize;
+<<<<<<< HEAD
     float da = apposPoint.x + a;
     float db = apposPoint.y + b;
     float dc = apposPoint.z + c;
@@ -284,6 +300,15 @@ bool pmols::AtomInsideBox(Atom atom, glm::vec3 apposPoint, std::tuple<float, flo
     return (atom_coord.x > apposPoint.x && atom_coord.x < da
             && atom_coord.y > apposPoint.y && atom_coord.y < db
             && atom_coord.z > apposPoint.z && atom_coord.z < dc);
+=======
+    float da = a + apposPoint.x;
+    float db = b + apposPoint.y;
+    float dc = c + apposPoint.z;
+
+    return (atom_coord.x >= apposPoint.x && atom_coord.x < da
+            && atom_coord.y >= apposPoint.y && atom_coord.y < db
+            && atom_coord.z >= apposPoint.z && atom_coord.z < dc);
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 }
 
 bool pmols::MolInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<float, float, float> boxSize) {
@@ -292,6 +317,7 @@ bool pmols::MolInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<float, f
             return false;
 
     return true;
+<<<<<<< HEAD
 }
 
 bool pmols::MolPartlyInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<float, float, float> boxSize) {
@@ -306,4 +332,6 @@ bool pmols::MolPartlyInsideBox(Molecule mol, glm::vec3 apposPoint, std::tuple<fl
             && barycenter.y >= barycenter.y && barycenter.y < db
             && barycenter.z >= barycenter.z && barycenter.z < dc);
 
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 }

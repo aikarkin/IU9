@@ -27,6 +27,7 @@ namespace pmols {
         friend class HJStatistics;
     public:
         CellLinkedLists() {};
+<<<<<<< HEAD
         CellLinkedLists(std::vector<Molecule*> &mols, float cellLen, DistFunc distFunc);
         CellLinkedLists(float cellLen, DistFunc distFunc);
         void Set(float cellLen, DistFunc distFunc);
@@ -38,6 +39,16 @@ namespace pmols {
         bool AddMol(Molecule &mol);
         bool MoveMol(int molIdx, MOVE_OP moveOp, float val);
         void RemoveMol(int molIdx);
+=======
+        CellLinkedLists(std::vector<Molecule> &mols, float cellLen, DistFunc distFunc);
+        CellLinkedLists(float cellLen, DistFunc distFunc);
+        void Set(float cellLen, DistFunc distFunc);
+        void FormCellLinkedLists();
+
+        Molecule &GetMol(int molIdx);
+        bool AddMol(Molecule &mol);
+        bool MoveMol(int molIdx, MOVE_OP moveOp, float val);
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
         void CancelMove();
         float MolDist(int molIdx);
         void SaveToCSV(std::string file_path);
@@ -45,11 +56,17 @@ namespace pmols {
         size_t MolsCount();
         ~CellLinkedLists();
     private:
+<<<<<<< HEAD
         void allocateGrid();
         void freeGrid();
 
         void repMol(int molIdx, Molecule mol);
         std::tuple<int, int, int> getCellIndex(Atom atom);
+=======
+        void calcBoundingBox();
+        void repMol(int molIdx, Molecule &mol);
+        std::tuple<int, int, int> getCellIndex(Atom &atom);
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
         int cells_count_x, cells_count_y, cells_count_z;
 
@@ -61,9 +78,14 @@ namespace pmols {
 
         bool formed;
         bool mol_moved;
+<<<<<<< HEAD
         bool grid_box_setted;
 
         std::vector<Molecule*> mols;
+=======
+
+        std::vector<Molecule> mols;
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
         std::list<Atom> ***atom_grid;
         std::shared_ptr<std::tuple<int, Molecule>> last_mol;
     };

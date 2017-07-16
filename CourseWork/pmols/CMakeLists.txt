@@ -6,6 +6,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 set(HEADER_FILES include/cell_linked_lists.h include/mol.h)
 set(SOURCE_FILES src/cell_linked_lists.cpp src/mol.cpp include/hj_algo.h src/hj_algo.cpp)
+<<<<<<< HEAD
+=======
+set(RAPIDJSON_INCLUDE_DIRS /home/alex/dev/libs/rapidjson-master/include)
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
 find_package(PkgConfig REQUIRED)
 find_package(Boost 1.58 COMPONENTS regex system filesystem REQUIRED)

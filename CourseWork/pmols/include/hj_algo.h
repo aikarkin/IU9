@@ -41,6 +41,7 @@ namespace pmols {
         float lj_epsilon = 0.648f;  // (14)
         float cell_length = 0.0f;   // (15) !!!
 
+<<<<<<< HEAD
         float compression = 0.75;   // (16)
 
         // input/output file paths and output file format
@@ -50,6 +51,15 @@ namespace pmols {
         std::string out_format = "";  // (20) !!!
         DistFunc distanceFunc;        // (21)
         std::string log_dir = "";     // (22)
+=======
+        // input/output file paths and output file format
+        std::string substance = "";   // (16) !!
+        std::string mol_file = "";    // (17) !!!
+        std::string out_file = "";    // (18) !!!
+        std::string out_format = "";  // (19) !!!
+        DistFunc distanceFunc;        // (20)
+        std::string log_dir = "";     // (21)
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
         std::string toString() {
             std::stringstream ss;
@@ -65,7 +75,10 @@ namespace pmols {
                       << "\tstep_gamma:" << step_gamma << "; \n"
                       << "\tlambda:" << lambda << "; \n"
                       << "\texpansivity:" << expansivity << "; \n"
+<<<<<<< HEAD
                       << "\tcompression:" << compression << "; \n"
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
                       << "\tstep_coefficient:" << step_coefficient << "; \n"
                       << "\ttrans_eps:" << trans_eps << "; \n"
                       << "\trot_eps:" << rot_eps << "; \n"
@@ -79,7 +92,11 @@ namespace pmols {
             return ss.str();
         }
         
+<<<<<<< HEAD
         bool val_setted[22] = {0};
+=======
+        bool val_setted[21] = {0};
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     };
 
     class HJStatistics {
@@ -103,8 +120,11 @@ namespace pmols {
         float AvgIntersection() { return avg_inter; }
         float MinIntersection() { return min_inter; }
         float MaxIntersection() { return max_inter; }
+<<<<<<< HEAD
 
         std::tuple<glm::vec3, std::tuple<float, float, float>> GetBoundingBox();
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     private:
         void calcMolStatistics(CellLinkedLists *cll);
         float atomsEDist(Atom &a, Atom &b);
@@ -129,7 +149,11 @@ namespace pmols {
         float min_inter;
         float max_inter;
 
+<<<<<<< HEAD
         std::tuple<glm::vec3, std::tuple<float, float, float>> boundingBox;
+=======
+        std::tuple<float, float, float> box_size;
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     };
 
     class HJPacker {
@@ -140,6 +164,7 @@ namespace pmols {
         void Save();
         HJStatistics GetStatistics();
     private:
+<<<<<<< HEAD
         void init();
         float eps(int coord_number);
         float objectiveFunc();
@@ -148,6 +173,13 @@ namespace pmols {
         int patternSearch(ublas::vector<float> &x1_, ublas::vector<float> &x2_);
         void removeOutOfBoxMols();
 
+=======
+        int exploringSearch(ublas::vector<float> &x_, bool change_step);
+        int patternSearch(ublas::vector<float> &x1_, ublas::vector<float> &x2_);
+        void init();
+        float eps(int coord_number);
+        float objectiveFunc();
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
         float totalDist;
         float prevTotalDist;
 
@@ -158,7 +190,10 @@ namespace pmols {
         ublas::vector<float> coordVec;
         ublas::vector<float> step;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
         int expSearchItCount;
         int ptrSearchItCount;
         int ptrSearchFpItCount;

@@ -13,7 +13,10 @@ var touchDist;
 var deltaTouchDist;
 
 var vdw_rad_enabled = false;
+<<<<<<< HEAD
 var bounding_box_enabled = false;
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 var rad_c0;
 
 var MAX_SCALE = 15;
@@ -43,6 +46,12 @@ function addStick(start, end, color) {
     var s = new THREE.Vector3(start.x, start.y, start.z);
     var e = new THREE.Vector3(end.x, end.y, end.z);
 
+<<<<<<< HEAD
+=======
+    // console.log(s);
+    // console.log(e);
+
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     var b_color = new THREE.Color();
     b_color.r = color[0];
     b_color.g = color[1];
@@ -129,6 +138,7 @@ function init() {
     window.addEventListener( 'resize', onWindowResize, false );
 }
 
+<<<<<<< HEAD
 /*  coord: THREE.Vector3
     color: THREE.Color
     radius: number  */
@@ -161,12 +171,48 @@ function addMol(mol, rad_c=0.3) {
         var rad = atom['vdw_radius']*rad_c;
 
         addAtom(pos, color, rad);
+=======
+function add_mol(mol, rad_c=0.3) {
+    var atoms = mol["atoms"];
+    rad_c0 = rad_c;
+
+    for(var a_key in atoms) {
+        var a = atoms[a_key];
+
+        var sphereGeometry = new THREE.IcosahedronBufferGeometry( a['vdw_radius']*rad_c, 2 );
+        var color = new THREE.Color();
+
+        color.r = a['color'][0];
+        color.g = a['color'][1];
+        color.b = a['color'][2];
+
+        var position = new THREE.Vector3();
+        position.x = a['position'][0];
+        position.y = a['position'][1];
+        position.z = a['position'][2];
+
+        sphereGeometry.dynamic = true;
+
+        var material = new THREE.MeshPhongMaterial( { color: color } );
+        var atom_obj = new THREE.Mesh( sphereGeometry, material );
+
+        atom_obj.name = 'atom';
+        atom_obj.position.copy(position);
+        atom_obj.position.multiplyScalar( 20 );
+		atom_obj.scale.multiplyScalar( 20);
+
+        root.add(atom_obj);
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     }
 
     if(rad_c != 1.0) {
         var bonds = mol["bonds"];
 
         for(var b of bonds) {
+<<<<<<< HEAD
+=======
+            //console.log(b);
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
             var b_idx, e_idx;
             var keys = Object.keys(b);
             b_idx = keys[0];
@@ -214,6 +260,7 @@ function addMol(mol, rad_c=0.3) {
     root.scale = cur_scale;
 }
 
+<<<<<<< HEAD
 /*  position: THREE.Vector3,
     length: number,
     width: number,
@@ -236,6 +283,8 @@ function addBoundingBox(position, length, width, height) {
     root.add(boxMesh);
 }
 
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 function onWindowResize() {
     windowHalfX = window.innerWidth / 2;
     windowHalfY = window.innerHeight / 2;
@@ -263,10 +312,17 @@ function onMouseMove(evt) {
     var rot_dy = -deltaX / 100;
     var rot_dx = deltaY / 100;
 
+<<<<<<< HEAD
     // console.log('mouse move');
     // console.log(rot_dx);
     // console.log(rot_dy);
     // console.log('------------');
+=======
+    console.log('mouse move');
+    console.log(rot_dx);
+    console.log(rot_dy);
+    console.log('------------');
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
     root.rotation.y += rot_dy;
     root.rotation.x += rot_dx;
@@ -296,6 +352,7 @@ function onMouseDown(evt) {
     mouseDown = false;
 }
 
+<<<<<<< HEAD
 function redrawBoundingBox() {
     for(var child_key in root.children) {
         var child = root.children[child_key];
@@ -305,6 +362,8 @@ function redrawBoundingBox() {
     }
 }
 
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 function redrawAtomRadii() {
     var cur_rad;
 
@@ -330,6 +389,7 @@ function redrawAtomRadii() {
 }
 
 function onKeyDown(evt) {
+<<<<<<< HEAD
     evt.preventDefault();
     var code = evt.keyCode;
 
@@ -354,6 +414,26 @@ function onMouseWheel(e) {
     // console.log(`delta ${delta}`);
     var scale = cur_scale + delta/100;
     // console.log(`cur_scale ${scale}`)
+=======
+    //alert('key pressed!');
+    evt.preventDefault();
+    var code = evt.keyCode;
+    if (code != 86)
+        return;
+
+    console.log('V pressed!');
+    vdw_rad_enabled = !vdw_rad_enabled;
+
+    redrawAtomRadii();
+}
+
+function onMouseWheel(e) {
+    console.log('scroling');
+    var delta = e.deltaY || e.detail || e.wheelDelta;
+    console.log(`delta ${delta}`);
+    var scale = cur_scale + delta/100;
+    console.log(`cur_scale ${scale}`)
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
     if(scale > MAX_SCALE || scale < MIN_SCALE)
         return;
@@ -405,7 +485,11 @@ function loadMol(mol_id) {
 				console.log(data['data']);
                 var mol = JSON.parse(data['data']);
                 console.log(mol);
+<<<<<<< HEAD
                 addMol(mol);
+=======
+                add_mol(mol);
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
                 render();
             }
         }
@@ -418,6 +502,7 @@ function visualize_mols(lattice_conf) {
     var mols = lattice_conf['mols'];
     
     for(var mol of mols) {
+<<<<<<< HEAD
         addMol(mol);
     }
 
@@ -439,6 +524,17 @@ function visualize_mols(lattice_conf) {
     bb_pos.multiplyScalar(20);
     
     addBoundingBox(bb_pos, bb_length, bb_width, bb_height);
+=======
+        add_mol(mol);
+    }
+
+    var root_c = getBoundingBoxCenter();
+
+    root.position.x -= root_c.x;
+    root.position.y -= root_c.y;
+    root.position.z -= root_c.z;
+
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
     render();
 
@@ -454,7 +550,11 @@ function calcDistBtnFingers(touches) {
 // touch events
 function onTouchMove(evt) {
     if ( evt.touches.length === 1 ) {
+<<<<<<< HEAD
         // console.log('touch moved');
+=======
+        console.log('touch moved');
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
         evt.preventDefault();
 
@@ -467,9 +567,15 @@ function onTouchMove(evt) {
         var rot_dy = -deltaTouchX / 100;
         var rot_dx = deltaTouchY / 100;
 
+<<<<<<< HEAD
         // console.log(rot_dy);
         // console.log(rot_dx);
         // console.log('----------');
+=======
+        console.log(rot_dy);
+        console.log(rot_dx);
+        console.log('----------');
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
 
         root.rotation.y += rot_dy;
         root.rotation.x += rot_dx;

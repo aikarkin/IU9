@@ -80,7 +80,11 @@ bool prepareHJParams(pmols::HJParams &params) {
     // 4. Check cell_length
     if(params.cell_length <= 0) {
         if(params.cell_length == 0) {
+<<<<<<< HEAD
 //            std::cout << "WARNING: Initial cell length of cell linked lists is not specified. Using default value: ";
+=======
+            std::cout << "WARNING: Initial cell length of cell linked lists is not specified. Using default value: ";
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
             pmols::Molecule mol(params.mol_file);
 
             float max_radius = 0;
@@ -89,7 +93,11 @@ bool prepareHJParams(pmols::HJParams &params) {
                     max_radius = mol.GetAtom(i).vdw_radius;
             }
             params.cell_length = 2 * max_radius;
+<<<<<<< HEAD
             // std::cout << "cell_length: " << params.cell_length << std::endl;
+=======
+            std::cout << "cell_length: " << params.cell_length << std::endl;
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
         }
         else {
             std::cerr
@@ -151,28 +159,47 @@ void JSONConfigParser::parseLattice() {
             {"box_width", 1},
             {"box_height", 2},
             {"expansivity", 3},
+<<<<<<< HEAD
             {"compression", 16}
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     };
     parseFloats(doc["lattice"], fkey_fieldIdx);
 
     if(doc["lattice"].HasMember("substance")) {
         assert(doc["lattice"]["substance"].IsString());
+<<<<<<< HEAD
         if(!params.val_setted[17])
+=======
+        if(!params.val_setted[16])
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
             params.substance = doc["lattice"]["substance"].GetString();
     }
     if(doc["lattice"].HasMember("mol_file")) {
         assert(doc["lattice"]["mol_file"].IsString());
+<<<<<<< HEAD
         if(!params.val_setted[18])
+=======
+        if(!params.val_setted[17])
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
             params.mol_file = doc["lattice"]["mol_file"].GetString();
     }
     if(doc["lattice"].HasMember("out_file")) {
         assert(doc["lattice"]["out_file"].IsString());
+<<<<<<< HEAD
         if(!params.val_setted[19])
+=======
+        if(!params.val_setted[18])
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
             params.out_file = doc["lattice"]["out_file"].GetString();
     }
     if(doc["lattice"].HasMember("out_format")) {
         assert(doc["lattice"]["out_format"].IsString());
+<<<<<<< HEAD
         if(!params.val_setted[20])
+=======
+        if(!params.val_setted[19])
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
             params.out_format = doc["lattice"]["out_format"].GetString();
     }
 }
@@ -252,7 +279,10 @@ void CommandLineParser::Parse() {
             ("format,F", boost::program_options::value<std::string>(), "Set output format")
             ("substance,S", boost::program_options::value<std::string>(), "Set substance naming of initial molecule")
             ("expansivity,E", boost::program_options::value<float>(), "Set expansivity coefficient of packing box")
+<<<<<<< HEAD
             ("compression", boost::program_options::value<float>(), "Set initial compression coefficient of molecule bounding box")
+=======
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
             ("cell_length,C", boost::program_options::value<float>(), "Set unit cell length of Cell Linked Lists")
             ("log_dir", boost::program_options::value<std::string>(), "Set directory where logs will be putted")
             ("trans_x", boost::program_options::value<float>(), "Set initial shift in Hooke Jeeves algorithm in X axis")
@@ -283,6 +313,7 @@ void CommandLineParser::Parse() {
     }
     if(vm.count("substance")) {
         params.substance = vm.at("substance").as<std::string>();
+<<<<<<< HEAD
         params.val_setted[17] = true;
     }
     if(vm.count("input")) {
@@ -296,6 +327,21 @@ void CommandLineParser::Parse() {
     if(vm.count("format")) {
         params.out_format = vm.at("format").as<std::string>();
         params.val_setted[20] = true;
+=======
+        params.val_setted[16] = true;
+    }
+    if(vm.count("input")) {
+        params.mol_file = vm.at("input").as<std::string>();
+        params.val_setted[17] = true;
+    }
+    if(vm.count("output")) {
+        params.out_file = vm.at("output").as<std::string>();
+        params.val_setted[18] = true;
+    }
+    if(vm.count("format")) {
+        params.out_format = vm.at("format").as<std::string>();
+        params.val_setted[19] = true;
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     }
     if(vm.count("config")) {
         conf_file = vm.at("config").as<std::string>();
@@ -309,8 +355,12 @@ void CommandLineParser::Parse() {
             {"rot_y", 8},           {"rot_z", 9},
             {"lambda", 10},         {"step_coefficient", 11},
             {"trans_eps", 12},      {"rot_eps", 13},
+<<<<<<< HEAD
             {"lj_epsilon", 14},     {"cell_length", 15},
             {"compression", 16}
+=======
+            {"lj_epsilon", 14},     {"cell_length", 15}
+>>>>>>> 038e334a388126d42b0fb0c2c05aa260f5dd3043
     };
 
     parseFloat(vm, paramToFloatFields);

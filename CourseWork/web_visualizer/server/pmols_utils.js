@@ -47,7 +47,6 @@ function latticeParamsFromRequest(request, idToMolFile, latticeRoot) {
     return latticeParams;
 }
 
-
 function updateCache(cache, rootDir) {
     for(var elem of cache.toArray())
         cache.remove(elem);
